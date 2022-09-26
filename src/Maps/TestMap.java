@@ -6,7 +6,9 @@ import Level.Map;
 import Level.NPC;
 import Level.Trigger;
 import NPCs.Dinosaur;
+import NPCs.Ghost;
 import NPCs.Walrus;
+import NPCs.Zombie;
 import Scripts.SimpleTextScript;
 import Scripts.TestMap.DinoScript;
 import Scripts.TestMap.LostBallScript;
@@ -35,14 +37,21 @@ public class TestMap extends Map {
     public ArrayList<NPC> loadNPCs() {
         ArrayList<NPC> npcs = new ArrayList<>();
 
-        Walrus walrus = new Walrus(1, getMapTile(4, 28).getLocation().subtractY(40));
-        walrus.setInteractScript(new WalrusScript());
-        npcs.add(walrus);
+        Ghost ghost = new Ghost(1, getMapTile(4, 28).getLocation().subtractY(40));
+        ghost.setInteractScript(new WalrusScript());
+        npcs.add(ghost);
+        // Walrus walrus = new Walrus(1, getMapTile(4, 28).getLocation().subtractY(40));
+        // walrus.setInteractScript(new WalrusScript());
+        // npcs.add(walrus);
 
-        Dinosaur dinosaur = new Dinosaur(2, getMapTile(13, 4).getLocation());
+        Zombie dinosaur = new Zombie(2, getMapTile(13, 4).getLocation());
         dinosaur.setExistenceFlag("hasTalkedToDinosaur");
         dinosaur.setInteractScript(new DinoScript());
         npcs.add(dinosaur);
+        // Dinosaur dinosaur = new Dinosaur(2, getMapTile(13, 4).getLocation());
+        // dinosaur.setExistenceFlag("hasTalkedToDinosaur");
+        // dinosaur.setInteractScript(new DinoScript());
+        // npcs.add(dinosaur);
 
         return npcs;
     }
