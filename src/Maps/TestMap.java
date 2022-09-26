@@ -11,10 +11,13 @@ import NPCs.Walrus;
 import NPCs.Zombie;
 import Scripts.SimpleTextScript;
 import Scripts.TestMap.DinoScript;
+import Scripts.TestMap.GhostScript;
 import Scripts.TestMap.LostBallScript;
 import Scripts.TestMap.TreeScript;
 import Scripts.TestMap.WalrusScript;
+import Scripts.TestMap.ZombieScript;
 import Tilesets.CommonTileset;
+import Utils.Direction;
 
 import java.util.ArrayList;
 
@@ -38,20 +41,21 @@ public class TestMap extends Map {
         ArrayList<NPC> npcs = new ArrayList<>();
 
         Ghost ghost = new Ghost(1, getMapTile(4, 28).getLocation().subtractY(40));
-        ghost.setInteractScript(new WalrusScript());
+        // ghost.walk(Direction.RIGHT, 0.3f);
+        ghost.setInteractScript(new GhostScript());
         npcs.add(ghost);
         // Walrus walrus = new Walrus(1, getMapTile(4, 28).getLocation().subtractY(40));
         // walrus.setInteractScript(new WalrusScript());
         // npcs.add(walrus);
 
-        Zombie dinosaur = new Zombie(2, getMapTile(13, 4).getLocation());
+        // Zombie zombie = new Zombie(2, getMapTile(13, 4).getLocation());
+        // zombie.setExistenceFlag("hasTalkedToDinosaur");
+        // zombie.setInteractScript(new ZombieScript());
+        // npcs.add(zombie);
+        Dinosaur dinosaur = new Dinosaur(2, getMapTile(13, 4).getLocation());
         dinosaur.setExistenceFlag("hasTalkedToDinosaur");
         dinosaur.setInteractScript(new DinoScript());
         npcs.add(dinosaur);
-        // Dinosaur dinosaur = new Dinosaur(2, getMapTile(13, 4).getLocation());
-        // dinosaur.setExistenceFlag("hasTalkedToDinosaur");
-        // dinosaur.setInteractScript(new DinoScript());
-        // npcs.add(dinosaur);
 
         return npcs;
     }
