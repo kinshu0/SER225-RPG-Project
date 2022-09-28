@@ -14,6 +14,8 @@ public abstract class Player extends GameObject {
     // values that affect player movement
     // these should be set in a subclass
     protected float walkSpeed = 0;
+
+    protected int lives = 3;
     protected int interactionRange = 5;
     protected Direction currentWalkingXDirection;
     protected Direction currentWalkingYDirection;
@@ -41,6 +43,9 @@ public abstract class Player extends GameObject {
     protected Key MOVE_DOWN_KEY = Key.DOWN;
     protected Key INTERACT_KEY = Key.SPACE;
 
+    protected Key LIVES_UP_KEY = Key.U;
+    protected Key LIVES_DOWN_KEY = Key.D;
+
     public Player(SpriteSheet spriteSheet, float x, float y, String startingAnimationName) {
         super(spriteSheet, x, y, startingAnimationName);
         facingDirection = Direction.RIGHT;
@@ -64,6 +69,14 @@ public abstract class Player extends GameObject {
         if (playerState != PlayerState.INTERACTING) {
             lastAmountMovedY = super.moveYHandleCollision(moveAmountY);
             lastAmountMovedX = super.moveXHandleCollision(moveAmountX);
+        }
+
+        //System.out.println(lives);
+
+        if (Keyboard.isKeyDown(LIVES_UP_KEY)){
+            lives = Math.max(0,Math.min(5,lives+1));
+        } else if (Keyboard.isKeyDown(LIVES_DOWN_KEY)) {
+            lives =  Math.max(0,Math.min(5,lives-1));
         }
 
         handlePlayerAnimation();
