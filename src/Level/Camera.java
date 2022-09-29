@@ -28,7 +28,8 @@ public class Camera extends Rectangle {
     private ArrayList<Trigger> activeTriggers = new ArrayList<>();
 
     // determines how many tiles off screen an entity can be before it will be deemed inactive and not included in the update/draw cycles until it comes back in range
-    private final int UPDATE_OFF_SCREEN_RANGE = 4;
+    // THIS IS TEMPORARY UNTIL I FIND BETTER SOLUTION TO KEEP THE NPCS MOVING OFF SCREEN!!!
+    private final int UPDATE_OFF_SCREEN_RANGE = 20;
 
     public Camera(int startX, int startY, int tileWidth, int tileHeight, Map map) {
         super(startX, startY, ScreenManager.getScreenWidth() / tileWidth, ScreenManager.getScreenHeight() / tileHeight);

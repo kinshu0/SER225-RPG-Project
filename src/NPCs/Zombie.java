@@ -7,20 +7,15 @@ import GameObject.Frame;
 import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
 import Level.NPC;
-import Level.Player;
 import Utils.Point;
 
 import java.util.HashMap;
 
-// This class is for the walrus NPC
+// This class is for the dinosaur NPC
 public class Zombie extends NPC {
 
     public Zombie(int id, Point location) {
-        super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("Zombie.png"), 24, 24), "STAND_LEFT");
-    }
-
-    public void update(Player player) {
-        super.update(player);
+        super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("Zombie.png"), 14, 17), "STAND_LEFT");
     }
 
     @Override
@@ -29,16 +24,40 @@ public class Zombie extends NPC {
             put("STAND_LEFT", new Frame[] {
                     new FrameBuilder(spriteSheet.getSprite(0, 0))
                             .withScale(3)
-                            .withBounds(7, 13, 11, 7)
-                            .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+                            .withBounds(4, 5, 5, 10)
                             .build()
             });
             put("STAND_RIGHT", new Frame[] {
                    new FrameBuilder(spriteSheet.getSprite(0, 0))
                            .withScale(3)
-                           .withBounds(7, 13, 11, 7)
+                           .withBounds(4, 5, 5, 10)
+                           .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
                            .build()
            });
+
+            put("WALK_LEFT", new Frame[]{
+                    new FrameBuilder(spriteSheet.getSprite(1, 0), 200)
+                            .withScale(3)
+                            .withBounds(4, 5, 5, 10)
+                            .build(),
+                    new FrameBuilder(spriteSheet.getSprite(1, 1), 200)
+                            .withScale(3)
+                            .withBounds(4, 5, 5, 10)
+                            .build()
+            });
+
+            put("WALK_RIGHT", new Frame[]{
+                    new FrameBuilder(spriteSheet.getSprite(1, 0), 200)
+                            .withScale(3)
+                            .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+                            .withBounds(4, 5, 5, 10)
+                            .build(),
+                    new FrameBuilder(spriteSheet.getSprite(1, 1), 200)
+                            .withScale(3)
+                            .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
+                            .withBounds(4, 5, 5, 10)
+                            .build()
+            });
         }};
     }
 
