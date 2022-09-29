@@ -1,6 +1,7 @@
 package Game;
 
 import Engine.GameWindow;
+import Engine.PlayMusic;
 import Engine.ScreenManager;
 
 /*
@@ -19,5 +20,6 @@ public class Game {
         gameWindow.startGame();
         ScreenManager screenManager = gameWindow.getScreenManager();
         screenManager.setCurrentScreen(new ScreenCoordinator());
+        PlayMusic.main(null);;
     }
 }
