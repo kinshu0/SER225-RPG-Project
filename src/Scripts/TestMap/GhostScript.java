@@ -1,45 +1,40 @@
 package Scripts.TestMap;
 
-import Level.NPC;
-import Level.Script;
-import Level.ScriptState;
+import Builders.FrameBuilder;
+import Builders.MapTileBuilder;
+import GameObject.Frame;
+import Level.*;
+import Utils.Direction;
+import Utils.Point;
 
-// script for talking to walrus npc
+// script for talking to dino npc
+// the script is segmented -- it has multiple setups, cleanups, and executions based on its current action
 public class GhostScript extends Script<NPC> {
+
+    private int sequence = 0;
+    private int amountMoved = 0;
+    private int speed = 2;
 
     @Override
     protected void setup() {
-        lockPlayer();
-        showTextbox();
-
-        // changes what walrus says when talking to him the first time (flag is not set) vs talking to him afterwards (flag is set)
-        if (!isFlagSet("hasTalkedToWalrus")) {
-            addTextToTextboxQueue( "Hi Cat!");
-            addTextToTextboxQueue( "...oh, you lost your ball?");
-            addTextToTextboxQueue( "Hmmm...my walrus brain remembers seeing Dino with\nit last. Maybe you can check with him?");
-        }
-        else {
-            addTextToTextboxQueue( "I sure love doing walrus things!");
-        }
-        entity.facePlayer(player);
     }
 
     @Override
     protected void cleanup() {
-        unlockPlayer();
-        hideTextbox();
-
-        // set flag so that if walrus is talked to again after the first time, what he says changes
-        setFlag("hasTalkedToWalrus");
     }
 
     @Override
     public ScriptState execute() {
-        start();
-        if (!isTextboxQueueEmpty()) {
-            return ScriptState.RUNNING;
+        entity.walk(Direction.RIGHT, speed);
+        amountMoved += speed;
+        if (amountMoved == 36) {
+            speed *= -1;
+        } else if (amountMoved == -36) {
+            speed *= -1;
         }
-        end();
-        return ScriptState.COMPLETED;
+        // sequence++;
+        // System.out.printf("Ghost: %d\n", sequence);
+        return ScriptState.RUNNING;
     }
 }
+
