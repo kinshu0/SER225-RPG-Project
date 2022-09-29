@@ -233,6 +233,10 @@ public abstract class Player extends GameObject {
                 getBounds().getHeight() + (interactionRange * 2));
     }
 
+    public int getPlayerLives() {
+        return lives;
+    }
+
     public Key getInteractKey() { return INTERACT_KEY; }
     public Direction getCurrentWalkingXDirection() { return currentWalkingXDirection; }
     public Direction getCurrentWalkingYDirection() { return currentWalkingYDirection; }
