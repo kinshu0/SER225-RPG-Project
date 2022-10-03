@@ -133,6 +133,12 @@ public class PlayLevelScreen extends Screen {
             keyLocker.lockKey(pauseKey);
         }
 
+        // if game is paused, draw pause gfx over Screen gfx
+        if (GamePanel.isGamePaused()) {
+            pauseLabel.draw(graphicsHandler);
+            graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(), new Color(0, 0, 0, 100));
+        }
+
         if (Keyboard.isKeyUp(pauseKey)) {
             keyLocker.unlockKey(pauseKey);
         }
