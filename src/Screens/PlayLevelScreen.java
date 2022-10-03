@@ -1,23 +1,33 @@
 package Screens;
 
 import Engine.GraphicsHandler;
+import Engine.Key;
+import Engine.Keyboard;
 import Engine.Screen;
 import Game.GameState;
 import Game.ScreenCoordinator;
 import Level.*;
 import Maps.TestMap;
 import Players.Cat;
+import SpriteFont.SpriteFont;
 import Utils.Direction;
 import Utils.Point;
+
+import java.awt.*;
 
 // This class is for when the platformer game is actually being played
 public class PlayLevelScreen extends Screen {
     protected ScreenCoordinator screenCoordinator;
     protected Map map;
     protected Player player;
+    protected SpriteFont livesLabels;
+    protected SpriteFont timeLabels;
     protected PlayLevelScreenState playLevelScreenState;
     protected WinScreen winScreen;
     protected FlagManager flagManager;
+
+    protected Key LIVES_UP_KEY = Key.U;
+    protected Key LIVES_DOWN_KEY = Key.D;
 
     public PlayLevelScreen(ScreenCoordinator screenCoordinator) {
         this.screenCoordinator = screenCoordinator;
@@ -46,7 +56,6 @@ public class PlayLevelScreen extends Screen {
 
         // let pieces of map know which button to listen for as the "interact" button
         map.getTextbox().setInteractKey(player.getInteractKey());
-
         // setup map scripts to have references to the map and player
         for (MapTile mapTile : map.getMapTiles()) {
             if (mapTile.getInteractScript() != null) {
@@ -72,11 +81,27 @@ public class PlayLevelScreen extends Screen {
                 trigger.getTriggerScript().setPlayer(player);
             }
         }
+        // lives
+        livesLabels = new SpriteFont(player.getPlayerLives(), 10, 60, "Comic Sans", 30,  Color.black);
+        livesLabels.setOutlineColor(Color.white);
+        livesLabels.setOutlineThickness(3);
+
+        // time
+        timeLabels = new SpriteFont("Time: 3:00", 10, 25, "Comic Sans", 30,  Color.black);
+        timeLabels.setOutlineColor(Color.white);
+        timeLabels.setOutlineThickness(3);
 
         winScreen = new WinScreen(this);
     }
 
     public void update() {
+        // TODO: changing lives is not working atm
+        if (Keyboard.isKeyDown(LIVES_UP_KEY)){
+            player.setPlayerLives(Math.max(0,Math.min(5,player.getPlayerLivesI()+1)));
+        } else if (Keyboard.isKeyDown(LIVES_DOWN_KEY)) {
+            player.setPlayerLives(Math.max(0,Math.min(5,player.getPlayerLivesI()-1)));
+        }
+
         // based on screen state, perform specific actions
         switch (playLevelScreenState) {
             // if level is "running" update player and map to keep game logic for the platformer level going
@@ -101,6 +126,8 @@ public class PlayLevelScreen extends Screen {
         switch (playLevelScreenState) {
             case RUNNING:
                 map.draw(player, graphicsHandler);
+                livesLabels.draw(graphicsHandler);
+                timeLabels.draw(graphicsHandler);
                 break;
             case LEVEL_COMPLETED:
                 winScreen.draw(graphicsHandler);

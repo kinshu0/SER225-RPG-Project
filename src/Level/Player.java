@@ -43,8 +43,6 @@ public abstract class Player extends GameObject {
     protected Key MOVE_DOWN_KEY = Key.DOWN;
     protected Key INTERACT_KEY = Key.SPACE;
 
-    protected Key LIVES_UP_KEY = Key.U;
-    protected Key LIVES_DOWN_KEY = Key.D;
 
     public Player(SpriteSheet spriteSheet, float x, float y, String startingAnimationName) {
         super(spriteSheet, x, y, startingAnimationName);
@@ -69,14 +67,6 @@ public abstract class Player extends GameObject {
         if (playerState != PlayerState.INTERACTING) {
             lastAmountMovedY = super.moveYHandleCollision(moveAmountY);
             lastAmountMovedX = super.moveXHandleCollision(moveAmountX);
-        }
-
-        //System.out.println(lives);
-
-        if (Keyboard.isKeyDown(LIVES_UP_KEY)){
-            lives = Math.max(0,Math.min(5,lives+1));
-        } else if (Keyboard.isKeyDown(LIVES_DOWN_KEY)) {
-            lives =  Math.max(0,Math.min(5,lives-1));
         }
 
         handlePlayerAnimation();
@@ -233,8 +223,17 @@ public abstract class Player extends GameObject {
                 getBounds().getHeight() + (interactionRange * 2));
     }
 
-    public int getPlayerLives() {
+    public String getPlayerLives() {
+        String livesIntro = "Lives: ";
+        return livesIntro.concat(Integer.toString(lives));
+    }
+
+    public int getPlayerLivesI(){
         return lives;
+    }
+
+    public void setPlayerLives(Integer lives){
+        this.lives = lives;
     }
 
     public Key getInteractKey() { return INTERACT_KEY; }
