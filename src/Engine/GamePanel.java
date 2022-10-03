@@ -25,10 +25,9 @@ public class GamePanel extends JPanel {
 	private GraphicsHandler graphicsHandler;
 
 	private boolean doPaint = false;
-	private boolean isGamePaused = false;
+	private static boolean isGamePaused = false;
 	private SpriteFont pauseLabel;
-	private KeyLocker keyLocker = new KeyLocker();
-	private final Key pauseKey = Key.P;
+
 
 	/*
 	 * The JPanel and various important class instances are setup here
@@ -78,14 +77,6 @@ public class GamePanel extends JPanel {
 	}
 
 	public void update() {
-		if (Keyboard.isKeyDown(pauseKey) && !keyLocker.isKeyLocked(pauseKey)) {
-			isGamePaused = !isGamePaused;
-			keyLocker.lockKey(pauseKey);
-		}
-
-		if (Keyboard.isKeyUp(pauseKey)) {
-			keyLocker.unlockKey(pauseKey);
-		}
 
 		if (!isGamePaused) {
 			screenManager.update();
@@ -100,6 +91,14 @@ public class GamePanel extends JPanel {
 			pauseLabel.draw(graphicsHandler);
 			graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(), new Color(0, 0, 0, 100));
 		}
+	}
+
+	public static boolean isGamePaused(){
+		return isGamePaused;
+	}
+
+	public static void setIsGamePaused(boolean pausedVal){
+		isGamePaused = pausedVal;
 	}
 
 	@Override

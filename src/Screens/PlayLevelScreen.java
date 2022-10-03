@@ -1,9 +1,6 @@
 package Screens;
 
-import Engine.GraphicsHandler;
-import Engine.Key;
-import Engine.Keyboard;
-import Engine.Screen;
+import Engine.*;
 import Game.GameState;
 import Game.ScreenCoordinator;
 import Level.*;
@@ -22,12 +19,16 @@ public class PlayLevelScreen extends Screen {
     protected Player player;
     protected SpriteFont livesLabels;
     protected SpriteFont timeLabels;
+    private SpriteFont pauseLabel;
+
     protected PlayLevelScreenState playLevelScreenState;
     protected WinScreen winScreen;
     protected FlagManager flagManager;
 
     protected Key LIVES_UP_KEY = Key.U;
     protected Key LIVES_DOWN_KEY = Key.D;
+    private KeyLocker keyLocker = new KeyLocker();
+    private final Key pauseKey = Key.P;
 
     public PlayLevelScreen(ScreenCoordinator screenCoordinator) {
         this.screenCoordinator = screenCoordinator;
@@ -91,6 +92,11 @@ public class PlayLevelScreen extends Screen {
         timeLabels.setOutlineColor(Color.white);
         timeLabels.setOutlineThickness(3);
 
+        // pause logic
+        pauseLabel = new SpriteFont("PAUSE", 365, 280, "Comic Sans", 24, Color.white);
+        pauseLabel.setOutlineColor(Color.black);
+        pauseLabel.setOutlineThickness(2.0f);
+
         winScreen = new WinScreen(this);
     }
 
@@ -122,16 +128,27 @@ public class PlayLevelScreen extends Screen {
     }
 
     public void draw(GraphicsHandler graphicsHandler) {
-        // based on screen state, draw appropriate graphics
-        switch (playLevelScreenState) {
-            case RUNNING:
-                map.draw(player, graphicsHandler);
-                livesLabels.draw(graphicsHandler);
-                timeLabels.draw(graphicsHandler);
-                break;
-            case LEVEL_COMPLETED:
-                winScreen.draw(graphicsHandler);
-                break;
+        if (Keyboard.isKeyDown(pauseKey) && !keyLocker.isKeyLocked(pauseKey)) {
+            GamePanel.setIsGamePaused(!GamePanel.isGamePaused());
+            keyLocker.lockKey(pauseKey);
+        }
+
+        if (Keyboard.isKeyUp(pauseKey)) {
+            keyLocker.unlockKey(pauseKey);
+        }
+
+        if (!GamePanel.isGamePaused()) {
+            // based on screen state, draw appropriate graphics
+            switch (playLevelScreenState) {
+                case RUNNING:
+                    map.draw(player, graphicsHandler);
+                    livesLabels.draw(graphicsHandler);
+                    timeLabels.draw(graphicsHandler);
+                    break;
+                case LEVEL_COMPLETED:
+                    winScreen.draw(graphicsHandler);
+                    break;
+            }
         }
     }
 
