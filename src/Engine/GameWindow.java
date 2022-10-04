@@ -2,6 +2,7 @@ package Engine;
 
 import javax.swing.*;
 
+
 /*
  * The JFrame that holds the GamePanel
  * Just does some setup and exposes the gamePanel's screenManager to allow an external class to setup their own content and attach it to this engine.
@@ -9,6 +10,7 @@ import javax.swing.*;
 public class GameWindow {
 	private JFrame gameWindow;
 	private GamePanel gamePanel;
+	
 
 	public GameWindow() {
 		gameWindow = new JFrame("Game");
@@ -32,4 +34,8 @@ public class GameWindow {
 	public ScreenManager getScreenManager() {
 		return gamePanel.getScreenManager();
 	}
-}
+	
+	
+		
+	}
+
