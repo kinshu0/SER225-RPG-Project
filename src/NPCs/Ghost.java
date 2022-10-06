@@ -7,6 +7,8 @@ import GameObject.Frame;
 import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
 import Level.NPC;
+import Level.Player;
+import Utils.Direction;
 import Utils.Point;
 
 import java.util.HashMap;
@@ -59,6 +61,20 @@ public class Ghost extends NPC {
                             .build()
             });
         }};
+    }
+
+    @Override
+    public void update(Player player) {
+        super.update(player);
+            
+        float dx = player.getLocation().x - this.getLocation().x;
+        float dy = player.getLocation().y - this.getLocation().y;
+
+        this.walk(dx > 0 ? Direction.RIGHT : Direction.LEFT, 1);
+        this.walk(dy > 0 ? Direction.DOWN : Direction.UP, 1);
+
+        //     System.out.printf("Zombie Position: %s\n", this.getLocation());
+        //     System.out.printf("Player Position: %s\n", player.getLocation());
     }
 
     @Override
