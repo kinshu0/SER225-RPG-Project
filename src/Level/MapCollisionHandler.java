@@ -28,6 +28,18 @@ public class MapCollisionHandler {
                 }
             }
         }
+        //System.out.println(edgeBoundX);
+        if (edgeBoundX <= 0 || edgeBoundX >=1150) {
+            if (direction == Direction.RIGHT) {
+                float boundsDifference = gameObject.getX2() - gameObject.getBoundsX2();
+                float adjustedPosition = 1150 - gameObject.getWidth() + boundsDifference;
+                return new MapCollisionCheckResult(adjustedPosition, entityCollidedWith);
+            } else if (direction == Direction.LEFT) {
+                float boundsDifference = gameObject.getBoundsX1() - gameObject.getX();
+                float adjustedPosition = 0 - boundsDifference;
+                return new MapCollisionCheckResult(adjustedPosition, entityCollidedWith);
+            }
+        }
 
         for (EnhancedMapTile enhancedMapTile : map.getActiveEnhancedMapTiles()) {
             if (!gameObject.equals(enhancedMapTile) && hasCollidedWithMapEntity(gameObject, enhancedMapTile, direction)) {
@@ -98,6 +110,14 @@ public class MapCollisionHandler {
                     float adjustedPosition = mapTile.getBoundsY2() - boundsDifference;
                     return new MapCollisionCheckResult(adjustedPosition, entityCollidedWith);
                 }
+            }
+        }
+        //System.out.println(edgeBoundY);
+        if (edgeBoundY <=30) {
+            if (direction == Direction.UP) {
+                float boundsDifference = gameObject.getBoundsY1() - gameObject.getY();
+                float adjustedPosition = 30 - boundsDifference;
+                return new MapCollisionCheckResult(adjustedPosition, entityCollidedWith);
             }
         }
 

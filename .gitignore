@@ -8,3 +8,5 @@ classes/
 out/
 TestResources/
 _site
+.vscode
+.DS_Store

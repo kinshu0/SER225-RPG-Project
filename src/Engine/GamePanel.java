@@ -17,7 +17,7 @@ public class GamePanel extends JPanel {
 	// loads Screens on to the JPanel
 	// each screen has its own update and draw methods defined to handle a "section" of the game.
 	private ScreenManager screenManager;
-
+	
 	// used to create the game loop and cycle between update and draw calls
 	private Timer timer;
 
@@ -25,10 +25,9 @@ public class GamePanel extends JPanel {
 	private GraphicsHandler graphicsHandler;
 
 	private boolean doPaint = false;
-	private boolean isGamePaused = false;
+	private static boolean isGamePaused = false;
 	private SpriteFont pauseLabel;
-	private KeyLocker keyLocker = new KeyLocker();
-	private final Key pauseKey = Key.P;
+
 
 	/*
 	 * The JPanel and various important class instances are setup here
@@ -43,7 +42,7 @@ public class GamePanel extends JPanel {
 		graphicsHandler = new GraphicsHandler();
 
 		screenManager = new ScreenManager();
-		
+
 		pauseLabel = new SpriteFont("PAUSE", 365, 280, "Comic Sans", 24, Color.white);
 		pauseLabel.setOutlineColor(Color.black);
 		pauseLabel.setOutlineThickness(2.0f);
@@ -78,14 +77,6 @@ public class GamePanel extends JPanel {
 	}
 
 	public void update() {
-		if (Keyboard.isKeyDown(pauseKey) && !keyLocker.isKeyLocked(pauseKey)) {
-			isGamePaused = !isGamePaused;
-			keyLocker.lockKey(pauseKey);
-		}
-		
-		if (Keyboard.isKeyUp(pauseKey)) {
-			keyLocker.unlockKey(pauseKey);
-		}
 
 		if (!isGamePaused) {
 			screenManager.update();
@@ -94,12 +85,14 @@ public class GamePanel extends JPanel {
 
 	public void draw() {
 		screenManager.draw(graphicsHandler);
+	}
 
-		// if game is paused, draw pause gfx over Screen gfx
-		if (isGamePaused) {
-			pauseLabel.draw(graphicsHandler);
-			graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(), new Color(0, 0, 0, 100));
-		}
+	public static boolean isGamePaused(){
+		return isGamePaused;
+	}
+
+	public static void setIsGamePaused(boolean pausedVal){
+		isGamePaused = pausedVal;
 	}
 
 	@Override

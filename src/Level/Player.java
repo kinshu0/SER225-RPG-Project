@@ -14,6 +14,8 @@ public abstract class Player extends GameObject {
     // values that affect player movement
     // these should be set in a subclass
     protected float walkSpeed = 0;
+
+    protected int lives = 3;
     protected int interactionRange = 5;
     protected Direction currentWalkingXDirection;
     protected Direction currentWalkingYDirection;
@@ -40,6 +42,7 @@ public abstract class Player extends GameObject {
     protected Key MOVE_UP_KEY = Key.UP;
     protected Key MOVE_DOWN_KEY = Key.DOWN;
     protected Key INTERACT_KEY = Key.SPACE;
+
 
     public Player(SpriteSheet spriteSheet, float x, float y, String startingAnimationName) {
         super(spriteSheet, x, y, startingAnimationName);
@@ -218,6 +221,19 @@ public abstract class Player extends GameObject {
                 getBounds().getY1() - interactionRange,
                 getBounds().getWidth() + (interactionRange * 2),
                 getBounds().getHeight() + (interactionRange * 2));
+    }
+
+    public String getPlayerLives() {
+        String livesIntro = "Lives: ";
+        return livesIntro.concat(Integer.toString(lives));
+    }
+
+    public int getPlayerLivesI(){
+        return lives;
+    }
+
+    public void setPlayerLives(Integer lives){
+        this.lives = lives;
     }
 
     public Key getInteractKey() { return INTERACT_KEY; }
