@@ -29,6 +29,7 @@ public class PlayLevelScreen extends Screen {
     protected Key LIVES_DOWN_KEY = Key.D;
 
     protected Key InventoryScreen = Key.I;
+    protected Key CraftingScreen = Key.C;
     private KeyLocker keyLocker = new KeyLocker();
     private final Key pauseKey = Key.P;
 
@@ -130,6 +131,9 @@ public class PlayLevelScreen extends Screen {
 
         if(Keyboard.isKeyDown(InventoryScreen)){
             screenCoordinator.setGameState(GameState.INVENTORY);
+        }
+        if(Keyboard.isKeyDown(CraftingScreen)){
+            screenCoordinator.setGameState(GameState.CRAFTING);
         }
     }
 

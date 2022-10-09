@@ -28,34 +28,6 @@ public class CraftingTable extends EnhancedMapTile {
         }
     }
 
-    private boolean canMoveLeft(Player player) {
-        return player.getBoundsX1() <= getBoundsX2() && player.getBoundsX2() > getBoundsX2() && canMoveX(player);
-    }
-
-    private boolean canMoveRight(Player player) {
-        return player.getBoundsX2() >= getBoundsX1() && player.getBoundsX1() < getBoundsX1() && canMoveX(player);
-    }
-
-    private boolean canMoveX(Player player) {
-        return (player.getBoundsY1() < getBoundsY2() && player.getBoundsY2() >= getBoundsY2()) ||
-                (player.getBoundsY2() > getBoundsY1() && player.getBoundsY1() <= getBoundsY1()) ||
-                (player.getBoundsY2() < getBoundsY2() && player.getBoundsY1() > getBoundsY1());
-    }
-
-    private boolean canMoveUp(Player player) {
-        return player.getBoundsY1() <= getBoundsY2() && player.getBoundsY2() > getBoundsY2() && canMoveY(player);
-    }
-
-    private boolean canMoveDown(Player player) {
-        return player.getBoundsY2() >= getBoundsY1() && player.getBoundsY1() < getBoundsY1() && canMoveY(player);
-    }
-
-    private boolean canMoveY(Player player) {
-        return (player.getBoundsX1() < getBoundsX2() && player.getBoundsX2() >= getBoundsX2()) ||
-                (player.getBoundsX2() > getBoundsX1() && player.getBoundsX1() <= getBoundsX1()) ||
-                (player.getBoundsX2() < getBoundsX2() && player.getBoundsX1() > getBoundsX1());
-    }
-
     @Override
     protected GameObject loadBottomLayer(SpriteSheet spriteSheet) {
         Frame frame = new FrameBuilder(spriteSheet.getSubImage(0, 0))
