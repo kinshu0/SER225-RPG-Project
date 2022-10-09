@@ -3,10 +3,6 @@ package Screens;
 import Engine.*;
 import Game.GameState;
 import Game.ScreenCoordinator;
-import GameObject.SpriteSheet;
-import Level.Map;
-import Maps.TitleScreenMap;
-import SpriteFont.SpriteFont;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -41,8 +37,8 @@ public class InventoryScreen extends Screen {
     public void draw(GraphicsHandler graphicsHandler){
         // set the background color
         graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(), new Color(0, 0, 0, 100));
-        for (int x = 0; x < 2000; x += 100){
-            for (int y = 0; y < 2000; y += 100) {
+        for (int x = 0; x < 2000; x += 87){
+            for (int y = 0; y < 2000; y += 80) {
                 graphicsHandler.drawImage(circleImg, x, y, 90, 80);
             }
         }
