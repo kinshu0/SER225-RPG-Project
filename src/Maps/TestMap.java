@@ -1,10 +1,6 @@
 package Maps;
 
-import EnhancedMapTiles.Axe;
-import EnhancedMapTiles.Katana;
-import EnhancedMapTiles.Machete;
-import EnhancedMapTiles.Spear;
-import EnhancedMapTiles.Rock;
+import EnhancedMapTiles.*;
 import Level.EnhancedMapTile;
 import Level.Map;
 import Level.NPC;
@@ -45,6 +41,7 @@ public class TestMap extends Map {
         enhancedMapTiles.add(new Katana(getMapTile(3, 5).getLocation()));
         enhancedMapTiles.add(new Machete(getMapTile(3, 7).getLocation()));
         enhancedMapTiles.add(new Spear(getMapTile(3, 9).getLocation()));
+        enhancedMapTiles.add(new CraftingTable(getMapTile(3, 20).getLocation()));
         return enhancedMapTiles;
     }
 
