@@ -12,7 +12,7 @@ public class CraftingScreen extends Screen {
     protected ScreenCoordinator screenCoordinator;
 
     protected KeyLocker keyLocker = new KeyLocker();
-    BufferedImage circleImg = ImageLoader.load("Inv_cir.png");
+
 
     public CraftingScreen(ScreenCoordinator screenCoordinator) {
         this.screenCoordinator = screenCoordinator;

@@ -11,6 +11,7 @@ import Utils.Direction;
 import Utils.Point;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 // This class is for when the platformer game is actually being played
 public class PlayLevelScreen extends Screen {
@@ -20,6 +21,9 @@ public class PlayLevelScreen extends Screen {
     protected SpriteFont livesLabels;
     protected SpriteFont timeLabels;
     private SpriteFont pauseLabel;
+
+    BufferedImage rect = ImageLoader.load("rect.png");
+    BufferedImage Axe = ImageLoader.load("Axe.png");
 
     protected PlayLevelScreenState playLevelScreenState;
     protected WinScreen winScreen;
@@ -160,6 +164,11 @@ public class PlayLevelScreen extends Screen {
                     map.draw(player, graphicsHandler);
                     livesLabels.draw(graphicsHandler);
                     timeLabels.draw(graphicsHandler);
+                    for(int i = 250; i < 550; i+=50){
+                        graphicsHandler.drawImage(rect, i, 500, 50, 50);
+                    }
+                    // just need to add variables for spaces
+                    graphicsHandler.drawImage(Axe, 255, 510, 30, 30);
                     break;
                 case LEVEL_COMPLETED:
                     winScreen.draw(graphicsHandler);
