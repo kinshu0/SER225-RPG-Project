@@ -27,6 +27,8 @@ public class PlayLevelScreen extends Screen {
 
     protected Key LIVES_UP_KEY = Key.U;
     protected Key LIVES_DOWN_KEY = Key.D;
+
+    protected Key InventoryScreen = Key.I;
     private KeyLocker keyLocker = new KeyLocker();
     private final Key pauseKey = Key.P;
 
@@ -124,6 +126,10 @@ public class PlayLevelScreen extends Screen {
         // if flag is set at any point during gameplay, game is "won"
         if (map.getFlagManager().isFlagSet("hasFoundBall")) {
             playLevelScreenState = PlayLevelScreenState.LEVEL_COMPLETED;
+        }
+
+        if(Keyboard.isKeyDown(InventoryScreen)){
+            screenCoordinator.setGameState(GameState.INVENTORY);
         }
     }
 

@@ -6,6 +6,7 @@ import Engine.Screen;
 import Screens.CreditsScreen;
 import Screens.MenuScreen;
 import Screens.PlayLevelScreen;
+import Screens.InventoryScreen;
 
 /*
  * Based on the current game state, this class determines which Screen should be shown
@@ -41,6 +42,9 @@ public class ScreenCoordinator extends Screen {
 			// this triggers ScreenCoordinator to bring up a new Screen based on what the gameState is
 			if (previousGameState != gameState) {
 				switch(gameState) {
+					case INVENTORY:
+						currentScreen = new InventoryScreen(this);
+						break;
 					case MENU:
 						currentScreen = new MenuScreen(this);
 						break;
