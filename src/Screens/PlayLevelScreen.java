@@ -37,6 +37,10 @@ public class PlayLevelScreen extends Screen {
     private KeyLocker keyLocker = new KeyLocker();
     private final Key pauseKey = Key.P;
 
+
+    private int count_updates = 0;
+    
+
     public PlayLevelScreen(ScreenCoordinator screenCoordinator) {
         this.screenCoordinator = screenCoordinator;
     }
@@ -121,6 +125,8 @@ public class PlayLevelScreen extends Screen {
             case RUNNING:
                 player.update();
                 map.update(player);
+                count_updates = (count_updates + 1) % (60*24*60);
+                timeLabels.setText(String.format("Time: %02d:%02d %s", count_updates / 3600, (count_updates % 3600) / 60 , (count_updates % 3600) / 60 > 30 ? "Day" : "Night"));
                 break;
             // if level has been completed, bring up level cleared screen
             case LEVEL_COMPLETED:
