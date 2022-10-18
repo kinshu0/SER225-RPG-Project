@@ -76,6 +76,11 @@ public class Zombie extends NPC {
 
         //     System.out.printf("Zombie Position: %s\n", this.getLocation());
         //     System.out.printf("Player Position: %s\n", player.getLocation());
+
+        
+        if (player.overlaps(this)) {
+            System.out.println("Collision with zombie! Lives should go down!!");
+        }
     }
 
 
