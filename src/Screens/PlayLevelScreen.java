@@ -134,7 +134,7 @@ public class PlayLevelScreen extends Screen {
         extrasLabel.setOutlineColor(Color.white);
         extrasLabel.setOutlineThickness(2.0f);
 
-        saveLabel = new SpriteFont("Save", 390, 325, "Comic Sans", 24, Color.white);
+        saveLabel = new SpriteFont("Exit", 390, 325, "Comic Sans", 24, Color.white);
         saveLabel.setOutlineColor(Color.white);
         saveLabel.setOutlineThickness(2.0f);
 
@@ -216,7 +216,6 @@ public class PlayLevelScreen extends Screen {
             } else if (Keyboard.isKeyDown(Key.UP) && keyTimer.isTimeUp()) {
                 keyTimer.reset();
                 currentMenuItemHovered--;
-                System.out.println(currentMenuItemHovered);
             }
 
             // if down is pressed on last menu item or up is pressed on first menu item, "loop" the selection back around to the beginning/end
@@ -253,8 +252,8 @@ public class PlayLevelScreen extends Screen {
             }
             if (!keyLocker.isKeyLocked(Key.SPACE) && Keyboard.isKeyDown(Key.SPACE)) {
                 menuItemSelected = currentMenuItemHovered;
-                if (menuItemSelected == 0) {
-                    graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(), Color.BLACK);
+                if (menuItemSelected == 3) {
+                    screenCoordinator.setGameState(GameState.MENU);
                 } else if (menuItemSelected == 1) {
                     graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(), Color.white);
                 } else if (menuItemSelected == 2) {
@@ -268,7 +267,7 @@ public class PlayLevelScreen extends Screen {
             keyLocker.unlockKey(pauseKey);
         }
 
-        // crafting screen
+        // ** crafting screen **
         if (Keyboard.isKeyDown(CraftingScreen) && !keyLocker.isKeyLocked(CraftingScreen)) {
             isCraftingScreen = !isCraftingScreen;
             keyLocker.lockKey(CraftingScreen);
@@ -283,7 +282,7 @@ public class PlayLevelScreen extends Screen {
             keyLocker.unlockKey(CraftingScreen);
         }
 
-        // inventory screen
+        // ** inventory screen **
         if (Keyboard.isKeyDown(inventoryScreen) && !keyLocker.isKeyLocked(inventoryScreen)) {
             isInventoryScreen = !isInventoryScreen;
             keyLocker.lockKey(inventoryScreen);
