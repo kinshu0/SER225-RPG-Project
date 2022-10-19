@@ -21,6 +21,8 @@ public class PlayLevelScreen extends Screen {
     protected SpriteFont livesLabels;
     protected SpriteFont timeLabels;
     private SpriteFont pauseLabel;
+    protected SpriteFont craftingLabel;
+    protected SpriteFont inventoryLabel;
 
     BufferedImage rect = ImageLoader.load("rect.png");
     BufferedImage Axe = ImageLoader.load("Axe.png");
@@ -32,8 +34,10 @@ public class PlayLevelScreen extends Screen {
     protected Key LIVES_UP_KEY = Key.U;
     protected Key LIVES_DOWN_KEY = Key.D;
 
-    protected Key InventoryScreen = Key.I;
+    protected Key inventoryScreen = Key.I;
     protected Key CraftingScreen = Key.C;
+    private static boolean isCraftingScreen = false;
+    private static boolean isInventoryScreen = false;
     private KeyLocker keyLocker = new KeyLocker();
     private final Key pauseKey = Key.P;
 
@@ -108,6 +112,16 @@ public class PlayLevelScreen extends Screen {
         pauseLabel.setOutlineColor(Color.black);
         pauseLabel.setOutlineThickness(2.0f);
 
+        // crafting logic
+        craftingLabel = new SpriteFont("Crafting", 365, 280, "Comic Sans", 24, Color.white);
+        craftingLabel.setOutlineColor(Color.black);
+        craftingLabel.setOutlineThickness(2.0f);
+
+        // inventory logic
+        inventoryLabel = new SpriteFont("Crafting", 365, 280, "Comic Sans", 24, Color.white);
+        inventoryLabel.setOutlineColor(Color.black);
+        inventoryLabel.setOutlineThickness(2.0f);
+
         winScreen = new WinScreen(this);
     }
 
@@ -138,32 +152,59 @@ public class PlayLevelScreen extends Screen {
         if (map.getFlagManager().isFlagSet("hasFoundBall")) {
             playLevelScreenState = PlayLevelScreenState.LEVEL_COMPLETED;
         }
-
-        if(Keyboard.isKeyDown(InventoryScreen)){
-            screenCoordinator.setGameState(GameState.INVENTORY);
-        }
-        if(Keyboard.isKeyDown(CraftingScreen)){
-            screenCoordinator.setGameState(GameState.CRAFTING);
-        }
     }
 
     public void draw(GraphicsHandler graphicsHandler) {
+        // **pause screen**
+
+        // this is what tells if the key is down
         if (Keyboard.isKeyDown(pauseKey) && !keyLocker.isKeyLocked(pauseKey)) {
             GamePanel.setIsGamePaused(!GamePanel.isGamePaused());
             keyLocker.lockKey(pauseKey);
         }
 
-        // if game is paused, draw pause gfx over Screen gfx
+        // this is what actually draws it
         if (GamePanel.isGamePaused()) {
             pauseLabel.draw(graphicsHandler);
             graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(), new Color(0, 0, 0, 100));
         }
 
+        // this unlocks the screen
         if (Keyboard.isKeyUp(pauseKey)) {
             keyLocker.unlockKey(pauseKey);
         }
 
-        if (!GamePanel.isGamePaused()) {
+        // crafting screen
+        if (Keyboard.isKeyDown(CraftingScreen) && !keyLocker.isKeyLocked(CraftingScreen)) {
+            isCraftingScreen = !isCraftingScreen;
+            keyLocker.lockKey(CraftingScreen);
+        }
+
+        if (isCraftingScreen) {
+            graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(), new Color(234, 221, 202));
+            craftingLabel.draw(graphicsHandler);
+        }
+
+        if (Keyboard.isKeyUp(CraftingScreen)) {
+            keyLocker.unlockKey(CraftingScreen);
+        }
+
+        // inventory screen
+        if (Keyboard.isKeyDown(inventoryScreen) && !keyLocker.isKeyLocked(inventoryScreen)) {
+            isInventoryScreen = !isInventoryScreen;
+            keyLocker.lockKey(inventoryScreen);
+        }
+
+        if (isInventoryScreen) {
+            graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(), new Color(245, 245, 220));
+            inventoryLabel.draw(graphicsHandler);
+        }
+
+        if (Keyboard.isKeyUp(inventoryScreen)) {
+            keyLocker.unlockKey(inventoryScreen);
+        }
+
+        if (!GamePanel.isGamePaused() && !isCraftingScreen && !isInventoryScreen) {
             // based on screen state, draw appropriate graphics
             switch (playLevelScreenState) {
                 case RUNNING:
