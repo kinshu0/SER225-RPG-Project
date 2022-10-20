@@ -152,7 +152,7 @@ public class PlayLevelScreen extends Screen {
         craftingLabel.setOutlineThickness(2.0f);
 
         // inventory logic
-        inventoryLabel = new SpriteFont("Crafting", 365, 280, "Comic Sans", 24, Color.white);
+        inventoryLabel = new SpriteFont("Inventory", 365, 280, "Comic Sans", 24, Color.white);
         inventoryLabel.setOutlineColor(Color.black);
         inventoryLabel.setOutlineThickness(2.0f);
 
