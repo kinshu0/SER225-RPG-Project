@@ -15,7 +15,7 @@ public abstract class Player extends GameObject {
     // these should be set in a subclass
     protected float walkSpeed = 0;
 
-    protected int lives = 3;
+    protected int lives = 1000;
     protected int interactionRange = 5;
     protected Direction currentWalkingXDirection;
     protected Direction currentWalkingYDirection;

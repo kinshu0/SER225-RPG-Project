@@ -176,6 +176,7 @@ public class PlayLevelScreen extends Screen {
                 map.update(player);
                 count_updates = (count_updates + 1) % (60*24*60);
                 timeLabels.setText(String.format("Time: %02d:%02d %s", count_updates / 3600, (count_updates % 3600) / 60 , (count_updates % 3600) / 60 > 30 ? "Day" : "Night"));
+                livesLabels.setText(player.getPlayerLives());
                 break;
             // if level has been completed, bring up level cleared screen
             case LEVEL_COMPLETED:
