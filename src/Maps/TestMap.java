@@ -1,10 +1,6 @@
 package Maps;
 
-import EnhancedMapTiles.Axe;
-import EnhancedMapTiles.Katana;
-import EnhancedMapTiles.Machete;
-import EnhancedMapTiles.Spear;
-import EnhancedMapTiles.Rock;
+import EnhancedMapTiles.*;
 import Level.EnhancedMapTile;
 import Level.Map;
 import Level.NPC;
@@ -45,6 +41,7 @@ public class TestMap extends Map {
         enhancedMapTiles.add(new Katana(getMapTile(3, 5).getLocation()));
         enhancedMapTiles.add(new Machete(getMapTile(3, 7).getLocation()));
         enhancedMapTiles.add(new Spear(getMapTile(3, 9).getLocation()));
+        enhancedMapTiles.add(new CraftingTable(getMapTile(21, 21).getLocation()));
         return enhancedMapTiles;
     }
 
@@ -54,7 +51,7 @@ public class TestMap extends Map {
 
         ghostScript = new GhostScript();
         Ghost ghost = new Ghost(1, getMapTile(4, 28).getLocation().subtractY(40));
-        ghost.setInteractScript(ghostScript);
+        // ghost.setInteractScript(ghostScript);
         npcs.add(ghost);
         // Walrus walrus = new Walrus(1, getMapTile(4, 28).getLocation().subtractY(40));
         // walrus.setInteractScript(new WalrusScript());
@@ -62,7 +59,7 @@ public class TestMap extends Map {
 
         zombieScript = new ZombieScript();
         Zombie zombie = new Zombie(2, getMapTile(13, 4).getLocation());
-        zombie.setInteractScript(zombieScript);
+        // zombie.setInteractScript(zombieScript);
         npcs.add(zombie);
         // Dinosaur dinosaur = new Dinosaur(2, getMapTile(13, 4).getLocation());
         // dinosaur.setExistenceFlag("hasTalkedToDinosaur");
@@ -75,12 +72,12 @@ public class TestMap extends Map {
     @Override
     public ArrayList<Trigger> loadTriggers() {
         ArrayList<Trigger> triggers = new ArrayList<>();
-        triggers.add(new Trigger(790, 1040, 110, 10, ghostScript));
-        triggers.add(new Trigger(780, 960, 10, 80, ghostScript));
-        triggers.add(new Trigger(900, 960, 10, 80, ghostScript));
-        triggers.add(new Trigger(800, 1030, 90, 10, zombieScript));
-        triggers.add(new Trigger(790, 960, 10, 80, zombieScript));
-        triggers.add(new Trigger(890, 960, 10, 80, zombieScript));
+        // triggers.add(new Trigger(790, 1040, 110, 10, ghostScript));
+        // triggers.add(new Trigger(780, 960, 10, 80, ghostScript));
+        // triggers.add(new Trigger(900, 960, 10, 80, ghostScript));
+        // triggers.add(new Trigger(800, 1030, 90, 10, zombieScript));
+        // triggers.add(new Trigger(790, 960, 10, 80, zombieScript));
+        // triggers.add(new Trigger(890, 960, 10, 80, zombieScript));
         // triggers.add(new Trigger(790, 1030, 100, 10, new LostBallScript(), "hasLostBall"));
         // triggers.add(new Trigger(790, 960, 10, 80, new LostBallScript(), "hasLostBall"));
         // triggers.add(new Trigger(890, 960, 10, 80, new LostBallScript(), "hasLostBall"));

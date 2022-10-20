@@ -11,6 +11,7 @@ import Utils.Direction;
 import Utils.Point;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 // This class is for when the platformer game is actually being played
 public class PlayLevelScreen extends Screen {
@@ -21,14 +22,24 @@ public class PlayLevelScreen extends Screen {
     protected SpriteFont timeLabels;
     private SpriteFont pauseLabel;
 
+    BufferedImage rect = ImageLoader.load("rect.png");
+    BufferedImage Axe = ImageLoader.load("Axe.png");
+
     protected PlayLevelScreenState playLevelScreenState;
     protected WinScreen winScreen;
     protected FlagManager flagManager;
 
     protected Key LIVES_UP_KEY = Key.U;
     protected Key LIVES_DOWN_KEY = Key.D;
+
+    protected Key InventoryScreen = Key.I;
+    protected Key CraftingScreen = Key.C;
     private KeyLocker keyLocker = new KeyLocker();
     private final Key pauseKey = Key.P;
+
+
+    private int count_updates = 0;
+    
 
     public PlayLevelScreen(ScreenCoordinator screenCoordinator) {
         this.screenCoordinator = screenCoordinator;
@@ -114,6 +125,8 @@ public class PlayLevelScreen extends Screen {
             case RUNNING:
                 player.update();
                 map.update(player);
+                count_updates = (count_updates + 1) % (60*24*60);
+                timeLabels.setText(String.format("Time: %02d:%02d %s", count_updates / 3600, (count_updates % 3600) / 60 , (count_updates % 3600) / 60 > 30 ? "Day" : "Night"));
                 break;
             // if level has been completed, bring up level cleared screen
             case LEVEL_COMPLETED:
@@ -124,6 +137,13 @@ public class PlayLevelScreen extends Screen {
         // if flag is set at any point during gameplay, game is "won"
         if (map.getFlagManager().isFlagSet("hasFoundBall")) {
             playLevelScreenState = PlayLevelScreenState.LEVEL_COMPLETED;
+        }
+
+        if(Keyboard.isKeyDown(InventoryScreen)){
+            screenCoordinator.setGameState(GameState.INVENTORY);
+        }
+        if(Keyboard.isKeyDown(CraftingScreen)){
+            screenCoordinator.setGameState(GameState.CRAFTING);
         }
     }
 
@@ -150,6 +170,11 @@ public class PlayLevelScreen extends Screen {
                     map.draw(player, graphicsHandler);
                     livesLabels.draw(graphicsHandler);
                     timeLabels.draw(graphicsHandler);
+                    for(int i = 250; i < 550; i+=50){
+                        graphicsHandler.drawImage(rect, i, 500, 50, 50);
+                    }
+                    // just need to add variables for spaces
+                    graphicsHandler.drawImage(Axe, 255, 510, 30, 30);
                     break;
                 case LEVEL_COMPLETED:
                     winScreen.draw(graphicsHandler);
