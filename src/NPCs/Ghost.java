@@ -75,6 +75,11 @@ public class Ghost extends NPC {
 
         //     System.out.printf("Zombie Position: %s\n", this.getLocation());
         //     System.out.printf("Player Position: %s\n", player.getLocation());
+
+        if (player.overlaps(this)) {
+            // System.out.println("Collision with ghost! Lives should go down!!");
+            player.setPlayerLives(player.getPlayerLivesI() - 1);
+        }
     }
 
     @Override
