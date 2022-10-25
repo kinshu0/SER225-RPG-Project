@@ -271,6 +271,8 @@ public class PlayLevelScreen extends Screen {
                             ScreenManager.getScreenHeight(), Color.blue);
                 }
             }
+            graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(),
+                    new Color(0, 0, 0, 100));
         }
 
         // this unlocks the screen
@@ -432,7 +434,6 @@ public class PlayLevelScreen extends Screen {
                             }
                         }
                     }
-
                     break;
                 case LEVEL_COMPLETED:
                     winScreen.draw(graphicsHandler);
