@@ -19,6 +19,8 @@ import java.awt.image.BufferedImage;
 // This class is for when the platformer game is actually being played
 public class PlayLevelScreen extends Screen {
     protected int currentMenuItemHovered = 0;
+    protected int xInvSelect = 0;
+    protected int yInvSelect = 0;
     protected int menuItemSelected = -1;
     protected ScreenCoordinator screenCoordinator;
     protected Stopwatch keyTimer = new Stopwatch();
@@ -38,6 +40,7 @@ public class PlayLevelScreen extends Screen {
 
     BufferedImage rect = ImageLoader.load("rect.png");
     BufferedImage Axe = ImageLoader.load("Axe.png");
+    BufferedImage backgroundFilter = ImageLoader.load("background-filter.png");
 
     protected PlayLevelScreenState playLevelScreenState;
     protected WinScreen winScreen;
@@ -148,12 +151,12 @@ public class PlayLevelScreen extends Screen {
         TimelivesLabels.setOutlineThickness(3);
 
         // crafting logic
-        craftingLabel = new SpriteFont("Crafting", 365, 280, "Comic Sans", 24, Color.white);
+        craftingLabel = new SpriteFont("Crafting", 400, 500, "Comic Sans", 24, Color.white);
         craftingLabel.setOutlineColor(Color.black);
         craftingLabel.setOutlineThickness(2.0f);
 
         // inventory logic
-        inventoryLabel = new SpriteFont("Crafting", 365, 280, "Comic Sans", 24, Color.white);
+        inventoryLabel = new SpriteFont("Inventory", 365, 330, "Comic Sans", 24, Color.white);
         inventoryLabel.setOutlineColor(Color.black);
         inventoryLabel.setOutlineThickness(2.0f);
 
@@ -308,6 +311,39 @@ public class PlayLevelScreen extends Screen {
             graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(),
                     new Color(245, 245, 220));
             inventoryLabel.draw(graphicsHandler);
+
+            // writes the rectangle
+            for (int y = 30; y < 300; y = y + 70) {
+                for (int x = 15; x + 70 < 800; x = x + 70) {
+                    graphicsHandler.drawFilledRectangle(x, y, 60, 60, Color.BLACK);
+                    graphicsHandler.drawFilledRectangle(x + 2, y + 2, 56, 56, Color.gray);
+                }
+            }
+
+            // crafting portion
+            graphicsHandler.drawFilledRectangle(150, 400, 60, 60, Color.BLACK);
+            graphicsHandler.drawFilledRectangle(150 + 2, 400 + 2, 56, 56, Color.gray);
+
+            graphicsHandler.drawFilledRectangle(300, 400, 60, 60, Color.BLACK);
+            graphicsHandler.drawFilledRectangle(300 + 2, 400 + 2, 56, 56, Color.gray);
+
+            graphicsHandler.drawFilledRectangle(500, 400, 60, 60, Color.BLACK);
+            graphicsHandler.drawFilledRectangle(500 + 2, 400 + 2, 56, 56, Color.gray);
+
+            if (Keyboard.isKeyDown(Key.DOWN)) {
+                yInvSelect = Math.max(0, Math.min(3, yInvSelect + 1));
+            } else if (Keyboard.isKeyDown(Key.UP)) {
+                yInvSelect = Math.max(0, Math.min(3, yInvSelect - 1));
+            } else if (Keyboard.isKeyDown(Key.LEFT)) {
+                xInvSelect = Math.max(0, Math.min(10, xInvSelect - 1));
+            } else if (Keyboard.isKeyDown(Key.RIGHT)) {
+                xInvSelect = Math.max(0, Math.min(10, xInvSelect + 1));
+            }
+
+            // highlights which box
+            graphicsHandler.drawFilledRectangle(xInvSelect * 70 + 15, yInvSelect * 70 + 30, 60, 60, Color.yellow);
+            graphicsHandler.drawFilledRectangle(xInvSelect * 70 + 15 + 2, yInvSelect * 70 + 30 + 2, 56, 56, Color.gray);
+
         }
 
         if (Keyboard.isKeyUp(inventoryScreen)) {
@@ -326,6 +362,13 @@ public class PlayLevelScreen extends Screen {
                     }
                     // just need to add variables for spaces
                     graphicsHandler.drawImage(Axe, 255, 510, 30, 30);
+                    // graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(),
+                    // ScreenManager.getScreenHeight(), new Color(0, 0, 0,100));
+                    // graphicsHandler.drawImage(backgroundFilter, 0, 0);
+                    graphicsHandler.drawImageAlpha(backgroundFilter, 0, 0, 786, 568,
+                            (float) Math.sin(((double) (count_updates % 3600) / 3600) * Math.PI * 2));
+                    // System.out.println(String.format("Width: %d\tHeight: %d",
+                    // ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight()));
                     break;
                 case LEVEL_COMPLETED:
                     winScreen.draw(graphicsHandler);
