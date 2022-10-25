@@ -324,10 +324,45 @@ public class PlayLevelScreen extends Screen {
             inventoryLabel.draw(graphicsHandler);
 
             // writes the rectangle
+            boolean goneThroughItems = false;
             for (int y = 30; y < 300; y = y + 70) {
                 for (int x = 15; x + 70 < 800; x = x + 70) {
                     graphicsHandler.drawFilledRectangle(x, y, 60, 60, Color.BLACK);
                     graphicsHandler.drawFilledRectangle(x + 2, y + 2, 56, 56, Color.gray);
+
+                    if (goneThroughItems == false && y == 30 && Inventory.getSize() > 0) {
+                        int position = x / 70;
+                        System.out.println(position);
+                        if (Inventory.getItem(position) == "Axe") {
+                            graphicsHandler.drawImage(Axe, x, y, 90, 80);
+                        }
+
+                        else if (Inventory.getItem(position) == "Spear") {
+                            graphicsHandler.drawImage(Spear, x, y, 90, 80);
+
+                        }
+
+                        else if (Inventory.getItem(position) == "Machete") {
+                            graphicsHandler.drawImage(Machete, x, y, 90, 80);
+                        }
+
+                        else if (Inventory.getItem(position) == "Katana") {
+                            // System.out.println(Inventory.getSize());
+                            graphicsHandler.drawImage(Katana, x, y, 90, 80);
+                        }
+
+                        if (position == Inventory.getSize() - 1) {
+                            goneThroughItems = true;
+                        }
+
+                        /*
+                         * if (x == Inventory.getSize()) {
+                         * goneThroughItems = true;
+                         * }
+                         */
+
+                    }
+
                 }
             }
 

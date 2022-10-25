@@ -17,7 +17,7 @@ import Utils.Point;
 public class Steel extends EnhancedMapTile {
     public Steel(Point location) {
         super(location.x, location.y, new SpriteSheet(ImageLoader.load("Steel.png"), 16, 16), TileType.NOT_PASSABLE);
-    } 
+    }
 
     @Override
     public void update(Player player) {
