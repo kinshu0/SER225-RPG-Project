@@ -21,6 +21,7 @@ public class PlayLevelScreen extends Screen {
     protected int currentMenuItemHovered = 0;
     protected int xInvSelect = 0;
     protected int yInvSelect = 0;
+    protected int boxSel = 1;
     protected int menuItemSelected = -1;
     protected ScreenCoordinator screenCoordinator;
     protected Stopwatch keyTimer = new Stopwatch();
@@ -327,23 +328,30 @@ public class PlayLevelScreen extends Screen {
             graphicsHandler.drawFilledRectangle(300, 400, 60, 60, Color.BLACK);
             graphicsHandler.drawFilledRectangle(300 + 2, 400 + 2, 56, 56, Color.gray);
 
-            graphicsHandler.drawFilledRectangle(500, 400, 60, 60, Color.BLACK);
-            graphicsHandler.drawFilledRectangle(500 + 2, 400 + 2, 56, 56, Color.gray);
+            graphicsHandler.drawFilledRectangle(450, 400, 60, 60, Color.BLACK);
+            graphicsHandler.drawFilledRectangle(450 + 2, 400 + 2, 56, 56, Color.gray);
 
             if (Keyboard.isKeyDown(Key.DOWN)) {
-                yInvSelect = Math.max(0, Math.min(3, yInvSelect + 1));
+                yInvSelect = Math.max(0, Math.min(4, yInvSelect + 1));
             } else if (Keyboard.isKeyDown(Key.UP)) {
-                yInvSelect = Math.max(0, Math.min(3, yInvSelect - 1));
+                yInvSelect = Math.max(0, Math.min(4, yInvSelect - 1));
             } else if (Keyboard.isKeyDown(Key.LEFT)) {
                 xInvSelect = Math.max(0, Math.min(10, xInvSelect - 1));
+                boxSel = Math.max(1, Math.min(3, boxSel - 1));
             } else if (Keyboard.isKeyDown(Key.RIGHT)) {
                 xInvSelect = Math.max(0, Math.min(10, xInvSelect + 1));
+                boxSel = Math.max(1, Math.min(3, boxSel + 1));
             }
 
             // highlights which box
-            graphicsHandler.drawFilledRectangle(xInvSelect * 70 + 15, yInvSelect * 70 + 30, 60, 60, Color.yellow);
-            graphicsHandler.drawFilledRectangle(xInvSelect * 70 + 15 + 2, yInvSelect * 70 + 30 + 2, 56, 56, Color.gray);
+            if (yInvSelect == 4) {
+                graphicsHandler.drawFilledRectangle( boxSel * 150, 400, 60, 60, Color.yellow);
+                graphicsHandler.drawFilledRectangle(boxSel * 150 + 2, 400 +2, 56, 56, Color.gray);
+            } else {
+                graphicsHandler.drawFilledRectangle(xInvSelect * 70 + 15, yInvSelect * 70 + 30, 60, 60, Color.yellow);
+                graphicsHandler.drawFilledRectangle(xInvSelect * 70 + 15 + 2, yInvSelect * 70 + 30 + 2, 56, 56, Color.gray);
 
+            }
         }
 
         if (Keyboard.isKeyUp(inventoryScreen)) {
