@@ -1,6 +1,8 @@
 package Screens;
 
 import Engine.*;
+import Engine.DayNight.RunState;
+import Engine.DayNight.State;
 import Game.GameState;
 import Game.ScreenCoordinator;
 import Level.*;
@@ -19,6 +21,7 @@ public class PlayLevelScreen extends Screen {
     protected int currentMenuItemHovered = 0;
     protected int xInvSelect = 0;
     protected int yInvSelect = 0;
+    protected int boxSel = 1;
     protected int menuItemSelected = -1;
     protected ScreenCoordinator screenCoordinator;
     protected Stopwatch keyTimer = new Stopwatch();
@@ -42,6 +45,7 @@ public class PlayLevelScreen extends Screen {
     BufferedImage Machete = ImageLoader.load("machete.png");
     BufferedImage Spear = ImageLoader.load("Spear.png");
     BufferedImage circleImg = ImageLoader.load("Inv_cir.png");
+    BufferedImage backgroundFilter = ImageLoader.load("background-filter.png");
 
     protected PlayLevelScreenState playLevelScreenState;
     protected WinScreen winScreen;
@@ -58,6 +62,8 @@ public class PlayLevelScreen extends Screen {
     private final Key pauseKey = Key.P;
 
     private int count_updates = 0;
+    // private int count_updates = 0;
+    private RunState runState = new RunState();
 
     public PlayLevelScreen(ScreenCoordinator screenCoordinator) {
         this.screenCoordinator = screenCoordinator;
@@ -182,6 +188,16 @@ public class PlayLevelScreen extends Screen {
                 count_updates = (count_updates + 1) % (60 * 24 * 60);
                 timeLabels.setText(String.format("Time: %02d:%02d %s", count_updates / 3600,
                         (count_updates % 3600) / 60, (count_updates % 3600) / 60 > 30 ? "Day" : "Night"));
+                // count_updates = (count_updates + 1) % (60 * 24 * 60);
+                // timeLabels.setText(String.format("Time: %02d:%02d %s", count_updates / 3600,
+                // (count_updates % 3600) / 60, (count_updates % 3600) / 60 > 30 ? "Day" :
+                // "Night"));
+                runState.runCycle();
+                int s = runState.c.getSecondsOfDay();
+                int h = runState.c.getHoursOfDay();
+                int m = runState.c.getMinutesOfDay();
+                State st = runState.c.getState();
+                timeLabels.setText(String.format("Time: %02d:%02d:%02d (%s)\n", h, m, s, st));
                 livesLabels.setText(player.getPlayerLives());
                 break;
             // if level has been completed, bring up level cleared screen
@@ -305,61 +321,6 @@ public class PlayLevelScreen extends Screen {
         if (isInventoryScreen) {
             graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(),
                     new Color(245, 245, 220));
-
-            //
-            // for(int i = 0; i < pinventorySize(); )
-
-            boolean goneThroughItems = false;
-            for (int x = 0; x < 2000; x += 87) {
-                for (int y = 0; y < 200; y += 80) {
-
-                    graphicsHandler.drawImage(circleImg, x, y, 90, 80);
-                    // System.out.println(Inventory.getItem(Inventory.getSize() - (x + 1)));
-
-                    if (goneThroughItems == false && y == 0 && Inventory.getSize() > 0) {
-                        int position = x / 87;
-                        System.out.println(position);
-                        if (Inventory.getItem(position) == "Axe") {
-                            graphicsHandler.drawImage(Axe, x, y, 90, 80);
-                        }
-
-                        else if (Inventory.getItem(position) == "Spear") {
-                            graphicsHandler.drawImage(Spear, x, y, 90, 80);
-
-                        }
-
-                        else if (Inventory.getItem(position) == "Machete") {
-                            graphicsHandler.drawImage(Machete, x, y, 90, 80);
-                        }
-
-                        else if (Inventory.getItem(position) == "Katana") {
-                            // System.out.println(Inventory.getSize());
-                            graphicsHandler.drawImage(Katana, x, y, 90, 80);
-                        }
-
-                        if (position == Inventory.getSize() - 1) {
-                            goneThroughItems = true;
-                        }
-
-                        /*
-                         * if (x == Inventory.getSize()) {
-                         * goneThroughItems = true;
-                         * }
-                         */
-
-                    }
-
-                }
-            }
-
-            // crafting portion of screen
-            graphicsHandler.drawImage(circleImg, 100, 400, 90, 80);
-            graphicsHandler.drawImage(circleImg, 250, 400, 90, 80);
-            graphicsHandler.drawFilledRectangle(185, 435, 60, 10, new Color(245, 0, 0));
-            graphicsHandler.drawFilledRectangle(210, 412, 10, 60, new Color(245, 0, 0));
-            graphicsHandler.drawFilledRectangle(370, 420, 60, 10, new Color(245, 0, 0));
-            graphicsHandler.drawFilledRectangle(370, 440, 60, 10, new Color(245, 0, 0));
-            graphicsHandler.drawImage(circleImg, 470, 400, 90, 80);
             inventoryLabel.draw(graphicsHandler);
 
             // writes the rectangle
@@ -377,23 +338,31 @@ public class PlayLevelScreen extends Screen {
             graphicsHandler.drawFilledRectangle(300, 400, 60, 60, Color.BLACK);
             graphicsHandler.drawFilledRectangle(300 + 2, 400 + 2, 56, 56, Color.gray);
 
-            graphicsHandler.drawFilledRectangle(500, 400, 60, 60, Color.BLACK);
-            graphicsHandler.drawFilledRectangle(500 + 2, 400 + 2, 56, 56, Color.gray);
+            graphicsHandler.drawFilledRectangle(450, 400, 60, 60, Color.BLACK);
+            graphicsHandler.drawFilledRectangle(450 + 2, 400 + 2, 56, 56, Color.gray);
 
             if (Keyboard.isKeyDown(Key.DOWN)) {
-                yInvSelect = Math.max(0, Math.min(3, yInvSelect + 1));
+                yInvSelect = Math.max(0, Math.min(4, yInvSelect + 1));
             } else if (Keyboard.isKeyDown(Key.UP)) {
-                yInvSelect = Math.max(0, Math.min(3, yInvSelect - 1));
+                yInvSelect = Math.max(0, Math.min(4, yInvSelect - 1));
             } else if (Keyboard.isKeyDown(Key.LEFT)) {
                 xInvSelect = Math.max(0, Math.min(10, xInvSelect - 1));
+                boxSel = Math.max(1, Math.min(3, boxSel - 1));
             } else if (Keyboard.isKeyDown(Key.RIGHT)) {
                 xInvSelect = Math.max(0, Math.min(10, xInvSelect + 1));
+                boxSel = Math.max(1, Math.min(3, boxSel + 1));
             }
 
             // highlights which box
-            graphicsHandler.drawFilledRectangle(xInvSelect * 70 + 15, yInvSelect * 70 + 30, 60, 60, Color.yellow);
-            graphicsHandler.drawFilledRectangle(xInvSelect * 70 + 15 + 2, yInvSelect * 70 + 30 + 2, 56, 56, Color.gray);
+            if (yInvSelect == 4) {
+                graphicsHandler.drawFilledRectangle(boxSel * 150, 400, 60, 60, Color.yellow);
+                graphicsHandler.drawFilledRectangle(boxSel * 150 + 2, 400 + 2, 56, 56, Color.gray);
+            } else {
+                graphicsHandler.drawFilledRectangle(xInvSelect * 70 + 15, yInvSelect * 70 + 30, 60, 60, Color.yellow);
+                graphicsHandler.drawFilledRectangle(xInvSelect * 70 + 15 + 2, yInvSelect * 70 + 30 + 2, 56, 56,
+                        Color.gray);
 
+            }
         }
 
         if (Keyboard.isKeyUp(inventoryScreen)) {
@@ -411,29 +380,15 @@ public class PlayLevelScreen extends Screen {
                         graphicsHandler.drawImage(rect, i, 500, 50, 50);
                     }
                     // just need to add variables for spaces
-
-                    // axe, katana, machete, spear
-                    if (Inventory.getSize() > 0) {
-                        for (int position = 0; position < Inventory.getSize(); position++) {
-                            if (Inventory.getItem(position) == "Axe") {
-                                graphicsHandler.drawImage(Axe, 255, 510, 30, 30);
-                            }
-
-                            else if (Inventory.getItem(position) == "Spear") {
-                                graphicsHandler.drawImage(Spear, 315, 510, 30, 30);
-
-                            }
-
-                            else if (Inventory.getItem(position) == "Machete") {
-                                graphicsHandler.drawImage(Machete, 355, 510, 30, 30);
-                            }
-
-                            else if (Inventory.getItem(position) == "Katana") {
-                                // System.out.println(Inventory.getSize());
-                                graphicsHandler.drawImage(Katana, 405, 510, 30, 30);
-                            }
-                        }
-                    }
+                    graphicsHandler.drawImage(Axe, 255, 510, 30, 30);
+                    // graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(),
+                    // ScreenManager.getScreenHeight(), new Color(0, 0, 0,100));
+                    // graphicsHandler.drawImage(backgroundFilter, 0, 0);
+                    graphicsHandler.drawImageAlpha(backgroundFilter, 0, 0, 786, 568,
+                            (float) Math.sin(((double) ((runState.c.getHoursOfDay() * 60 + runState.c.getMinutesOfDay())
+                                    % (12 * 60)) / (12 * 60)) * Math.PI * 2));
+                    // System.out.println(String.format("Width: %d\tHeight: %d",
+                    // ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight()));
                     break;
                 case LEVEL_COMPLETED:
                     winScreen.draw(graphicsHandler);
