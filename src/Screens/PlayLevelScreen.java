@@ -41,6 +41,10 @@ public class PlayLevelScreen extends Screen {
 
     BufferedImage rect = ImageLoader.load("rect.png");
     BufferedImage Axe = ImageLoader.load("Axe.png");
+    BufferedImage Katana = ImageLoader.load("Katana.png");
+    BufferedImage Machete = ImageLoader.load("machete.png");
+    BufferedImage Spear = ImageLoader.load("Spear.png");
+    BufferedImage circleImg = ImageLoader.load("Inv_cir.png");
     BufferedImage backgroundFilter = ImageLoader.load("background-filter.png");
 
     protected PlayLevelScreenState playLevelScreenState;
@@ -57,6 +61,7 @@ public class PlayLevelScreen extends Screen {
     private KeyLocker keyLocker = new KeyLocker();
     private final Key pauseKey = Key.P;
 
+    private int count_updates = 0;
     // private int count_updates = 0;
     private RunState runState = new RunState();
 
@@ -180,6 +185,9 @@ public class PlayLevelScreen extends Screen {
             case RUNNING:
                 player.update();
                 map.update(player);
+                count_updates = (count_updates + 1) % (60 * 24 * 60);
+                timeLabels.setText(String.format("Time: %02d:%02d %s", count_updates / 3600,
+                        (count_updates % 3600) / 60, (count_updates % 3600) / 60 > 30 ? "Day" : "Night"));
                 // count_updates = (count_updates + 1) % (60 * 24 * 60);
                 // timeLabels.setText(String.format("Time: %02d:%02d %s", count_updates / 3600,
                 // (count_updates % 3600) / 60, (count_updates % 3600) / 60 > 30 ? "Day" :
@@ -279,6 +287,8 @@ public class PlayLevelScreen extends Screen {
                             ScreenManager.getScreenHeight(), Color.blue);
                 }
             }
+            graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(),
+                    new Color(0, 0, 0, 100));
         }
 
         // this unlocks the screen
@@ -349,11 +359,12 @@ public class PlayLevelScreen extends Screen {
 
             // highlights which box
             if (yInvSelect == 4) {
-                graphicsHandler.drawFilledRectangle( boxSel * 150, 400, 60, 60, Color.yellow);
-                graphicsHandler.drawFilledRectangle(boxSel * 150 + 2, 400 +2, 56, 56, Color.gray);
+                graphicsHandler.drawFilledRectangle(boxSel * 150, 400, 60, 60, Color.yellow);
+                graphicsHandler.drawFilledRectangle(boxSel * 150 + 2, 400 + 2, 56, 56, Color.gray);
             } else {
                 graphicsHandler.drawFilledRectangle(xInvSelect * 70 + 15, yInvSelect * 70 + 30, 60, 60, Color.yellow);
-                graphicsHandler.drawFilledRectangle(xInvSelect * 70 + 15 + 2, yInvSelect * 70 + 30 + 2, 56, 56, Color.gray);
+                graphicsHandler.drawFilledRectangle(xInvSelect * 70 + 15 + 2, yInvSelect * 70 + 30 + 2, 56, 56,
+                        Color.gray);
 
             }
         }
@@ -378,7 +389,8 @@ public class PlayLevelScreen extends Screen {
                     // ScreenManager.getScreenHeight(), new Color(0, 0, 0,100));
                     // graphicsHandler.drawImage(backgroundFilter, 0, 0);
                     graphicsHandler.drawImageAlpha(backgroundFilter, 0, 0, 786, 568,
-                            (float) Math.sin(((double)((runState.c.getHoursOfDay() * 60 + runState.c.getMinutesOfDay()) % (12*60)) / (12*60)) * Math.PI * 2));
+                            (float) Math.sin(((double) ((runState.c.getHoursOfDay() * 60 + runState.c.getMinutesOfDay())
+                                    % (12 * 60)) / (12 * 60)) * Math.PI * 2));
                     // System.out.println(String.format("Width: %d\tHeight: %d",
                     // ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight()));
                     break;

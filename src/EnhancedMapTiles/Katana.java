@@ -6,6 +6,7 @@ import GameObject.Frame;
 import GameObject.GameObject;
 import GameObject.SpriteSheet;
 import Level.EnhancedMapTile;
+import Level.Inventory;
 import Level.Player;
 import Level.PlayerState;
 import Level.TileType;
@@ -22,35 +23,35 @@ public class Katana extends EnhancedMapTile {
     @Override
     public void update(Player player) {
         super.update(player);
-        if (player.overlaps(this) && player.getPlayerState() == PlayerState.WALKING) 
-        {
-        	this.setLocation(1000, 1000);
-        	/*
-            if (player.getCurrentWalkingXDirection() == Direction.LEFT) 
-            {
-                if (canMoveLeft(player)) {
-                    moveXHandleCollision(-1000);
-                }
-            }
-            else if (player.getCurrentWalkingXDirection() == Direction.RIGHT) 
-            {
-                if (canMoveRight(player)) {
-                    moveXHandleCollision(1000);
-                }
-            }
-             if (player.getCurrentWalkingYDirection() == Direction.UP) 
-             {
-                if (canMoveUp(player)) {
-                    moveYHandleCollision(-1000);
-                }
-            }
-            else if (player.getCurrentWalkingYDirection() == Direction.DOWN) 
-            {
-                if (canMoveDown(player)) {
-                    moveYHandleCollision(1000);
-                }
-            }
-            */
+        if (player.overlaps(this) && player.getPlayerState() == PlayerState.WALKING) {
+            Inventory.addItem("Katana");
+            this.setLocation(1000, 1000);
+            /*
+             * if (player.getCurrentWalkingXDirection() == Direction.LEFT)
+             * {
+             * if (canMoveLeft(player)) {
+             * moveXHandleCollision(-1000);
+             * }
+             * }
+             * else if (player.getCurrentWalkingXDirection() == Direction.RIGHT)
+             * {
+             * if (canMoveRight(player)) {
+             * moveXHandleCollision(1000);
+             * }
+             * }
+             * if (player.getCurrentWalkingYDirection() == Direction.UP)
+             * {
+             * if (canMoveUp(player)) {
+             * moveYHandleCollision(-1000);
+             * }
+             * }
+             * else if (player.getCurrentWalkingYDirection() == Direction.DOWN)
+             * {
+             * if (canMoveDown(player)) {
+             * moveYHandleCollision(1000);
+             * }
+             * }
+             */
         }
     }
 

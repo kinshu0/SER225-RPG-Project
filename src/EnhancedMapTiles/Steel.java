@@ -11,48 +11,20 @@ import Level.PlayerState;
 import Level.TileType;
 import Utils.Direction;
 import Utils.Point;
-import Level.Inventory;
 
 // This class is for the end level gold box tile
 // when the player touches it, it will tell the player that the level has been completed
-public class Axe extends EnhancedMapTile {
-    public Axe(Point location) {
-        super(location.x, location.y, new SpriteSheet(ImageLoader.load("Axe.png"), 16, 16), TileType.NOT_PASSABLE);
-    }
+public class Steel extends EnhancedMapTile {
+    public Steel(Point location) {
+        super(location.x, location.y, new SpriteSheet(ImageLoader.load("Steel.png"), 16, 16), TileType.NOT_PASSABLE);
+    } 
 
     @Override
     public void update(Player player) {
         super.update(player);
         if (player.overlaps(this) && player.getPlayerState() == PlayerState.WALKING) {
-            Inventory.addItem("Axe");
+            // Inventory.addItem("Steel");
             this.setLocation(1000, 1000);
-
-            /*
-             * if (player.getCurrentWalkingXDirection() == Direction.LEFT)
-             * {
-             * if (canMoveLeft(player)) {
-             * moveXHandleCollision(-1000);
-             * }
-             * }
-             * else if (player.getCurrentWalkingXDirection() == Direction.RIGHT)
-             * {
-             * if (canMoveRight(player)) {
-             * moveXHandleCollision(1000);
-             * }
-             * }
-             * if (player.getCurrentWalkingYDirection() == Direction.UP)
-             * {
-             * if (canMoveUp(player)) {
-             * moveYHandleCollision(-1000);
-             * }
-             * }
-             * else if (player.getCurrentWalkingYDirection() == Direction.DOWN)
-             * {
-             * if (canMoveDown(player)) {
-             * moveYHandleCollision(1000);
-             * }
-             * }
-             */
         }
     }
 

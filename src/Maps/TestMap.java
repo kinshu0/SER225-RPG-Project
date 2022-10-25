@@ -41,6 +41,7 @@ public class TestMap extends Map {
         enhancedMapTiles.add(new Katana(getMapTile(3, 5).getLocation()));
         enhancedMapTiles.add(new Machete(getMapTile(3, 7).getLocation()));
         enhancedMapTiles.add(new Spear(getMapTile(3, 9).getLocation()));
+        enhancedMapTiles.add(new Steel(getMapTile(5, 9).getLocation()));
         enhancedMapTiles.add(new CraftingTable(getMapTile(21, 21).getLocation()));
         return enhancedMapTiles;
     }
@@ -78,9 +79,12 @@ public class TestMap extends Map {
         // triggers.add(new Trigger(800, 1030, 90, 10, zombieScript));
         // triggers.add(new Trigger(790, 960, 10, 80, zombieScript));
         // triggers.add(new Trigger(890, 960, 10, 80, zombieScript));
-        // triggers.add(new Trigger(790, 1030, 100, 10, new LostBallScript(), "hasLostBall"));
-        // triggers.add(new Trigger(790, 960, 10, 80, new LostBallScript(), "hasLostBall"));
-        // triggers.add(new Trigger(890, 960, 10, 80, new LostBallScript(), "hasLostBall"));
+        // triggers.add(new Trigger(790, 1030, 100, 10, new LostBallScript(),
+        // "hasLostBall"));
+        // triggers.add(new Trigger(790, 960, 10, 80, new LostBallScript(),
+        // "hasLostBall"));
+        // triggers.add(new Trigger(890, 960, 10, 80, new LostBallScript(),
+        // "hasLostBall"));
         return triggers;
     }
 
@@ -95,4 +99,3 @@ public class TestMap extends Map {
         getMapTile(2, 6).setInteractScript(new TreeScript());
     }
 }
-
