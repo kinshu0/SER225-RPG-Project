@@ -56,7 +56,7 @@ public class PlayLevelScreen extends Screen {
     private KeyLocker keyLocker = new KeyLocker();
     private final Key pauseKey = Key.P;
 
-    private int count_updates = 0;
+    // private int count_updates = 0;
     private RunState runState = new RunState();
 
     public PlayLevelScreen(ScreenCoordinator screenCoordinator) {
@@ -366,7 +366,7 @@ public class PlayLevelScreen extends Screen {
                     // ScreenManager.getScreenHeight(), new Color(0, 0, 0,100));
                     // graphicsHandler.drawImage(backgroundFilter, 0, 0);
                     graphicsHandler.drawImageAlpha(backgroundFilter, 0, 0, 786, 568,
-                            (float) Math.sin(((double) (count_updates % 3600) / 3600) * Math.PI * 2));
+                            (float) Math.sin(((double)((runState.c.getHoursOfDay() * 60 + runState.c.getMinutesOfDay()) % (12*60)) / (12*60)) * Math.PI * 2));
                     // System.out.println(String.format("Width: %d\tHeight: %d",
                     // ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight()));
                     break;
