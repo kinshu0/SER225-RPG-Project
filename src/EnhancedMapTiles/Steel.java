@@ -17,14 +17,13 @@ import Utils.Point;
 public class Steel extends EnhancedMapTile {
     public Steel(Point location) {
         super(location.x, location.y, new SpriteSheet(ImageLoader.load("Steel.png"), 16, 16), TileType.NOT_PASSABLE);
-    }
+    } 
 
     @Override
     public void update(Player player) {
         super.update(player);
-        if (player.overlaps(this) && player.getPlayerState() == PlayerState.WALKING) 
-        {
-           // Inventory.addItem("Steel");
+        if (player.overlaps(this) && player.getPlayerState() == PlayerState.WALKING) {
+            // Inventory.addItem("Steel");
             this.setLocation(1000, 1000);
         }
     }
