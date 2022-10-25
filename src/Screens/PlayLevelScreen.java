@@ -331,16 +331,20 @@ public class PlayLevelScreen extends Screen {
             graphicsHandler.drawFilledRectangle(450, 400, 60, 60, Color.BLACK);
             graphicsHandler.drawFilledRectangle(450 + 2, 400 + 2, 56, 56, Color.gray);
 
-            if (Keyboard.isKeyDown(Key.DOWN)) {
+            if (Keyboard.isKeyDown(Key.DOWN) && keyTimer.isTimeUp()) {
                 yInvSelect = Math.max(0, Math.min(4, yInvSelect + 1));
-            } else if (Keyboard.isKeyDown(Key.UP)) {
+                keyTimer.reset();
+            } else if (Keyboard.isKeyDown(Key.UP) && keyTimer.isTimeUp()) {
                 yInvSelect = Math.max(0, Math.min(4, yInvSelect - 1));
-            } else if (Keyboard.isKeyDown(Key.LEFT)) {
+                keyTimer.reset();
+            } else if (Keyboard.isKeyDown(Key.LEFT) && keyTimer.isTimeUp()) {
                 xInvSelect = Math.max(0, Math.min(10, xInvSelect - 1));
                 boxSel = Math.max(1, Math.min(3, boxSel - 1));
-            } else if (Keyboard.isKeyDown(Key.RIGHT)) {
+                keyTimer.reset();
+            } else if (Keyboard.isKeyDown(Key.RIGHT) && keyTimer.isTimeUp()) {
                 xInvSelect = Math.max(0, Math.min(10, xInvSelect + 1));
                 boxSel = Math.max(1, Math.min(3, boxSel + 1));
+                keyTimer.reset();
             }
 
             // highlights which box
