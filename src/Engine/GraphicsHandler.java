@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.awt.image.RescaleOp;
 
 
 public class GraphicsHandler {
@@ -39,6 +40,15 @@ public class GraphicsHandler {
                 break;
         }
     }
+
+    public void drawImageAlpha(BufferedImage image, int x, int y, int width, int height, float alpha) {
+        float[] scales = { 1f, 1f, 1f, alpha };
+        float[] offsets = new float[4];
+        RescaleOp rop = new RescaleOp(scales, offsets, null);
+        g.drawImage(image, rop, 0, 0);
+        // g.drawImage(image, x + width, y, -width, height, null);
+    }
+
 
     public void drawRectangle(int x, int y, int width, int height, Color color) {
         g.setColor(color);

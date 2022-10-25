@@ -38,6 +38,7 @@ public class PlayLevelScreen extends Screen {
 
     BufferedImage rect = ImageLoader.load("rect.png");
     BufferedImage Axe = ImageLoader.load("Axe.png");
+    BufferedImage backgroundFilter = ImageLoader.load("background-filter.png");
 
     protected PlayLevelScreenState playLevelScreenState;
     protected WinScreen winScreen;
@@ -332,6 +333,10 @@ public class PlayLevelScreen extends Screen {
                     }
                     // just need to add variables for spaces
                     graphicsHandler.drawImage(Axe, 255, 510, 30, 30);
+                    // graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(), new Color(0, 0, 0,100));
+                    // graphicsHandler.drawImage(backgroundFilter, 0, 0);
+                    graphicsHandler.drawImageAlpha(backgroundFilter, 0, 0, 786, 568, (float)Math.sin(((double)(count_updates % 3600) / 3600)*Math.PI*2));
+                    // System.out.println(String.format("Width: %d\tHeight: %d", ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight()));
                     break;
                 case LEVEL_COMPLETED:
                     winScreen.draw(graphicsHandler);
