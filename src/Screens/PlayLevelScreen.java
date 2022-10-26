@@ -240,7 +240,7 @@ public class PlayLevelScreen extends Screen {
             if (Keyboard.isKeyDown(Key.DOWN) && keyTimer.isTimeUp()) {
                 keyTimer.reset();
                 currentMenuItemHovered++;
-                //System.out.println(currentMenuItemHovered);
+                // System.out.println(currentMenuItemHovered);
             } else if (Keyboard.isKeyDown(Key.UP) && keyTimer.isTimeUp()) {
                 keyTimer.reset();
                 currentMenuItemHovered--;
@@ -343,7 +343,7 @@ public class PlayLevelScreen extends Screen {
                             }
 
                             else if (Inventory.getItem(position) == "Axe+1") {
-                                graphicsHandler.drawImage(Spear, x, y, 90, 80);
+                                graphicsHandler.drawImage(AxePlus1, x, y, 90, 80);
 
                             } else if (Inventory.getItem(position) == "Spear") {
                                 graphicsHandler.drawImage(Spear, x, y, 90, 80);
@@ -389,6 +389,33 @@ public class PlayLevelScreen extends Screen {
             graphicsHandler.drawFilledRectangle(450, 400, 60, 60, Color.BLACK);
             graphicsHandler.drawFilledRectangle(450 + 2, 400 + 2, 56, 56, Color.gray);
 
+            if (CraftingInventory.getSize() >= 1) {
+
+                if (CraftingInventory.contains("Axe") == true) {
+                    graphicsHandler.drawImage(Axe, 150, 400, 90, 80);
+                } else if (CraftingInventory.contains("Axe+1") == true) {
+                    graphicsHandler.drawImage(AxePlus1, 150, 400, 90, 80);
+                } else if (CraftingInventory.contains("Spear") == true) {
+                    graphicsHandler.drawImage(Spear, 150, 400, 90, 80);
+                } else if (CraftingInventory.contains("Machete") == true) {
+                    graphicsHandler.drawImage(Machete, 150, 400, 90, 80);
+                } else if (CraftingInventory.contains("Katana") == true) {
+                    graphicsHandler.drawImage(Katana, 150, 400, 90, 80);
+                }
+                if (CraftingInventory.contains("Steel")) {
+                    graphicsHandler.drawImage(Steel, 260, 400, 90, 80);
+                }
+            }
+
+            if (CraftingInventory.contains("Axe") && CraftingInventory.contains("Steel")) {
+                graphicsHandler.drawImage(AxePlus1, 410, 400, 90, 80);
+                String crafted = CraftingInventory.craft();
+                Inventory.replace("Axe", "Axe+1");
+
+                System.out.println(Inventory.getItem(0));
+
+            }
+
             if (Keyboard.isKeyDown(Key.DOWN) && keyTimer.isTimeUp()) {
                 yInvSelect = Math.max(0, Math.min(4, yInvSelect + 1));
                 keyTimer.reset();
@@ -404,14 +431,14 @@ public class PlayLevelScreen extends Screen {
                 boxSel = Math.max(1, Math.min(3, boxSel + 1));
                 keyTimer.reset();
             } else if (Keyboard.isKeyDown(Key.ENTER) && keyTimer.isTimeUp()) {
-                if (Inventory.getSize() > 1) {
+                if (Inventory.getSize() >= 1) {
                     System.out.println(xInvSelect);
                     String item = Inventory.getItem(xInvSelect);
                     if (item == "Axe") {
                         graphicsHandler.drawImage(Axe, 400, 400, 90, 80);
                         CraftingInventory.addItem("Axe");
                     } else if (item == "Axe+1") {
-                        graphicsHandler.drawImage(Spear, 400, 400, 90, 80);
+                        graphicsHandler.drawImage(AxePlus1, 400, 400, 90, 80);
                         CraftingInventory.addItem("Axe+1");
                     } else if (item == "Spear") {
                         graphicsHandler.drawImage(Spear, 400, 400, 90, 80);
@@ -423,6 +450,9 @@ public class PlayLevelScreen extends Screen {
                         // System.out.println(Inventory.getSize());
                         graphicsHandler.drawImage(Katana, 400, 400, 90, 80);
                         CraftingInventory.addItem("Katana");
+                    } else if (item == "Steel") {
+                        graphicsHandler.drawImage(Steel, 400, 400, 90, 80);
+                        CraftingInventory.addItem("Steel");
                     }
                     keyTimer.reset();
                 }
@@ -449,12 +479,10 @@ public class PlayLevelScreen extends Screen {
             switch (playLevelScreenState) {
                 case RUNNING:
                     map.draw(player, graphicsHandler);
-                    
+
                     graphicsHandler.drawImageAlpha(backgroundFilter, 0, 0, 786, 568,
                             (float) Math.sin(((double) ((runState.c.getHoursOfDay() * 60 + runState.c.getMinutesOfDay())
                                     % (12 * 60)) / (12 * 60)) * Math.PI * 2));
-
-
 
                     livesLabels.draw(graphicsHandler);
                     timeLabels.draw(graphicsHandler);
@@ -462,7 +490,7 @@ public class PlayLevelScreen extends Screen {
                     for (int i = 250; i < 550; i += 50) {
                         graphicsHandler.drawImage(rect, i, 500, 50, 50);
                     }
-                    
+
                     // just need to add variables for spaces
                     if (Inventory.contains("Axe") == true) {
                         graphicsHandler.drawImage(Axe, 255, 510, 30, 30);

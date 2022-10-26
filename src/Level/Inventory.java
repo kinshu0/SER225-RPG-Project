@@ -12,6 +12,23 @@ public class Inventory {
         playerInventory.add(item);
     }
 
+    public static void replace(String originalItem, String newItem) {
+        int position = getPostion(originalItem);
+
+        // playerInventory[position] = newItem;
+        playerInventory.set(position, newItem);
+    }
+
+    public static int getPostion(String item) {
+        for (int i = 0; i < playerInventory.size(); i++) {
+            if (getItem(i) == item) {
+                return i;
+            }
+        }
+
+        return 0;
+    }
+
     public static String getItem(int spot) {
         String item = playerInventory.get(spot);
         return item;
