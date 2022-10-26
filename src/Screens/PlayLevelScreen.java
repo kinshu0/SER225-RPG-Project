@@ -8,6 +8,7 @@ import Game.ScreenCoordinator;
 import Level.*;
 import Maps.TestMap;
 import Players.Cat;
+import Players.CatWep;
 import SpriteFont.SpriteFont;
 import Utils.Direction;
 import Utils.Point;
@@ -29,6 +30,7 @@ public class PlayLevelScreen extends Screen {
     protected Stopwatch keyTimer = new Stopwatch();
     protected Map map;
     protected Player player;
+    protected Player player1;
     protected SpriteFont livesLabels;
     protected SpriteFont timeLabels;
     private SpriteFont pauseLabel;
@@ -88,11 +90,15 @@ public class PlayLevelScreen extends Screen {
 
         // setup player
         this.player = new Cat(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
+        this.player1 = new CatWep(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
         this.player.setMap(map);
+        this.player1.setMap(map);
         Point playerStartPosition = map.getPlayerStartPosition();
         this.player.setLocation(playerStartPosition.x, playerStartPosition.y);
         this.playLevelScreenState = PlayLevelScreenState.RUNNING;
         this.player.setFacingDirection(Direction.LEFT);
+        this.player1.setLocation(player.getX(), player.getY());
+        this.player1.setFacingDirection(Direction.LEFT);
 
         // let pieces of map know which button to listen for as the "interact" button
         map.getTextbox().setInteractKey(player.getInteractKey());
@@ -218,6 +224,14 @@ public class PlayLevelScreen extends Screen {
 
     public void draw(GraphicsHandler graphicsHandler) {
         // **pause screen**
+
+        if (Inventory.getSize() > 1) {
+            float xLoc = player.getX();
+            float yLoc = player.getY();
+            this.player1.setLocation(xLoc, yLoc);
+            player = player1;
+            //System.out.println(map.getPlayerStartPosition().x);
+        }
 
         // this is what tells if the key is down
         if (Keyboard.isKeyDown(pauseKey) && !keyLocker.isKeyLocked(pauseKey)) {
