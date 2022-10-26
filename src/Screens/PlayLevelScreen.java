@@ -16,6 +16,8 @@ import Utils.Stopwatch;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import javax.lang.model.util.ElementScanner14;
+
 // This class is for when the platformer game is actually being played
 public class PlayLevelScreen extends Screen {
     protected int currentMenuItemHovered = 0;
@@ -419,7 +421,62 @@ public class PlayLevelScreen extends Screen {
                         graphicsHandler.drawImage(rect, i, 500, 50, 50);
                     }
                     // just need to add variables for spaces
-                    graphicsHandler.drawImage(Axe, 255, 510, 30, 30);
+                    if (Inventory.getSize() > 0) {
+                        if (Inventory.getItem(0) == "Axe") {
+                            graphicsHandler.drawImage(Axe, 255, 510, 30, 30);
+                        } else if (Inventory.getItem(0) == "Spear") {
+                            graphicsHandler.drawImage(Spear, 255, 510, 30, 30);
+
+                        } else if (Inventory.getItem(0) == "Machete") {
+                            graphicsHandler.drawImage(Machete, 255, 510, 30, 30);
+                        } else if (Inventory.getItem(0) == "Katana") {
+                            // System.out.println(Inventory.getSize());
+                            graphicsHandler.drawImage(Katana, 255, 510, 30, 30);
+                        }
+
+                        if (Inventory.getSize() > 1) {
+                            if (Inventory.getItem(1) == "Axe") {
+                                graphicsHandler.drawImage(Axe, 300, 510, 30, 30);
+                            } else if (Inventory.getItem(1) == "Spear") {
+                                graphicsHandler.drawImage(Spear, 300, 510, 30, 30);
+
+                            } else if (Inventory.getItem(1) == "Machete") {
+                                graphicsHandler.drawImage(Machete, 300, 510, 30, 30);
+                            } else if (Inventory.getItem(1) == "Katana") {
+                                // System.out.println(Inventory.getSize());
+                                graphicsHandler.drawImage(Katana, 300, 510, 30, 30);
+                            }
+                        }
+
+                        if (Inventory.getSize() > 2) {
+                            if (Inventory.getItem(2) == "Axe") {
+                                graphicsHandler.drawImage(Axe, 360, 510, 30, 30);
+                            } else if (Inventory.getItem(2) == "Spear") {
+                                graphicsHandler.drawImage(Spear, 360, 510, 30, 30);
+
+                            } else if (Inventory.getItem(2) == "Machete") {
+                                graphicsHandler.drawImage(Machete, 360, 510, 30, 30);
+                            } else if (Inventory.getItem(2) == "Katana") {
+                                // System.out.println(Inventory.getSize());
+                                graphicsHandler.drawImage(Katana, 360, 510, 30, 30);
+                            }
+                        }
+
+                        if (Inventory.getSize() > 3) {
+                            if (Inventory.getItem(3) == "Axe") {
+                                graphicsHandler.drawImage(Axe, 420, 510, 30, 30);
+                            } else if (Inventory.getItem(3) == "Spear") {
+                                graphicsHandler.drawImage(Spear, 420, 510, 30, 30);
+
+                            } else if (Inventory.getItem(3) == "Machete") {
+                                graphicsHandler.drawImage(Machete, 420, 510, 30, 30);
+                            } else if (Inventory.getItem(3) == "Katana") {
+                                // System.out.println(Inventory.getSize());
+                                graphicsHandler.drawImage(Katana, 420, 510, 30, 30);
+                            }
+                        }
+                    }
+
                     // graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(),
                     // ScreenManager.getScreenHeight(), new Color(0, 0, 0,100));
                     // graphicsHandler.drawImage(backgroundFilter, 0, 0);
@@ -433,6 +490,7 @@ public class PlayLevelScreen extends Screen {
                     winScreen.draw(graphicsHandler);
                     break;
             }
+
         }
     }
 
