@@ -26,4 +26,14 @@ public class Inventory {
         playerInventory = new ArrayList<String>();
     }
 
+    public static boolean contains(String item) {
+        for (int i = 0; i < playerInventory.size(); i++) {
+            if (getItem(i) == item) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }

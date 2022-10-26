@@ -43,9 +43,11 @@ public class PlayLevelScreen extends Screen {
 
     BufferedImage rect = ImageLoader.load("rect.png");
     BufferedImage Axe = ImageLoader.load("Axe.png");
+    BufferedImage AxePlus1 = ImageLoader.load("Axe+1.png");
     BufferedImage Katana = ImageLoader.load("Katana.png");
     BufferedImage Machete = ImageLoader.load("machete.png");
     BufferedImage Spear = ImageLoader.load("Spear.png");
+    BufferedImage Steel = ImageLoader.load("Steel.png");
     BufferedImage circleImg = ImageLoader.load("Inv_cir.png");
     BufferedImage backgroundFilter = ImageLoader.load("background-filter.png");
 
@@ -332,29 +334,38 @@ public class PlayLevelScreen extends Screen {
                     graphicsHandler.drawFilledRectangle(x, y, 60, 60, Color.BLACK);
                     graphicsHandler.drawFilledRectangle(x + 2, y + 2, 56, 56, Color.gray);
 
-                    if (goneThroughItems == false && y == 30 && Inventory.getSize() > 0) {
+                    if (goneThroughItems == false && Inventory.getSize() > 0) {
                         int position = x / 70;
-                        System.out.println(position);
-                        if (Inventory.getItem(position) == "Axe") {
-                            graphicsHandler.drawImage(Axe, x, y, 90, 80);
-                        }
 
-                        else if (Inventory.getItem(position) == "Spear") {
-                            graphicsHandler.drawImage(Spear, x, y, 90, 80);
+                        if (y == 30) {
+                            if (Inventory.getItem(position) == "Axe") {
+                                graphicsHandler.drawImage(Axe, x, y, 90, 80);
+                            }
 
-                        }
+                            else if (Inventory.getItem(position) == "Axe+1") {
+                                graphicsHandler.drawImage(Spear, x, y, 90, 80);
 
-                        else if (Inventory.getItem(position) == "Machete") {
-                            graphicsHandler.drawImage(Machete, x, y, 90, 80);
-                        }
+                            } else if (Inventory.getItem(position) == "Spear") {
+                                graphicsHandler.drawImage(Spear, x, y, 90, 80);
 
-                        else if (Inventory.getItem(position) == "Katana") {
-                            // System.out.println(Inventory.getSize());
-                            graphicsHandler.drawImage(Katana, x, y, 90, 80);
-                        }
+                            }
 
-                        if (position == Inventory.getSize() - 1) {
-                            goneThroughItems = true;
+                            else if (Inventory.getItem(position) == "Machete") {
+                                graphicsHandler.drawImage(Machete, x, y, 90, 80);
+                            }
+
+                            else if (Inventory.getItem(position) == "Katana") {
+                                // System.out.println(Inventory.getSize());
+                                graphicsHandler.drawImage(Katana, x, y, 90, 80);
+                            }
+
+                            if (Inventory.getItem(position) == "Steel") {
+                                graphicsHandler.drawImage(Steel, x, y, 90, 80);
+                            }
+
+                            if (position == Inventory.getSize() - 1) {
+                                goneThroughItems = true;
+                            }
                         }
 
                         /*
@@ -421,60 +432,22 @@ public class PlayLevelScreen extends Screen {
                         graphicsHandler.drawImage(rect, i, 500, 50, 50);
                     }
                     // just need to add variables for spaces
-                    if (Inventory.getSize() > 0) {
-                        if (Inventory.getItem(0) == "Axe") {
-                            graphicsHandler.drawImage(Axe, 255, 510, 30, 30);
-                        } else if (Inventory.getItem(0) == "Spear") {
-                            graphicsHandler.drawImage(Spear, 255, 510, 30, 30);
+                    if (Inventory.contains("Axe") == true) {
+                        graphicsHandler.drawImage(Axe, 255, 510, 30, 30);
+                    }
+                    if (Inventory.contains("Axe+1") == true) {
+                        graphicsHandler.drawImage(AxePlus1, 255, 510, 30, 30);
+                    }
+                    if (Inventory.contains("Spear") == true) {
+                        graphicsHandler.drawImage(Spear, 310, 510, 30, 30);
 
-                        } else if (Inventory.getItem(0) == "Machete") {
-                            graphicsHandler.drawImage(Machete, 255, 510, 30, 30);
-                        } else if (Inventory.getItem(0) == "Katana") {
-                            // System.out.println(Inventory.getSize());
-                            graphicsHandler.drawImage(Katana, 255, 510, 30, 30);
-                        }
-
-                        if (Inventory.getSize() > 1) {
-                            if (Inventory.getItem(1) == "Axe") {
-                                graphicsHandler.drawImage(Axe, 300, 510, 30, 30);
-                            } else if (Inventory.getItem(1) == "Spear") {
-                                graphicsHandler.drawImage(Spear, 300, 510, 30, 30);
-
-                            } else if (Inventory.getItem(1) == "Machete") {
-                                graphicsHandler.drawImage(Machete, 300, 510, 30, 30);
-                            } else if (Inventory.getItem(1) == "Katana") {
-                                // System.out.println(Inventory.getSize());
-                                graphicsHandler.drawImage(Katana, 300, 510, 30, 30);
-                            }
-                        }
-
-                        if (Inventory.getSize() > 2) {
-                            if (Inventory.getItem(2) == "Axe") {
-                                graphicsHandler.drawImage(Axe, 360, 510, 30, 30);
-                            } else if (Inventory.getItem(2) == "Spear") {
-                                graphicsHandler.drawImage(Spear, 360, 510, 30, 30);
-
-                            } else if (Inventory.getItem(2) == "Machete") {
-                                graphicsHandler.drawImage(Machete, 360, 510, 30, 30);
-                            } else if (Inventory.getItem(2) == "Katana") {
-                                // System.out.println(Inventory.getSize());
-                                graphicsHandler.drawImage(Katana, 360, 510, 30, 30);
-                            }
-                        }
-
-                        if (Inventory.getSize() > 3) {
-                            if (Inventory.getItem(3) == "Axe") {
-                                graphicsHandler.drawImage(Axe, 420, 510, 30, 30);
-                            } else if (Inventory.getItem(3) == "Spear") {
-                                graphicsHandler.drawImage(Spear, 420, 510, 30, 30);
-
-                            } else if (Inventory.getItem(3) == "Machete") {
-                                graphicsHandler.drawImage(Machete, 420, 510, 30, 30);
-                            } else if (Inventory.getItem(3) == "Katana") {
-                                // System.out.println(Inventory.getSize());
-                                graphicsHandler.drawImage(Katana, 420, 510, 30, 30);
-                            }
-                        }
+                    }
+                    if (Inventory.contains("Machete") == true) {
+                        graphicsHandler.drawImage(Machete, 360, 510, 30, 30);
+                    }
+                    if (Inventory.contains("Katana") == true) {
+                        // System.out.println(Inventory.getSize());
+                        graphicsHandler.drawImage(Katana, 410, 510, 30, 30);
                     }
 
                     // graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(),

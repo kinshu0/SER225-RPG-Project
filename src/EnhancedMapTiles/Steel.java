@@ -6,6 +6,7 @@ import GameObject.Frame;
 import GameObject.GameObject;
 import GameObject.SpriteSheet;
 import Level.EnhancedMapTile;
+import Level.Inventory;
 import Level.Player;
 import Level.PlayerState;
 import Level.TileType;
@@ -23,7 +24,7 @@ public class Steel extends EnhancedMapTile {
     public void update(Player player) {
         super.update(player);
         if (player.overlaps(this) && player.getPlayerState() == PlayerState.WALKING) {
-            // Inventory.addItem("Steel");
+            Inventory.addItem("Steel");
             this.setLocation(1000, 1000);
         }
     }
