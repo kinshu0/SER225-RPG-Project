@@ -38,7 +38,7 @@ public class PlayMusic {
 
 	public static void main(String[] args) {
 		try {
-			filePath = "nintendo ds pokemon music.wav";
+			filePath = "summer-night-forest.wav";
 			PlayMusic audioPlayer = new PlayMusic();
 
 			audioPlayer.play();
