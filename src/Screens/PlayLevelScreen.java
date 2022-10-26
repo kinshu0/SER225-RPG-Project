@@ -449,11 +449,20 @@ public class PlayLevelScreen extends Screen {
             switch (playLevelScreenState) {
                 case RUNNING:
                     map.draw(player, graphicsHandler);
+                    
+                    graphicsHandler.drawImageAlpha(backgroundFilter, 0, 0, 786, 568,
+                            (float) Math.sin(((double) ((runState.c.getHoursOfDay() * 60 + runState.c.getMinutesOfDay())
+                                    % (12 * 60)) / (12 * 60)) * Math.PI * 2));
+
+
+
                     livesLabels.draw(graphicsHandler);
                     timeLabels.draw(graphicsHandler);
+
                     for (int i = 250; i < 550; i += 50) {
                         graphicsHandler.drawImage(rect, i, 500, 50, 50);
                     }
+                    
                     // just need to add variables for spaces
                     if (Inventory.contains("Axe") == true) {
                         graphicsHandler.drawImage(Axe, 255, 510, 30, 30);
@@ -476,9 +485,6 @@ public class PlayLevelScreen extends Screen {
                     // graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(),
                     // ScreenManager.getScreenHeight(), new Color(0, 0, 0,100));
                     // graphicsHandler.drawImage(backgroundFilter, 0, 0);
-                    graphicsHandler.drawImageAlpha(backgroundFilter, 0, 0, 786, 568,
-                            (float) Math.sin(((double) ((runState.c.getHoursOfDay() * 60 + runState.c.getMinutesOfDay())
-                                    % (12 * 60)) / (12 * 60)) * Math.PI * 2));
                     // System.out.println(String.format("Width: %d\tHeight: %d",
                     // ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight()));
                     break;

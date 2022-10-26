@@ -25,7 +25,7 @@ public class Cycle extends Time {
             int h = getHoursOfDay();
             int m = getMinutesOfDay();
             int s = getSecondsOfDay();
-            System.out.printf("%02d:%02d:%02d (%s)\n", h, m, s, state);
+            // System.out.printf("%02d:%02d:%02d (%s)\n", h, m, s, state);
 
             if (timeOfDay == 0) {
                 timeOfDay = MIDNIGHT;
