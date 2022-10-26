@@ -16,7 +16,7 @@ import Utils.Stopwatch;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import javax.lang.model.util.ElementScanner14;
+//import javax.lang.model.util.ElementScanner14;
 
 // This class is for when the platformer game is actually being played
 public class PlayLevelScreen extends Screen {
@@ -240,7 +240,7 @@ public class PlayLevelScreen extends Screen {
             if (Keyboard.isKeyDown(Key.DOWN) && keyTimer.isTimeUp()) {
                 keyTimer.reset();
                 currentMenuItemHovered++;
-                System.out.println(currentMenuItemHovered);
+                //System.out.println(currentMenuItemHovered);
             } else if (Keyboard.isKeyDown(Key.UP) && keyTimer.isTimeUp()) {
                 keyTimer.reset();
                 currentMenuItemHovered--;
@@ -403,6 +403,29 @@ public class PlayLevelScreen extends Screen {
                 xInvSelect = Math.max(0, Math.min(10, xInvSelect + 1));
                 boxSel = Math.max(1, Math.min(3, boxSel + 1));
                 keyTimer.reset();
+            } else if (Keyboard.isKeyDown(Key.ENTER) && keyTimer.isTimeUp()) {
+                if (Inventory.getSize() > 1) {
+                    System.out.println(xInvSelect);
+                    String item = Inventory.getItem(xInvSelect);
+                    if (item == "Axe") {
+                        graphicsHandler.drawImage(Axe, 400, 400, 90, 80);
+                        CraftingInventory.addItem("Axe");
+                    } else if (item == "Axe+1") {
+                        graphicsHandler.drawImage(Spear, 400, 400, 90, 80);
+                        CraftingInventory.addItem("Axe+1");
+                    } else if (item == "Spear") {
+                        graphicsHandler.drawImage(Spear, 400, 400, 90, 80);
+                        CraftingInventory.addItem("Spear");
+                    } else if (item == "Machete") {
+                        graphicsHandler.drawImage(Machete, 400, 400, 90, 80);
+                        CraftingInventory.addItem("Machete");
+                    } else if (item == "Katana") {
+                        // System.out.println(Inventory.getSize());
+                        graphicsHandler.drawImage(Katana, 400, 400, 90, 80);
+                        CraftingInventory.addItem("Katana");
+                    }
+                    keyTimer.reset();
+                }
             }
 
             // highlights which box
