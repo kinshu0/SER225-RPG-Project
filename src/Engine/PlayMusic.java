@@ -1,130 +1,191 @@
 package Engine;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.Scanner;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class PlayMusic {
 
 	// to store current position
-	Long currentFrame;
 	Clip clip;
 
-	// current status of clip
-	String status;
+	// AudioInputStream audioInputStream;
+	static String dayMusic;
+	static String nightMusic;
+	static String damageSound;
 
-	AudioInputStream audioInputStream;
-	static String filePath;
+	DayMusic dm = new DayMusic();
+	NightMusic nm = new NightMusic();
+	DamageSound dg = new DamageSound();
 
 	// constructor to initialize streams and clip
-	public PlayMusic() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-		// create AudioInputStream object
-		audioInputStream = AudioSystem.getAudioInputStream(new File(Config.RESOURCES_PATH + filePath));
+	public PlayMusic() {
+		dayMusic = "nintendo ds pokemon music.wav";
+		nightMusic = "summer-night-forest.wav";
+		damageSound = "Bonk - Sound Effect (HD).wav";
 
-		// create clip reference
-		clip = AudioSystem.getClip();
-
-		// open audioInputStream to the clip
-		clip.open(audioInputStream);
-
-		clip.loop(Clip.LOOP_CONTINUOUSLY);
 	}
 
-	public static void main(String[] args) {
-		try {
-			filePath = "nintendo ds pokemon music.wav";
-			PlayMusic audioPlayer = new PlayMusic();
+	public class DamageSound {
 
-			audioPlayer.play();
-			Scanner sc = new Scanner(System.in);
+		Clip clip;
 
-			while (true) {
-				System.out.println("1. pause");
-				System.out.println("2. resume");
-				System.out.println("3. stop");
-				int c = sc.nextInt();
-				audioPlayer.gotoChoice(c);
-				if (c == 3)
-					break;
+		public void setFile(String soundFileName) {
+			try {
+				File file = new File(Config.RESOURCES_PATH + soundFileName);
+				// create AudioInputStream object
+				AudioInputStream damage = AudioSystem.getAudioInputStream(file);
+
+				clip = AudioSystem.getClip();
+				clip.open(damage);
+
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			sc.close();
 		}
 
-		catch (Exception e) {
-			System.out.println("Error with playing sound.");
-			e.printStackTrace();
+		// Method to play the audio
+		public void play() {
+			// start the clip
+
+			clip.setFramePosition(0);
+			clip.start();
 
 		}
-	}
 
-	// Work as the user enters his choice
+		public void loop() {
+			clip.loop(Clip.LOOP_CONTINUOUSLY);
 
-	private void gotoChoice(int c) throws IOException, LineUnavailableException, UnsupportedAudioFileException {
-		switch (c) {
-		case 1:
-			pause();
-			break;
-		case 2:
-			resumeAudio();
-			break;
+		}
 
-		case 3:
-			stop();
-			break;
+		// Method to stop the audio
+		public void stop() {
+
+			clip.stop();
+			clip.close();
 
 		}
 
 	}
 
-	// Method to play the audio
-	public void play() {
-		// start the clip
-		clip.start();
+	public class DayMusic {
+		Clip clip;
 
-		status = "play";
-	}
+		public void setFile(String soundFileName) {
+			try {
+				File file = new File(Config.RESOURCES_PATH + soundFileName);
+				// create AudioInputStream object
+				AudioInputStream day = AudioSystem.getAudioInputStream(file);
 
-	// Method to pause the audio
-	public void pause() {
-		if (status.equals("paused")) {
-			System.out.println("audio is already paused");
-			return;
+				clip = AudioSystem.getClip();
+				clip.open(day);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-		this.currentFrame = this.clip.getMicrosecondPosition();
-		clip.stop();
-		status = "paused";
-	}
 
-	// Method to resume the audio
-	public void resumeAudio() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-		if (status.equals("play")) {
-			System.out.println("Audio is already " + "being played");
-			return;
+		// Method to play the audio
+		public void play() {
+			// start the clip
+			// clip.setFramePosition(0);
+			clip.start();
+
 		}
-		clip.close();
-		resetAudioStream();
-		clip.setMicrosecondPosition(currentFrame);
-		this.play();
+
+		public void loop() {
+			clip.loop(Clip.LOOP_CONTINUOUSLY);
+
+		}
+
+		// Method to stop the audio
+		public void stop() {
+			//clip.stop();
+			clip.close();
+		}
+
 	}
 
-	// Method to stop the audio
-	public void stop() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-		currentFrame = 0L;
-		clip.stop();
-		clip.close();
+	public class NightMusic {
+
+		Clip clip;
+
+		public void setFile(String soundFileName) {
+			try {
+				File file = new File(Config.RESOURCES_PATH + soundFileName);
+				// create AudioInputStream object
+				AudioInputStream night = AudioSystem.getAudioInputStream(file);
+
+				clip = AudioSystem.getClip();
+
+				clip.open(night);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		// Method to play the audio
+		public void play() {
+			// start the clip
+			// clip.setFramePosition(0);
+			clip.start();
+
+		}
+
+		public void loop() {
+			clip.loop(Clip.LOOP_CONTINUOUSLY);
+
+		}
+
+		// Method to stop the audio
+		public void stop() {
+			//clip.stop();
+			clip.close();
+		}
+
 	}
 
-	// Method to reset audio stream
-	public void resetAudioStream() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-		audioInputStream = AudioSystem.getAudioInputStream(new File(filePath).getAbsoluteFile());
-		clip.open(audioInputStream);
-		clip.loop(Clip.LOOP_CONTINUOUSLY);
+	public void playDM() {
+
+		dm.setFile(dayMusic);
+		dm.play();
+
+	}
+
+	public void stopDM() {
+		
+			dm.stop();
+		 
+	}
+
+	public void playNM() {
+
+		nm.setFile(nightMusic);
+		nm.play();
+
+	}
+
+	public void stopNM() {
+		
+			nm.stop();
+		
+	}
+
+	public void playDG() {
+		try {
+			dg.setFile(damageSound);
+			dg.play();
+		} catch (Exception e) {
+
+		}
+
+	}
+
+	public static void main(String args[]) {
+
 	}
 
 }

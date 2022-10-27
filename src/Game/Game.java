@@ -20,6 +20,7 @@ public class Game {
         gameWindow.startGame();
         ScreenManager screenManager = gameWindow.getScreenManager();
         screenManager.setCurrentScreen(new ScreenCoordinator());
-        PlayMusic.main(null);;
+        PlayMusic music = new PlayMusic();
+       // music.playNM();
     }
 }

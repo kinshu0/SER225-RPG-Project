@@ -8,5 +8,9 @@ classes/
 out/
 TestResources/
 _site
+<<<<<<< HEAD
 .vscode
 .DS_Store
+=======
+.DS_Store
+>>>>>>> fd953b90a837d623c4cab73f95e1fdbf7291863c
