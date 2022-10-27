@@ -28,14 +28,8 @@ public class PlayMusic {
 
 	}
 
-<<<<<<< HEAD
+
 	public class DamageSound {
-=======
-	public static void main(String[] args) {
-		try {
-			filePath = "summer-night-forest.wav";
-			PlayMusic audioPlayer = new PlayMusic();
->>>>>>> c9a0584901b51845a87d03fc95b97aef7c89236d
 
 		Clip clip;
 

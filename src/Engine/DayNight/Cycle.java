@@ -22,15 +22,8 @@ public class Cycle extends Time {
 		state = newState;
 	}
 
-<<<<<<< HEAD
-	public void updateState() {
-		// while (timeOfDay >= 0 && timeOfDay <= minutesOfDay * minutesInHour) {
-		if (timeOfDay >= 0 && timeOfDay <= minutesOfDay * minutesInHour) {
-			int h = getHoursOfDay();
-			int m = getMinutesOfDay();
-			int s = getSecondsOfDay();
-			System.out.printf("%02d:%02d:%02d (%s)\n", h, m, s, state);
-=======
+
+
     public void updateState() {
         // while (timeOfDay >= 0 && timeOfDay <= minutesOfDay * minutesInHour) {
         if (timeOfDay >= 0 && timeOfDay <= minutesOfDay * minutesInHour) {
@@ -38,7 +31,6 @@ public class Cycle extends Time {
             int m = getMinutesOfDay();
             int s = getSecondsOfDay();
             // System.out.printf("%02d:%02d:%02d (%s)\n", h, m, s, state);
->>>>>>> c9a0584901b51845a87d03fc95b97aef7c89236d
 
 			if (timeOfDay == 0) {
 				timeOfDay = MIDNIGHT;
