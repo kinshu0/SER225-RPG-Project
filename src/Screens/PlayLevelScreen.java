@@ -8,6 +8,7 @@ import Game.ScreenCoordinator;
 import Level.*;
 import Maps.TestMap;
 import Players.Cat;
+import Players.CatWep;
 import SpriteFont.SpriteFont;
 import Utils.Direction;
 import Utils.Point;
@@ -16,16 +17,20 @@ import Utils.Stopwatch;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+//import javax.lang.model.util.ElementScanner14;
+
 // This class is for when the platformer game is actually being played
 public class PlayLevelScreen extends Screen {
     protected int currentMenuItemHovered = 0;
     protected int xInvSelect = 0;
     protected int yInvSelect = 0;
+    protected int boxSel = 1;
     protected int menuItemSelected = -1;
     protected ScreenCoordinator screenCoordinator;
     protected Stopwatch keyTimer = new Stopwatch();
     protected Map map;
     protected Player player;
+    protected Player player1;
     protected SpriteFont livesLabels;
     protected SpriteFont timeLabels;
     private SpriteFont pauseLabel;
@@ -40,6 +45,12 @@ public class PlayLevelScreen extends Screen {
 
     BufferedImage rect = ImageLoader.load("rect.png");
     BufferedImage Axe = ImageLoader.load("Axe.png");
+    BufferedImage AxePlus1 = ImageLoader.load("Axe+1.png");
+    BufferedImage Katana = ImageLoader.load("Katana.png");
+    BufferedImage Machete = ImageLoader.load("machete.png");
+    BufferedImage Spear = ImageLoader.load("Spear.png");
+    BufferedImage Steel = ImageLoader.load("Steel.png");
+    BufferedImage circleImg = ImageLoader.load("Inv_cir.png");
     BufferedImage backgroundFilter = ImageLoader.load("background-filter.png");
 
     protected PlayLevelScreenState playLevelScreenState;
@@ -57,6 +68,7 @@ public class PlayLevelScreen extends Screen {
     private final Key pauseKey = Key.P;
 
     private int count_updates = 0;
+    // private int count_updates = 0;
     private RunState runState = new RunState();
 
     public PlayLevelScreen(ScreenCoordinator screenCoordinator) {
@@ -78,11 +90,15 @@ public class PlayLevelScreen extends Screen {
 
         // setup player
         this.player = new Cat(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
+        this.player1 = new CatWep(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
         this.player.setMap(map);
+        this.player1.setMap(map);
         Point playerStartPosition = map.getPlayerStartPosition();
         this.player.setLocation(playerStartPosition.x, playerStartPosition.y);
         this.playLevelScreenState = PlayLevelScreenState.RUNNING;
         this.player.setFacingDirection(Direction.LEFT);
+        this.player1.setLocation(player.getX(), player.getY());
+        this.player1.setFacingDirection(Direction.LEFT);
 
         // let pieces of map know which button to listen for as the "interact" button
         map.getTextbox().setInteractKey(player.getInteractKey());
@@ -179,6 +195,9 @@ public class PlayLevelScreen extends Screen {
             case RUNNING:
                 player.update();
                 map.update(player);
+                count_updates = (count_updates + 1) % (60 * 24 * 60);
+                timeLabels.setText(String.format("Time: %02d:%02d %s", count_updates / 3600,
+                        (count_updates % 3600) / 60, (count_updates % 3600) / 60 > 30 ? "Day" : "Night"));
                 // count_updates = (count_updates + 1) % (60 * 24 * 60);
                 // timeLabels.setText(String.format("Time: %02d:%02d %s", count_updates / 3600,
                 // (count_updates % 3600) / 60, (count_updates % 3600) / 60 > 30 ? "Day" :
@@ -206,6 +225,14 @@ public class PlayLevelScreen extends Screen {
     public void draw(GraphicsHandler graphicsHandler) {
         // **pause screen**
 
+        if (Inventory.getSize() > 1) {
+            float xLoc = player.getX();
+            float yLoc = player.getY();
+            this.player1.setLocation(xLoc, yLoc);
+            player = player1;
+            //System.out.println(map.getPlayerStartPosition().x);
+        }
+
         // this is what tells if the key is down
         if (Keyboard.isKeyDown(pauseKey) && !keyLocker.isKeyLocked(pauseKey)) {
             GamePanel.setIsGamePaused(!GamePanel.isGamePaused());
@@ -227,7 +254,7 @@ public class PlayLevelScreen extends Screen {
             if (Keyboard.isKeyDown(Key.DOWN) && keyTimer.isTimeUp()) {
                 keyTimer.reset();
                 currentMenuItemHovered++;
-                System.out.println(currentMenuItemHovered);
+                // System.out.println(currentMenuItemHovered);
             } else if (Keyboard.isKeyDown(Key.UP) && keyTimer.isTimeUp()) {
                 keyTimer.reset();
                 currentMenuItemHovered--;
@@ -278,6 +305,8 @@ public class PlayLevelScreen extends Screen {
                             ScreenManager.getScreenHeight(), Color.blue);
                 }
             }
+            graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(),
+                    new Color(0, 0, 0, 100));
         }
 
         // this unlocks the screen
@@ -313,10 +342,54 @@ public class PlayLevelScreen extends Screen {
             inventoryLabel.draw(graphicsHandler);
 
             // writes the rectangle
+            boolean goneThroughItems = false;
             for (int y = 30; y < 300; y = y + 70) {
                 for (int x = 15; x + 70 < 800; x = x + 70) {
                     graphicsHandler.drawFilledRectangle(x, y, 60, 60, Color.BLACK);
                     graphicsHandler.drawFilledRectangle(x + 2, y + 2, 56, 56, Color.gray);
+
+                    if (goneThroughItems == false && Inventory.getSize() > 0) {
+                        int position = x / 70;
+
+                        if (y == 30) {
+                            if (Inventory.getItem(position) == "Axe") {
+                                graphicsHandler.drawImage(Axe, x, y, 90, 80);
+                            }
+
+                            else if (Inventory.getItem(position) == "Axe+1") {
+                                graphicsHandler.drawImage(AxePlus1, x, y, 90, 80);
+
+                            } else if (Inventory.getItem(position) == "Spear") {
+                                graphicsHandler.drawImage(Spear, x, y, 90, 80);
+
+                            }
+
+                            else if (Inventory.getItem(position) == "Machete") {
+                                graphicsHandler.drawImage(Machete, x, y, 90, 80);
+                            }
+
+                            else if (Inventory.getItem(position) == "Katana") {
+                                // System.out.println(Inventory.getSize());
+                                graphicsHandler.drawImage(Katana, x, y, 90, 80);
+                            }
+
+                            if (Inventory.getItem(position) == "Steel") {
+                                graphicsHandler.drawImage(Steel, x, y, 90, 80);
+                            }
+
+                            if (position == Inventory.getSize() - 1) {
+                                goneThroughItems = true;
+                            }
+                        }
+
+                        /*
+                         * if (x == Inventory.getSize()) {
+                         * goneThroughItems = true;
+                         * }
+                         */
+
+                    }
+
                 }
             }
 
@@ -327,23 +400,88 @@ public class PlayLevelScreen extends Screen {
             graphicsHandler.drawFilledRectangle(300, 400, 60, 60, Color.BLACK);
             graphicsHandler.drawFilledRectangle(300 + 2, 400 + 2, 56, 56, Color.gray);
 
-            graphicsHandler.drawFilledRectangle(500, 400, 60, 60, Color.BLACK);
-            graphicsHandler.drawFilledRectangle(500 + 2, 400 + 2, 56, 56, Color.gray);
+            graphicsHandler.drawFilledRectangle(450, 400, 60, 60, Color.BLACK);
+            graphicsHandler.drawFilledRectangle(450 + 2, 400 + 2, 56, 56, Color.gray);
 
-            if (Keyboard.isKeyDown(Key.DOWN)) {
-                yInvSelect = Math.max(0, Math.min(3, yInvSelect + 1));
-            } else if (Keyboard.isKeyDown(Key.UP)) {
-                yInvSelect = Math.max(0, Math.min(3, yInvSelect - 1));
-            } else if (Keyboard.isKeyDown(Key.LEFT)) {
+            if (CraftingInventory.getSize() >= 1) {
+
+                if (CraftingInventory.contains("Axe") == true) {
+                    graphicsHandler.drawImage(Axe, 150, 400, 90, 80);
+                } else if (CraftingInventory.contains("Axe+1") == true) {
+                    graphicsHandler.drawImage(AxePlus1, 150, 400, 90, 80);
+                } else if (CraftingInventory.contains("Spear") == true) {
+                    graphicsHandler.drawImage(Spear, 150, 400, 90, 80);
+                } else if (CraftingInventory.contains("Machete") == true) {
+                    graphicsHandler.drawImage(Machete, 150, 400, 90, 80);
+                } else if (CraftingInventory.contains("Katana") == true) {
+                    graphicsHandler.drawImage(Katana, 150, 400, 90, 80);
+                }
+                if (CraftingInventory.contains("Steel")) {
+                    graphicsHandler.drawImage(Steel, 260, 400, 90, 80);
+                }
+            }
+
+            if (CraftingInventory.contains("Axe") && CraftingInventory.contains("Steel")) {
+                graphicsHandler.drawImage(AxePlus1, 410, 400, 90, 80);
+                String crafted = CraftingInventory.craft();
+                Inventory.replace("Axe", "Axe+1");
+
+                System.out.println(Inventory.getItem(0));
+
+            }
+
+            if (Keyboard.isKeyDown(Key.DOWN) && keyTimer.isTimeUp()) {
+                yInvSelect = Math.max(0, Math.min(4, yInvSelect + 1));
+                keyTimer.reset();
+            } else if (Keyboard.isKeyDown(Key.UP) && keyTimer.isTimeUp()) {
+                yInvSelect = Math.max(0, Math.min(4, yInvSelect - 1));
+                keyTimer.reset();
+            } else if (Keyboard.isKeyDown(Key.LEFT) && keyTimer.isTimeUp()) {
                 xInvSelect = Math.max(0, Math.min(10, xInvSelect - 1));
-            } else if (Keyboard.isKeyDown(Key.RIGHT)) {
+                boxSel = Math.max(1, Math.min(3, boxSel - 1));
+                keyTimer.reset();
+            } else if (Keyboard.isKeyDown(Key.RIGHT) && keyTimer.isTimeUp()) {
                 xInvSelect = Math.max(0, Math.min(10, xInvSelect + 1));
+                boxSel = Math.max(1, Math.min(3, boxSel + 1));
+                keyTimer.reset();
+            } else if (Keyboard.isKeyDown(Key.ENTER) && keyTimer.isTimeUp()) {
+                if (Inventory.getSize() >= 1) {
+                    System.out.println(xInvSelect);
+                    String item = Inventory.getItem(xInvSelect);
+                    if (item == "Axe") {
+                        graphicsHandler.drawImage(Axe, 400, 400, 90, 80);
+                        CraftingInventory.addItem("Axe");
+                    } else if (item == "Axe+1") {
+                        graphicsHandler.drawImage(AxePlus1, 400, 400, 90, 80);
+                        CraftingInventory.addItem("Axe+1");
+                    } else if (item == "Spear") {
+                        graphicsHandler.drawImage(Spear, 400, 400, 90, 80);
+                        CraftingInventory.addItem("Spear");
+                    } else if (item == "Machete") {
+                        graphicsHandler.drawImage(Machete, 400, 400, 90, 80);
+                        CraftingInventory.addItem("Machete");
+                    } else if (item == "Katana") {
+                        // System.out.println(Inventory.getSize());
+                        graphicsHandler.drawImage(Katana, 400, 400, 90, 80);
+                        CraftingInventory.addItem("Katana");
+                    } else if (item == "Steel") {
+                        graphicsHandler.drawImage(Steel, 400, 400, 90, 80);
+                        CraftingInventory.addItem("Steel");
+                    }
+                    keyTimer.reset();
+                }
             }
 
             // highlights which box
-            graphicsHandler.drawFilledRectangle(xInvSelect * 70 + 15, yInvSelect * 70 + 30, 60, 60, Color.yellow);
-            graphicsHandler.drawFilledRectangle(xInvSelect * 70 + 15 + 2, yInvSelect * 70 + 30 + 2, 56, 56, Color.gray);
+            if (yInvSelect == 4) {
+                graphicsHandler.drawFilledRectangle(boxSel * 150, 400, 60, 60, Color.yellow);
+                graphicsHandler.drawFilledRectangle(boxSel * 150 + 2, 400 + 2, 56, 56, Color.gray);
+            } else {
+                graphicsHandler.drawFilledRectangle(xInvSelect * 70 + 15, yInvSelect * 70 + 30, 60, 60, Color.yellow);
+                graphicsHandler.drawFilledRectangle(xInvSelect * 70 + 15 + 2, yInvSelect * 70 + 30 + 2, 56, 56,
+                        Color.gray);
 
+            }
         }
 
         if (Keyboard.isKeyUp(inventoryScreen)) {
@@ -355,18 +493,40 @@ public class PlayLevelScreen extends Screen {
             switch (playLevelScreenState) {
                 case RUNNING:
                     map.draw(player, graphicsHandler);
+
+                    graphicsHandler.drawImageAlpha(backgroundFilter, 0, 0, 786, 568,
+                            (float) Math.sin(((double) ((runState.c.getHoursOfDay() * 60 + runState.c.getMinutesOfDay())
+                                    % (12 * 60)) / (12 * 60)) * Math.PI * 2));
+
                     livesLabels.draw(graphicsHandler);
                     timeLabels.draw(graphicsHandler);
+
                     for (int i = 250; i < 550; i += 50) {
                         graphicsHandler.drawImage(rect, i, 500, 50, 50);
                     }
+
                     // just need to add variables for spaces
-                    graphicsHandler.drawImage(Axe, 255, 510, 30, 30);
+                    if (Inventory.contains("Axe") == true) {
+                        graphicsHandler.drawImage(Axe, 255, 510, 30, 30);
+                    }
+                    if (Inventory.contains("Axe+1") == true) {
+                        graphicsHandler.drawImage(AxePlus1, 255, 510, 30, 30);
+                    }
+                    if (Inventory.contains("Spear") == true) {
+                        graphicsHandler.drawImage(Spear, 310, 510, 30, 30);
+
+                    }
+                    if (Inventory.contains("Machete") == true) {
+                        graphicsHandler.drawImage(Machete, 360, 510, 30, 30);
+                    }
+                    if (Inventory.contains("Katana") == true) {
+                        // System.out.println(Inventory.getSize());
+                        graphicsHandler.drawImage(Katana, 410, 510, 30, 30);
+                    }
+
                     // graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(),
                     // ScreenManager.getScreenHeight(), new Color(0, 0, 0,100));
                     // graphicsHandler.drawImage(backgroundFilter, 0, 0);
-                    graphicsHandler.drawImageAlpha(backgroundFilter, 0, 0, 786, 568,
-                            (float) Math.sin(((double) (count_updates % 3600) / 3600) * Math.PI * 2));
                     // System.out.println(String.format("Width: %d\tHeight: %d",
                     // ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight()));
                     break;
@@ -374,6 +534,7 @@ public class PlayLevelScreen extends Screen {
                     winScreen.draw(graphicsHandler);
                     break;
             }
+
         }
     }
 
