@@ -230,7 +230,7 @@ public class PlayLevelScreen extends Screen {
             float yLoc = player.getY();
             this.player1.setLocation(xLoc, yLoc);
             player = player1;
-            //System.out.println(map.getPlayerStartPosition().x);
+            // System.out.println(map.getPlayerStartPosition().x);
         }
 
         // this is what tells if the key is down
