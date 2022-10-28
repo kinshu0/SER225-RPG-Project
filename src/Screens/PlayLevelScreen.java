@@ -62,7 +62,6 @@ public class PlayLevelScreen extends Screen {
     private KeyLocker keyLocker = new KeyLocker();
     private final Key pauseKey = Key.P;
 
-    private int count_updates = 0;
     // private int count_updates = 0;
     private RunState runState = new RunState();
 
@@ -127,10 +126,7 @@ public class PlayLevelScreen extends Screen {
         livesLabels.setOutlineColor(Color.white);
         livesLabels.setOutlineThickness(3);
 
-        // time
-        timeLabels = new SpriteFont("Time: 3:00", 10, 25, "Comic Sans", 30, Color.black);
-        timeLabels.setOutlineColor(Color.white);
-        timeLabels.setOutlineThickness(3);
+
 
         // crafting logic
         craftingLabel = new SpriteFont("Crafting", 400, 500, "Comic Sans", 24, Color.white);
@@ -143,6 +139,7 @@ public class PlayLevelScreen extends Screen {
         inventoryLabel.setOutlineThickness(2.0f);
 
         PauseScreen.initPause();
+        dayNight.initDayNight();
 
         winScreen = new WinScreen(this);
         keyTimer.setWaitTime(200);
@@ -164,22 +161,10 @@ public class PlayLevelScreen extends Screen {
             case RUNNING:
                 player.update();
                 map.update(player);
-                count_updates = (count_updates + 1) % (60 * 24 * 60);
-                timeLabels.setText(String.format("Time: %02d:%02d %s", count_updates / 3600,
-                        (count_updates % 3600) / 60, (count_updates % 3600) / 60 > 30 ? "Day" : "Night"));
-                // count_updates = (count_updates + 1) % (60 * 24 * 60);
-                // timeLabels.setText(String.format("Time: %02d:%02d %s", count_updates / 3600,
-                // (count_updates % 3600) / 60, (count_updates % 3600) / 60 > 30 ? "Day" :
-                // "Night"));
-                runState.runCycle();
-                int s = runState.c.getSecondsOfDay();
-                int h = runState.c.getHoursOfDay();
-                int m = runState.c.getMinutesOfDay();
-                State st = runState.c.getState();
-                timeLabels.setText(String.format("Time: %02d:%02d:%02d (%s)\n", h, m, s, st));
                 livesLabels.setText(player.getPlayerLives());
+                timeLabels = dayNight.drawDayNight(runState);
                 break;
-            // if level has been completed, bring up level cleared screen
+                // if level has been completed, bring up level cleared screen
             case LEVEL_COMPLETED:
                 winScreen.update();
                 break;

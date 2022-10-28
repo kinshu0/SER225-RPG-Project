@@ -4,6 +4,7 @@ import Builders.FrameBuilder;
 import Engine.GraphicsHandler;
 import Engine.ImageLoader;
 import Engine.PlayMusic;
+import Engine.dayNight;
 import GameObject.Frame;
 import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
@@ -81,7 +82,6 @@ public class Ghost extends NPC {
 
         //     System.out.printf("Zombie Position: %s\n", this.getLocation());
         //     System.out.printf("Player Position: %s\n", player.getLocation());
-
         if (player.overlaps(this) && hitTimer.isTimeUp()) {
             music.playDG();
             player.setPlayerLives(player.getPlayerLivesI() - 1);

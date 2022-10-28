@@ -1,6 +1,7 @@
 package Level;
 
 import Engine.GraphicsHandler;
+import Engine.dayNight;
 import GameObject.Frame;
 import GameObject.SpriteSheet;
 import Utils.Direction;
