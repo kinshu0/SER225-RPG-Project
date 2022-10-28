@@ -20,7 +20,10 @@ public class PauseScreen {
     protected static SpriteFont controlsLabel;
     protected static SpriteFont extrasLabel;
     protected static SpriteFont saveLabel;
-    protected static boolean controlOn = true;
+    protected static boolean controlOn = false;
+    protected static boolean OptionsOn = false;
+    protected static boolean SaveOn = false;
+    protected static boolean exitOn = false;
 
     public static void initPause(){
         // pause logic
@@ -94,24 +97,76 @@ public class PauseScreen {
             saveLabel.setColor(new Color(147, 112, 219));
         }
 
+        menuItemSelected = currentMenuItemHovered;
+        if (Keyboard.isKeyDown(Key.SPACE) && !keyLocker.isKeyLocked(Key.SPACE) && menuItemSelected == 1) {
+            controlOn = !controlOn;
+            keyLocker.lockKey(Key.SPACE);
+        }
+
+        if (controlOn){
+            ControlsScreen.drawControlScreen(graphicsHandler);
+            menuItemSelected = 1;
+        }
+
+        // this unlocks the screen
+        if (Keyboard.isKeyUp(Key.SPACE)) {
+            keyLocker.unlockKey(Key.SPACE);
+        }
+
+        if (Keyboard.isKeyDown(Key.SPACE) && !keyLocker.isKeyLocked(Key.SPACE) && menuItemSelected == 2) {
+            OptionsOn = !OptionsOn;
+            keyLocker.lockKey(Key.SPACE);
+        }
+
+        if (OptionsOn){
+            graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(),
+                    ScreenManager.getScreenHeight(), Color.blue);
+            menuItemSelected = 2;
+        }
+
+        // this unlocks the screen
+        if (Keyboard.isKeyUp(Key.SPACE)) {
+            keyLocker.unlockKey(Key.SPACE);
+        }
+
+        if (Keyboard.isKeyDown(Key.SPACE) && !keyLocker.isKeyLocked(Key.SPACE) && menuItemSelected == 0) {
+            SaveOn = !SaveOn;
+            keyLocker.lockKey(Key.SPACE);
+        }
+
+        if (SaveOn){
+            graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(),
+                    ScreenManager.getScreenHeight(), Color.yellow);
+            menuItemSelected = 0;
+        }
+
+        // this unlocks the screen
+        if (Keyboard.isKeyUp(Key.SPACE)) {
+            keyLocker.unlockKey(Key.SPACE);
+        }
+
+        if (Keyboard.isKeyDown(Key.SPACE) && menuItemSelected == 3) {
+            System.out.println("here");
+            screenCoordinator.setGameState(GameState.MENU);
+            return true;
+        }
+
+        return false;
+    }
+}
+
+/*
         if (Keyboard.isKeyUp(Key.SPACE)) {
             keyLocker.unlockKey(Key.SPACE);
         }
         if (!keyLocker.isKeyLocked(Key.SPACE) && Keyboard.isKeyDown(Key.SPACE)) {
-            menuItemSelected = currentMenuItemHovered;
-            if (menuItemSelected == 3) {
-                screenCoordinator.setGameState(GameState.MENU);
-                return true;
-            } else if (menuItemSelected == 1) {
-                ControlsScreen.drawControlScreen(graphicsHandler);
-            } else if (menuItemSelected == 2) {
-                graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(),
-                        ScreenManager.getScreenHeight(), Color.blue);
-            } else if (menuItemSelected == 0){
-                graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(),
-                        ScreenManager.getScreenHeight(), Color.yellow);
-            }
+
+
+
         }
-        return false;
-    }
-}
+ else if (menuItemSelected == 2) {
+
+            } else if (menuItemSelected == 0){
+
+            }
+ */
