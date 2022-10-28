@@ -143,17 +143,9 @@ public class PlayLevelScreen extends Screen {
 
         winScreen = new WinScreen(this);
         keyTimer.setWaitTime(200);
-
     }
 
     public void update() {
-        // TODO: changing lives is not working atm
-        if (Keyboard.isKeyDown(LIVES_UP_KEY)) {
-            player.setPlayerLives(Math.max(0, Math.min(5, player.getPlayerLivesI() + 1)));
-        } else if (Keyboard.isKeyDown(LIVES_DOWN_KEY)) {
-            player.setPlayerLives(Math.max(0, Math.min(5, player.getPlayerLivesI() - 1)));
-        }
-
         // based on screen state, perform specific actions
         switch (playLevelScreenState) {
             // if level is "running" update player and map to keep game logic for the
