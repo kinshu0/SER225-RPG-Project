@@ -11,6 +11,7 @@ import Level.NPC;
 import Level.Player;
 import Utils.Direction;
 import Utils.Point;
+import Utils.Stopwatch;
 
 import java.util.HashMap;
 
@@ -18,9 +19,11 @@ import java.util.HashMap;
 public class Ghost extends NPC {
 	
     PlayMusic music = new PlayMusic();
+    protected Stopwatch hitTimer = new Stopwatch();
 
     public Ghost(int id, Point location) {
         super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("Ghost.png"), 14, 17), "STAND_LEFT");
+        hitTimer.setWaitTime(500);
     }
 
     @Override
@@ -79,10 +82,10 @@ public class Ghost extends NPC {
         //     System.out.printf("Zombie Position: %s\n", this.getLocation());
         //     System.out.printf("Player Position: %s\n", player.getLocation());
 
-        if (player.overlaps(this)) {
-            // System.out.println("Collision with ghost! Lives should go down!!");
-        	music.playDG();
+        if (player.overlaps(this) && hitTimer.isTimeUp()) {
+            music.playDG();
             player.setPlayerLives(player.getPlayerLivesI() - 1);
+            hitTimer.reset();
         }
     }
 

@@ -15,7 +15,7 @@ public abstract class Player extends GameObject {
     // these should be set in a subclass
     protected float walkSpeed = 0;
 
-    protected int lives = 1000;
+    protected int lives = 50;
     protected int interactionRange = 5;
     protected Direction currentWalkingXDirection;
     protected Direction currentWalkingYDirection;
@@ -233,6 +233,10 @@ public abstract class Player extends GameObject {
     public String getPlayerLives() {
         String livesIntro = "Lives: ";
         return livesIntro.concat(Integer.toString(lives));
+    }
+
+    public int getLives() {
+        return lives;
     }
 
     public int getPlayerLivesI() {

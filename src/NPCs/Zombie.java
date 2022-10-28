@@ -11,6 +11,7 @@ import Level.NPC;
 import Level.Player;
 import Utils.Direction;
 import Utils.Point;
+import Utils.Stopwatch;
 
 import java.util.HashMap;
 
@@ -18,9 +19,14 @@ import java.util.HashMap;
 public class Zombie extends NPC {
 	
     PlayMusic music = new PlayMusic();
+    protected Stopwatch hitTimer = new Stopwatch();
+
+
+
 
     public Zombie(int id, Point location) {
         super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("Zombie.png"), 14, 17), "STAND_LEFT");
+        hitTimer.setWaitTime(500);
     }
 
     @Override
@@ -81,10 +87,10 @@ public class Zombie extends NPC {
         //     System.out.printf("Player Position: %s\n", player.getLocation());
 
         
-        if (player.overlaps(this)) {
-            // System.out.println("Collision with zombie! Lives should go down!!");
+        if (player.overlaps(this) && hitTimer.isTimeUp()) {
         	music.playDG();
             player.setPlayerLives(player.getPlayerLivesI() - 1);
+            hitTimer.reset();
         }
     }
 

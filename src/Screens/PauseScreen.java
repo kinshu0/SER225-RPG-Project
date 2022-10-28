@@ -113,14 +113,13 @@ public class PauseScreen {
             keyLocker.unlockKey(Key.SPACE);
         }
 
-        if (Keyboard.isKeyDown(Key.SPACE) && !keyLocker.isKeyLocked(Key.SPACE) && menuItemSelected == 2) {
+        if (Keyboard.isKeyDown(Key.SPACE) && !keyLocker.isKeyLocked(Key.SPACE) && menuItemSelected == 0) {
             OptionsOn = !OptionsOn;
             keyLocker.lockKey(Key.SPACE);
         }
 
         if (OptionsOn){
-            graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(),
-                    ScreenManager.getScreenHeight(), Color.blue);
+            OptionsClass.drawOptionScreen(graphicsHandler);
             menuItemSelected = 2;
         }
 
@@ -129,14 +128,13 @@ public class PauseScreen {
             keyLocker.unlockKey(Key.SPACE);
         }
 
-        if (Keyboard.isKeyDown(Key.SPACE) && !keyLocker.isKeyLocked(Key.SPACE) && menuItemSelected == 0) {
+        if (Keyboard.isKeyDown(Key.SPACE) && !keyLocker.isKeyLocked(Key.SPACE) && menuItemSelected == 2) {
             SaveOn = !SaveOn;
             keyLocker.lockKey(Key.SPACE);
         }
 
         if (SaveOn){
-            graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(),
-                    ScreenManager.getScreenHeight(), Color.yellow);
+            ExtraScreen.drawOptionScreen(graphicsHandler);
             menuItemSelected = 0;
         }
 
@@ -146,7 +144,6 @@ public class PauseScreen {
         }
 
         if (Keyboard.isKeyDown(Key.SPACE) && menuItemSelected == 3) {
-            System.out.println("here");
             screenCoordinator.setGameState(GameState.MENU);
             return true;
         }

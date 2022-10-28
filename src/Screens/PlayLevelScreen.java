@@ -185,6 +185,12 @@ public class PlayLevelScreen extends Screen {
                 break;
         }
 
+        // death screen
+        if (player.getLives() <= 0) {
+            screenCoordinator.setGameState(GameState.DEATH);
+        }
+
+
         // if flag is set at any point during gameplay, game is "won"
         if (map.getFlagManager().isFlagSet("hasFoundBall")) {
             playLevelScreenState = PlayLevelScreenState.LEVEL_COMPLETED;
@@ -192,16 +198,7 @@ public class PlayLevelScreen extends Screen {
     }
 
     public void draw(GraphicsHandler graphicsHandler) {
-        // **pause screen**
-
-        if (Inventory.getSize() > 1) {
-            float xLoc = player.getX();
-            float yLoc = player.getY();
-            this.player1.setLocation(xLoc, yLoc);
-            player = player1;
-            // System.out.println(map.getPlayerStartPosition().x);
-        }
-
+        // **start pause screen**
         // this is what tells if the key is down
         if (Keyboard.isKeyDown(pauseKey) && !keyLocker.isKeyLocked(pauseKey)) {
             GamePanel.setIsGamePaused(!GamePanel.isGamePaused());
@@ -218,6 +215,16 @@ public class PlayLevelScreen extends Screen {
         // this unlocks the screen
         if (Keyboard.isKeyUp(pauseKey)) {
             keyLocker.unlockKey(pauseKey);
+        }
+
+        // **end pause screen**
+
+        if (Inventory.getSize() > 1) {
+            float xLoc = player.getX();
+            float yLoc = player.getY();
+            this.player1.setLocation(xLoc, yLoc);
+            player = player1;
+            // System.out.println(map.getPlayerStartPosition().x);
         }
 
         // ** crafting screen **
