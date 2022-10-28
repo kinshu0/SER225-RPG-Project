@@ -21,27 +21,22 @@ import java.awt.image.BufferedImage;
 
 // This class is for when the platformer game is actually being played
 public class PlayLevelScreen extends Screen {
-    protected int currentMenuItemHovered = 0;
+
     protected int xInvSelect = 0;
     protected int yInvSelect = 0;
     protected int boxSel = 1;
-    protected int menuItemSelected = -1;
+
     protected ScreenCoordinator screenCoordinator;
-    protected Stopwatch keyTimer = new Stopwatch();
     protected Map map;
     protected Player player;
     protected Player player1;
     protected SpriteFont livesLabels;
     protected SpriteFont timeLabels;
-    private SpriteFont pauseLabel;
     protected SpriteFont craftingLabel;
     protected SpriteFont inventoryLabel;
-    protected SpriteFont optionsLabel;
-    protected SpriteFont controlsLabel;
-    protected SpriteFont extrasLabel;
-    protected SpriteFont saveLabel;
-    protected SpriteFont pauselivesLabels;
-    protected SpriteFont TimelivesLabels;
+
+    protected Stopwatch keyTimer = new Stopwatch();
+
 
     BufferedImage rect = ImageLoader.load("rect.png");
     BufferedImage Axe = ImageLoader.load("Axe.png");
@@ -137,35 +132,6 @@ public class PlayLevelScreen extends Screen {
         timeLabels.setOutlineColor(Color.white);
         timeLabels.setOutlineThickness(3);
 
-        // pause logic
-        pauseLabel = new SpriteFont("PAUSE SCREEN", 325, 50, "Comic Sans", 24, Color.white);
-        pauseLabel.setOutlineColor(Color.black);
-        pauseLabel.setOutlineThickness(2.0f);
-
-        optionsLabel = new SpriteFont("Options", 380, 100, "Comic Sans", 24, Color.white);
-        optionsLabel.setOutlineColor(Color.white);
-        optionsLabel.setOutlineThickness(2.0f);
-
-        controlsLabel = new SpriteFont("Controls", 375, 175, "Comic Sans", 24, Color.white);
-        controlsLabel.setOutlineColor(Color.white);
-        controlsLabel.setOutlineThickness(2.0f);
-
-        extrasLabel = new SpriteFont("Extras", 385, 250, "Comic Sans", 24, Color.white);
-        extrasLabel.setOutlineColor(Color.white);
-        extrasLabel.setOutlineThickness(2.0f);
-
-        saveLabel = new SpriteFont("Exit", 390, 325, "Comic Sans", 24, Color.white);
-        saveLabel.setOutlineColor(Color.white);
-        saveLabel.setOutlineThickness(2.0f);
-
-        pauselivesLabels = new SpriteFont(player.getPlayerLives(), 10, 550, "Comic Sans", 24, Color.black);
-        pauselivesLabels.setOutlineColor(Color.black);
-        pauselivesLabels.setOutlineThickness(3);
-
-        TimelivesLabels = new SpriteFont("Time: 3:00", 650, 550, "Comic Sans", 24, Color.black);
-        TimelivesLabels.setOutlineColor(Color.black);
-        TimelivesLabels.setOutlineThickness(3);
-
         // crafting logic
         craftingLabel = new SpriteFont("Crafting", 400, 500, "Comic Sans", 24, Color.white);
         craftingLabel.setOutlineColor(Color.black);
@@ -176,8 +142,11 @@ public class PlayLevelScreen extends Screen {
         inventoryLabel.setOutlineColor(Color.black);
         inventoryLabel.setOutlineThickness(2.0f);
 
+        PauseScreen.initPause();
+
         winScreen = new WinScreen(this);
         keyTimer.setWaitTime(200);
+
     }
 
     public void update() {
@@ -241,72 +210,9 @@ public class PlayLevelScreen extends Screen {
 
         // this is what actually draws it
         if (GamePanel.isGamePaused()) {
-            // graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(),
-            // ScreenManager.getScreenHeight(), new Color(234, 221, 202));
-            pauseLabel.draw(graphicsHandler);
-            optionsLabel.draw(graphicsHandler);
-            controlsLabel.draw(graphicsHandler);
-            extrasLabel.draw(graphicsHandler);
-            saveLabel.draw(graphicsHandler);
-            pauselivesLabels.draw(graphicsHandler);
-            TimelivesLabels.draw(graphicsHandler);
-
-            if (Keyboard.isKeyDown(Key.DOWN) && keyTimer.isTimeUp()) {
-                keyTimer.reset();
-                currentMenuItemHovered++;
-                // System.out.println(currentMenuItemHovered);
-            } else if (Keyboard.isKeyDown(Key.UP) && keyTimer.isTimeUp()) {
-                keyTimer.reset();
-                currentMenuItemHovered--;
+            if (PauseScreen.drawPause(graphicsHandler, keyTimer, screenCoordinator, keyLocker)){
+                GamePanel.setIsGamePaused(false);
             }
-
-            // if down is pressed on last menu item or up is pressed on first menu item,
-            // "loop" the selection back around to the beginning/end
-            if (currentMenuItemHovered > 3) {
-                currentMenuItemHovered = 0;
-            } else if (currentMenuItemHovered < 0) {
-                currentMenuItemHovered = 3;
-            }
-
-            if (currentMenuItemHovered == 0) {
-                optionsLabel.setColor(new Color(147, 112, 219));
-                controlsLabel.setColor(new Color(49, 207, 240));
-                extrasLabel.setColor(new Color(49, 207, 240));
-                saveLabel.setColor(new Color(49, 207, 240));
-            } else if (currentMenuItemHovered == 1) {
-                optionsLabel.setColor(new Color(49, 207, 240));
-                controlsLabel.setColor(new Color(147, 112, 219));
-                extrasLabel.setColor(new Color(49, 207, 240));
-                saveLabel.setColor(new Color(49, 207, 240));
-            } else if (currentMenuItemHovered == 2) {
-                optionsLabel.setColor(new Color(49, 207, 240));
-                controlsLabel.setColor(new Color(49, 207, 240));
-                extrasLabel.setColor(new Color(147, 112, 219));
-                saveLabel.setColor(new Color(49, 207, 240));
-            } else if (currentMenuItemHovered == 3) {
-                optionsLabel.setColor(new Color(49, 207, 240));
-                controlsLabel.setColor(new Color(49, 207, 240));
-                extrasLabel.setColor(new Color(49, 207, 240));
-                saveLabel.setColor(new Color(147, 112, 219));
-            }
-
-            if (Keyboard.isKeyUp(Key.SPACE)) {
-                keyLocker.unlockKey(Key.SPACE);
-            }
-            if (!keyLocker.isKeyLocked(Key.SPACE) && Keyboard.isKeyDown(Key.SPACE)) {
-                menuItemSelected = currentMenuItemHovered;
-                if (menuItemSelected == 3) {
-                    screenCoordinator.setGameState(GameState.MENU);
-                } else if (menuItemSelected == 1) {
-                    graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(),
-                            ScreenManager.getScreenHeight(), Color.white);
-                } else if (menuItemSelected == 2) {
-                    graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(),
-                            ScreenManager.getScreenHeight(), Color.blue);
-                }
-            }
-            graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(),
-                    new Color(0, 0, 0, 100));
         }
 
         // this unlocks the screen
