@@ -1,7 +1,9 @@
 package Level;
 
+import Engine.DayNight.Cycle;
 import Engine.GraphicsHandler;
 import Engine.ScreenManager;
+import Engine.dayNight;
 import GameObject.GameObject;
 import GameObject.Rectangle;
 
@@ -49,7 +51,10 @@ public class Camera extends Rectangle {
 
     public void update(Player player) {
         updateMapTiles();
-        updateMapEntities(player);
+        //System.out.println(Cycle.getStateNight());
+        if(Boolean.TRUE.equals(Cycle.getStateNight())){
+            updateMapEntities(player);
+        }
         updateScripts();
     }
 

@@ -3,7 +3,7 @@ package Engine.DayNight;
 import Engine.PlayMusic;
 
 public class Cycle extends Time {
-	protected State state;
+	protected static State state;
 	private static final int MIDNIGHT = 0;
 	private static final int NOON = 12;
 	private static final int SUNSET = 1120 * 60;
@@ -16,6 +16,13 @@ public class Cycle extends Time {
 
 	public State getState() {
 		return state;
+	}
+
+	public static Boolean getStateNight() {
+		if (State.NIGHT == state){
+			return true;
+		}
+		return null;
 	}
 
 	public void setState(State newState) {

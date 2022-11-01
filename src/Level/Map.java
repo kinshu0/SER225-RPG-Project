@@ -348,6 +348,11 @@ public abstract class Map {
         this.npcs.add(npc);
     }
 
+    public void claerNPC() {
+        this.npcs.clear();
+
+    }
+
     // add a trigger to the map's list of triggers
     public void addTrigger(Trigger trigger) {
         trigger.setMap(this);

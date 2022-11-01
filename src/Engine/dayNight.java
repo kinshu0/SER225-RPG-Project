@@ -38,6 +38,7 @@ public class dayNight {
 
     public static boolean isNight(){
         if (((count_updates % 3600) / 60 > 30 ? "Day" : "Night") == "Night"){
+            //System.out.println("true");
             return true;
         }
         return false;
