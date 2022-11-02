@@ -158,6 +158,7 @@ public class PlayLevelScreen extends Screen {
             case RUNNING:
                 player.update();
                 map.update(player);
+                baseLabel.setText(base.getBaseHealthS());
                 livesLabels.setText(player.getPlayerLives());
                 timeLabels = dayNight.drawDayNight(runState);
                 break;

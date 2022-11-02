@@ -9,8 +9,8 @@ public class base {
         return baseHealth;
     }
 
-    public static void setBaseHealth(int baseHealth) {
-        baseHealth = baseHealth;
+    public static void baseDam() {
+        baseHealth = baseHealth - 1;
     }
 
     public static String getBaseHealthS(){

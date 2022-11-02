@@ -23,7 +23,15 @@ public class Zombie extends NPC {
     PlayMusic music = new PlayMusic();
     protected Stopwatch hitTimer = new Stopwatch();
 
+<<<<<<< HEAD
     static int lives = 5;
+=======
+    int lives;
+
+    float dx;
+    float dy;
+
+>>>>>>> d0b9243499dcd0c63b379395c4e234c3f32fb630
 
     public Zombie(int id, Point location) {
         super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("Zombie.png"), 14, 17), "STAND_LEFT");
@@ -79,12 +87,27 @@ public class Zombie extends NPC {
     public void update(Player player) {
         super.update(player);
 
+<<<<<<< HEAD
         float dx = 1 - this.getLocation().x;
         float dy = 1 - this.getLocation().y;
+=======
+        if(this.getLocation().x > 480){
+            dx = 1 - this.getLocation().x;
+        } else if (this.getLocation().x < 520) {
+            dx = 1 + this.getLocation().x;
+        }
+
+        if(this.getLocation().y > 480 ){
+            dy = 1 - this.getLocation().x;
+        } else if (this.getLocation().y < 520) {
+            dy = 1 + this.getLocation().y;
+        }
+>>>>>>> d0b9243499dcd0c63b379395c4e234c3f32fb630
 
         this.walk(dx > 0 ? Direction.RIGHT : Direction.LEFT, 1);
         this.walk(dy > 0 ? Direction.DOWN : Direction.UP, 1);
 
+<<<<<<< HEAD
         System.out.printf("Zombie Position: %s\n", this.getLocation());
         System.out.printf("Player Position: %s\n", player.getLocation());
 
@@ -94,6 +117,26 @@ public class Zombie extends NPC {
             hitTimer.reset();
         }
 
+=======
+        if(this.getLocation().x == 480 && hitTimer.isTimeUp()){
+            base.baseDam();
+            hitTimer.reset();
+        } else if (this.getLocation().x == 520 && hitTimer.isTimeUp()) {
+            base.baseDam();
+            hitTimer.reset();
+        } else if(this.getLocation().y == 480 && hitTimer.isTimeUp()){
+            base.baseDam();
+            hitTimer.reset();
+        } else if (this.getLocation().y == 520 && hitTimer.isTimeUp()) {
+            base.baseDam();
+            hitTimer.reset();
+        }
+
+         //System.out.printf("Zombie Position: %s\n", this.getLocation());
+         //System.out.printf("Player Position: %s\n", player.getLocation());
+
+        
+>>>>>>> d0b9243499dcd0c63b379395c4e234c3f32fb630
         if (player.overlaps(this) && hitTimer.isTimeUp()) {
             music.playDG();
             lives = lives - 1;
