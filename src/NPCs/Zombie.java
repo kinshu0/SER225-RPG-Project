@@ -22,9 +22,10 @@ public class Zombie extends NPC {
     PlayMusic music = new PlayMusic();
     protected Stopwatch hitTimer = new Stopwatch();
 
-    int lives = 5;
+    int lives;
 
-
+    float dx;
+    float dy;
 
 
     public Zombie(int id, Point location) {
@@ -79,21 +80,38 @@ public class Zombie extends NPC {
     @Override
     public void update(Player player) {
         super.update(player);
-            
-        float dx = 1 - this.getLocation().x;
-        float dy = 1 - this.getLocation().y;
+
+        if(this.getLocation().x > 480){
+            dx = 1 - this.getLocation().x;
+        } else if (this.getLocation().x < 520) {
+            dx = 1 + this.getLocation().x;
+        }
+
+        if(this.getLocation().y > 480 ){
+            dy = 1 - this.getLocation().x;
+        } else if (this.getLocation().y < 520) {
+            dy = 1 + this.getLocation().y;
+        }
 
         this.walk(dx > 0 ? Direction.RIGHT : Direction.LEFT, 1);
         this.walk(dy > 0 ? Direction.DOWN : Direction.UP, 1);
 
-             System.out.printf("Zombie Position: %s\n", this.getLocation());
-             System.out.printf("Player Position: %s\n", player.getLocation());
-
-        if (this.getLocation().x < 1.0 && this.getLocation().y > 1.0 && hitTimer.isTimeUp()) {
-            System.out.println("here");
-            base.setBaseHealth(5 - base.getBaseHealth());
+        if(this.getLocation().x == 480 && hitTimer.isTimeUp()){
+            base.baseDam();
+            hitTimer.reset();
+        } else if (this.getLocation().x == 520 && hitTimer.isTimeUp()) {
+            base.baseDam();
+            hitTimer.reset();
+        } else if(this.getLocation().y == 480 && hitTimer.isTimeUp()){
+            base.baseDam();
+            hitTimer.reset();
+        } else if (this.getLocation().y == 520 && hitTimer.isTimeUp()) {
+            base.baseDam();
             hitTimer.reset();
         }
+
+         //System.out.printf("Zombie Position: %s\n", this.getLocation());
+         //System.out.printf("Player Position: %s\n", player.getLocation());
 
         
         if (player.overlaps(this) && hitTimer.isTimeUp()) {
