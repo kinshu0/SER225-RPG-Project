@@ -148,6 +148,7 @@ public class PlayLevelScreen extends Screen {
 
         winScreen = new WinScreen(this);
         keyTimer.setWaitTime(200);
+        base.setBaseHealth(100);
     }
 
     public void update() {

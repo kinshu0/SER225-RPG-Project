@@ -9,6 +9,10 @@ public class base {
         return baseHealth;
     }
 
+    public static void setBaseHealth(int baseHealth1){
+        baseHealth = baseHealth1;
+    }
+
     public static void baseDam() {
         baseHealth = baseHealth - 1;
     }
