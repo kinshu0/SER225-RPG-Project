@@ -34,6 +34,7 @@ public class PlayLevelScreen extends Screen {
     protected SpriteFont timeLabels;
     protected SpriteFont craftingLabel;
     protected SpriteFont inventoryLabel;
+    protected SpriteFont baseLabel;
 
     protected Stopwatch keyTimer = new Stopwatch();
 
@@ -126,6 +127,10 @@ public class PlayLevelScreen extends Screen {
         livesLabels.setOutlineColor(Color.white);
         livesLabels.setOutlineThickness(3);
 
+        // crafting logic
+        baseLabel = new SpriteFont(base.getBaseHealthS(), 10, 90, "Comic Sans", 30, Color.black);
+        baseLabel.setOutlineColor(Color.white);
+        baseLabel.setOutlineThickness(3);
 
 
         // crafting logic
@@ -390,6 +395,7 @@ public class PlayLevelScreen extends Screen {
 
                     livesLabels.draw(graphicsHandler);
                     timeLabels.draw(graphicsHandler);
+                    baseLabel.draw(graphicsHandler);
 
                     for (int i = 250; i < 550; i += 50) {
                         graphicsHandler.drawImage(rect, i, 500, 50, 50);

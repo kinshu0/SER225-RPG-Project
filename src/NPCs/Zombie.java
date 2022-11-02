@@ -9,6 +9,7 @@ import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
 import Level.NPC;
 import Level.Player;
+import Level.base;
 import Utils.Direction;
 import Utils.Point;
 import Utils.Stopwatch;
@@ -20,6 +21,8 @@ public class Zombie extends NPC {
 	
     PlayMusic music = new PlayMusic();
     protected Stopwatch hitTimer = new Stopwatch();
+
+    int lives = 5;
 
 
 
@@ -77,18 +80,26 @@ public class Zombie extends NPC {
     public void update(Player player) {
         super.update(player);
             
-        float dx = player.getLocation().x - this.getLocation().x;
-        float dy = player.getLocation().y - this.getLocation().y;
+        float dx = 1 - this.getLocation().x;
+        float dy = 1 - this.getLocation().y;
 
         this.walk(dx > 0 ? Direction.RIGHT : Direction.LEFT, 1);
         this.walk(dy > 0 ? Direction.DOWN : Direction.UP, 1);
 
-        //     System.out.printf("Zombie Position: %s\n", this.getLocation());
-        //     System.out.printf("Player Position: %s\n", player.getLocation());
+             System.out.printf("Zombie Position: %s\n", this.getLocation());
+             System.out.printf("Player Position: %s\n", player.getLocation());
+
+        if (this.getLocation().x < 1.0 && this.getLocation().y > 1.0 && hitTimer.isTimeUp()) {
+            System.out.println("here");
+            base.setBaseHealth(5 - base.getBaseHealth());
+            hitTimer.reset();
+        }
 
         
         if (player.overlaps(this) && hitTimer.isTimeUp()) {
         	music.playDG();
+            lives = lives - 1;
+            System.out.println(lives);
             player.setPlayerLives(player.getPlayerLivesI() - 1);
             hitTimer.reset();
         }
