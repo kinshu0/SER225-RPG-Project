@@ -20,16 +20,22 @@ public class Camera extends Rectangle {
     // width and height of each tile in the map (the map's tileset has this info)
     private int tileWidth, tileHeight;
 
-    // if the screen is covered in full length tiles, often there will be some extra room that doesn't quite have enough space for another entire tile
-    // this leftover space keeps track of that "extra" space, which is needed to calculate the camera's current "end" position on the screen (in map coordinates, not screen coordinates)
+    // if the screen is covered in full length tiles, often there will be some extra
+    // room that doesn't quite have enough space for another entire tile
+    // this leftover space keeps track of that "extra" space, which is needed to
+    // calculate the camera's current "end" position on the screen (in map
+    // coordinates, not screen coordinates)
     private int leftoverSpaceX, leftoverSpaceY;
 
-    // current map entities that are to be included in this frame's update/draw cycle
+    // current map entities that are to be included in this frame's update/draw
+    // cycle
     private ArrayList<EnhancedMapTile> activeEnhancedMapTiles = new ArrayList<>();
     private ArrayList<NPC> activeNPCs = new ArrayList<>();
     private ArrayList<Trigger> activeTriggers = new ArrayList<>();
 
-    // determines how many tiles off screen an entity can be before it will be deemed inactive and not included in the update/draw cycles until it comes back in range
+    // determines how many tiles off screen an entity can be before it will be
+    // deemed inactive and not included in the update/draw cycles until it comes
+    // back in range
     private final int UPDATE_OFF_SCREEN_RANGE = 4;
 
     public Camera(int startX, int startY, int tileWidth, int tileHeight, Map map) {
@@ -41,8 +47,10 @@ public class Camera extends Rectangle {
         this.leftoverSpaceY = ScreenManager.getScreenHeight() % tileHeight;
     }
 
-    // gets the tile index that the camera's x and y values are currently on (top left tile)
-    // this is used to determine a starting place for the rectangle of area the camera currently contains on the map
+    // gets the tile index that the camera's x and y values are currently on (top
+    // left tile)
+    // this is used to determine a starting place for the rectangle of area the
+    // camera currently contains on the map
     public Point getTileIndexByCameraPosition() {
         int xIndex = Math.round(getX()) / tileWidth;
         int yIndex = Math.round(getY()) / tileHeight;
@@ -51,8 +59,8 @@ public class Camera extends Rectangle {
 
     public void update(Player player) {
         updateMapTiles();
-        //System.out.println(Cycle.getStateNight());
-        if(Boolean.TRUE.equals(Cycle.getStateNight())){
+        // System.out.println(Cycle.getStateNight());
+        if (Boolean.TRUE.equals(Cycle.getStateNight())) {
             updateMapEntities(player);
         }
         updateScripts();
@@ -66,7 +74,8 @@ public class Camera extends Rectangle {
     }
 
     // update map entities currently a part of the update/draw cycle
-    // active entities are calculated each frame using the loadActiveEntity methods below
+    // active entities are calculated each frame using the loadActiveEntity methods
+    // below
     public void updateMapEntities(Player player) {
         activeEnhancedMapTiles = loadActiveEnhancedMapTiles();
         activeNPCs = loadActiveNPCs();
@@ -97,7 +106,8 @@ public class Camera extends Rectangle {
         }
     }
 
-    // determine which enhanced map tiles are active (exist and are within range of the camera)
+    // determine which enhanced map tiles are active (exist and are within range of
+    // the camera)
     private ArrayList<EnhancedMapTile> loadActiveEnhancedMapTiles() {
         ArrayList<EnhancedMapTile> activeEnhancedMapTiles = new ArrayList<>();
         for (int i = map.getEnhancedMapTiles().size() - 1; i >= 0; i--) {
@@ -137,7 +147,8 @@ public class Camera extends Rectangle {
         return activeNPCs;
     }
 
-    // determine which trigger map tiles are active (exist and are within range of the camera)
+    // determine which trigger map tiles are active (exist and are within range of
+    // the camera)
     private ArrayList<Trigger> loadActiveTriggers() {
         ArrayList<Trigger> activeTriggers = new ArrayList<>();
         for (int i = map.getTriggers().size() - 1; i >= 0; i--) {
@@ -158,15 +169,18 @@ public class Camera extends Rectangle {
     }
 
     /*
-        determines if map entity (enemy, enhanced map tile, or npc) is active by the camera's standards
-        1. if entity's status is REMOVED, it is not active, no questions asked
-        2. if an entity is hidden, it is not active
-        3. if entity's status is not REMOVED and the entity is not hidden, then there's additional checks that take place:
-            1. if entity's isUpdateOffScreen attribute is true, it is active
-            2. OR if the camera determines that it is in its boundary range, it is active
+     * determines if map entity (enemy, enhanced map tile, or npc) is active by the
+     * camera's standards
+     * 1. if entity's status is REMOVED, it is not active, no questions asked
+     * 2. if an entity is hidden, it is not active
+     * 3. if entity's status is not REMOVED and the entity is not hidden, then
+     * there's additional checks that take place:
+     * 1. if entity's isUpdateOffScreen attribute is true, it is active
+     * 2. OR if the camera determines that it is in its boundary range, it is active
      */
     private boolean isMapEntityActive(MapEntity mapEntity) {
-        return mapEntity.getMapEntityStatus() != MapEntityStatus.REMOVED && !mapEntity.isHidden() && mapEntity.exists() && (mapEntity.isUpdateOffScreen() || containsUpdate(mapEntity));
+        return mapEntity.getMapEntityStatus() != MapEntityStatus.REMOVED && !mapEntity.isHidden() && mapEntity.exists()
+                && (mapEntity.isUpdateOffScreen() || containsUpdate(mapEntity));
     }
 
     public void draw(GraphicsHandler graphicsHandler) {
@@ -181,8 +195,10 @@ public class Camera extends Rectangle {
     }
 
     // draws the bottom layer of visible map tiles to the screen
-    // this is different than "active" map tiles as determined in the update method -- there is no reason to actually draw to screen anything that can't be seen
-    // so this does not include the extra range granted by the UPDATE_OFF_SCREEN_RANGE value
+    // this is different than "active" map tiles as determined in the update method
+    // -- there is no reason to actually draw to screen anything that can't be seen
+    // so this does not include the extra range granted by the
+    // UPDATE_OFF_SCREEN_RANGE value
     public void drawMapTilesBottomLayer(GraphicsHandler graphicsHandler) {
         Point tileIndex = getTileIndexByCameraPosition();
         for (int i = tileIndex.y - 1; i <= tileIndex.y + height + 1; i++) {
@@ -224,15 +240,15 @@ public class Camera extends Rectangle {
     public void drawMapEntities(Player player, GraphicsHandler graphicsHandler) {
         ArrayList<NPC> drawNpcsAfterPlayer = new ArrayList<>();
 
-        // goes through each active npc and determines if it should be drawn at this time based on their location relative to the player
+        // goes through each active npc and determines if it should be drawn at this
+        // time based on their location relative to the player
         // if drawn here, npc will later be "overlapped" by player
         // if drawn later, npc will "cover" player
         for (NPC npc : activeNPCs) {
             if (containsDraw(npc)) {
-                if (npc.getBounds().getY() < player.getBounds().getY1()  + (player.getBounds().getHeight() / 2f)) {
+                if (npc.getBounds().getY() < player.getBounds().getY1() + (player.getBounds().getHeight() / 2f)) {
                     npc.draw(graphicsHandler);
-                }
-                else {
+                } else {
                     drawNpcsAfterPlayer.add(npc);
                 }
             }
@@ -242,7 +258,7 @@ public class Camera extends Rectangle {
         player.draw(graphicsHandler);
 
         // npcs determined to be drawn after player from the above step are drawn here
-        if(Boolean.TRUE.equals(Cycle.getStateNight())){
+        if (Boolean.TRUE.equals(Cycle.getStateNight())) {
             for (NPC npc : drawNpcsAfterPlayer) {
                 npc.draw(graphicsHandler);
             }
@@ -251,28 +267,30 @@ public class Camera extends Rectangle {
         // Uncomment this to see triggers drawn on screen
         // helps for placing them in the correct spot/debugging
         /*
-        for (Trigger trigger : activeTriggers) {
-            if (containsDraw(trigger)) {
-                trigger.draw(graphicsHandler);
-            }
-        }
-        */
+         * for (Trigger trigger : activeTriggers) {
+         * if (containsDraw(trigger)) {
+         * trigger.draw(graphicsHandler);
+         * }
+         * }
+         */
     }
-
 
     // checks if a game object's position falls within the camera's current radius
     public boolean containsUpdate(GameObject gameObject) {
         return getX1() - (tileWidth * UPDATE_OFF_SCREEN_RANGE) < gameObject.getX() + gameObject.getWidth() &&
                 getEndBoundX() + (tileWidth * UPDATE_OFF_SCREEN_RANGE) > gameObject.getX() &&
-                getY1() - (tileHeight * UPDATE_OFF_SCREEN_RANGE) <  gameObject.getY() + gameObject.getHeight()
+                getY1() - (tileHeight * UPDATE_OFF_SCREEN_RANGE) < gameObject.getY() + gameObject.getHeight()
                 && getEndBoundY() + (tileHeight * UPDATE_OFF_SCREEN_RANGE) > gameObject.getY();
     }
 
     // checks if a game object's position falls within the camera's current radius
-    // this does not include the extra range granted by the UPDATE_OFF_SCREEN_RANGE value, because there is no point to drawing graphics that can't be seen
+    // this does not include the extra range granted by the UPDATE_OFF_SCREEN_RANGE
+    // value, because there is no point to drawing graphics that can't be seen
     public boolean containsDraw(GameObject gameObject) {
-        return getX1() - tileWidth < gameObject.getX() + gameObject.getWidth() && getEndBoundX() + tileWidth > gameObject.getX() &&
-                getY1() - tileHeight <  gameObject.getY() + gameObject.getHeight() && getEndBoundY() + tileHeight >  gameObject.getY();
+        return getX1() - tileWidth < gameObject.getX() + gameObject.getWidth()
+                && getEndBoundX() + tileWidth > gameObject.getX() &&
+                getY1() - tileHeight < gameObject.getY() + gameObject.getHeight()
+                && getEndBoundY() + tileHeight > gameObject.getY();
     }
 
     public ArrayList<EnhancedMapTile> getActiveEnhancedMapTiles() {
