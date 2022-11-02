@@ -3,7 +3,7 @@ package Level;
 public class base {
 
     // base health
-    static int baseHealth = 200;
+    static int baseHealth = 50;
 
     public static int getBaseHealth() {
         return baseHealth;

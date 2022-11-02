@@ -169,7 +169,7 @@ public class PlayLevelScreen extends Screen {
         }
 
         // death screen
-        if (player.getLives() <= 0) {
+        if (base.getBaseHealth() <= 0 || player.getPlayerLivesI() <= 0) {
             screenCoordinator.setGameState(GameState.DEATH);
         }
 
