@@ -23,7 +23,7 @@ public class Zombie extends NPC {
     PlayMusic music = new PlayMusic();
     protected Stopwatch hitTimer = new Stopwatch();
 
-    static int lives = 5;
+    int lives = 5;
 
     float dx;
     float dy;
@@ -82,13 +82,13 @@ public class Zombie extends NPC {
     public void update(Player player) {
         super.update(player);
 
-        if(this.getLocation().x > 480){
+        if (this.getLocation().x > 480) {
             dx = 1 - this.getLocation().x;
         } else if (this.getLocation().x < 520) {
             dx = 1 + this.getLocation().x;
         }
 
-        if(this.getLocation().y > 480 ){
+        if (this.getLocation().y > 480) {
             dy = 1 - this.getLocation().x;
         } else if (this.getLocation().y < 520) {
             dy = 1 + this.getLocation().y;
@@ -97,13 +97,13 @@ public class Zombie extends NPC {
         this.walk(dx > 0 ? Direction.RIGHT : Direction.LEFT, 1);
         this.walk(dy > 0 ? Direction.DOWN : Direction.UP, 1);
 
-        if(this.getLocation().x == 480 && hitTimer.isTimeUp()){
+        if (this.getLocation().x == 480 && hitTimer.isTimeUp()) {
             base.baseDam();
             hitTimer.reset();
         } else if (this.getLocation().x == 520 && hitTimer.isTimeUp()) {
             base.baseDam();
             hitTimer.reset();
-        } else if(this.getLocation().y == 480 && hitTimer.isTimeUp()){
+        } else if (this.getLocation().y == 480 && hitTimer.isTimeUp()) {
             base.baseDam();
             hitTimer.reset();
         } else if (this.getLocation().y == 520 && hitTimer.isTimeUp()) {
@@ -111,10 +111,10 @@ public class Zombie extends NPC {
             hitTimer.reset();
         }
 
-         //System.out.printf("Zombie Position: %s\n", this.getLocation());
-         //System.out.printf("Player Position: %s\n", player.getLocation());
+        // System.out.printf("Zombie Position: %s\n", this.getLocation());
+        // System.out.printf("Player Position: %s\n", player.getLocation());
 
-        if (player.overlaps(this)) {
+        if (player.overlaps(this) && hitTimer.isTimeUp()) {
             music.playDG();
             lives = lives - 1;
             System.out.println(lives);
