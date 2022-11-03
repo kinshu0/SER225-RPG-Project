@@ -1,6 +1,5 @@
 package Maps;
 
-import Engine.dayNight;
 import EnhancedMapTiles.*;
 import Level.EnhancedMapTile;
 import Level.Map;

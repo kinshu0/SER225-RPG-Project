@@ -1,9 +1,7 @@
 package Level;
 
-import Engine.DayNight.Cycle;
 import Engine.GraphicsHandler;
 import Engine.ScreenManager;
-import Engine.dayNight;
 import GameObject.GameObject;
 import GameObject.Rectangle;
 
@@ -60,9 +58,11 @@ public class Camera extends Rectangle {
     public void update(Player player) {
         updateMapTiles();
         // System.out.println(Cycle.getStateNight());
-        if (Boolean.TRUE.equals(Cycle.getStateNight())) {
-            updateMapEntities(player);
-        }
+
+        // TODO: Fix reference
+        // if (Boolean.TRUE.equals(Cycle.getStateNight())) {
+        //     updateMapEntities(player);
+        // }
         updateScripts();
     }
 
@@ -258,6 +258,12 @@ public class Camera extends Rectangle {
         player.draw(graphicsHandler);
 
         // npcs determined to be drawn after player from the above step are drawn here
+        // TODO: fix reference
+        // if (Boolean.TRUE.equals(Cycle.getStateNight())) {
+        //     for (NPC npc : drawNpcsAfterPlayer) {
+        //         npc.draw(graphicsHandler);
+        //     }
+        // }
         for (NPC npc : drawNpcsAfterPlayer) {
             npc.draw(graphicsHandler);
         }

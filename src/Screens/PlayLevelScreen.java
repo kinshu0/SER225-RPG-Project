@@ -1,8 +1,6 @@
 package Screens;
 
 import Engine.*;
-import Engine.DayNight.RunState;
-import Engine.DayNight.State;
 import Game.GameState;
 import Game.ScreenCoordinator;
 import Level.*;
@@ -63,8 +61,6 @@ public class PlayLevelScreen extends Screen {
     private KeyLocker keyLocker = new KeyLocker();
     private final Key pauseKey = Key.P;
 
-    // private int count_updates = 0;
-    private RunState runState = new RunState();
 
     public PlayLevelScreen(ScreenCoordinator screenCoordinator) {
         this.screenCoordinator = screenCoordinator;
@@ -127,6 +123,12 @@ public class PlayLevelScreen extends Screen {
         livesLabels.setOutlineColor(Color.white);
         livesLabels.setOutlineThickness(3);
 
+        
+        // lives
+        timeLabels = new SpriteFont("", 10, 30, "Comic Sans", 30, Color.black);
+        timeLabels.setOutlineColor(Color.white);
+        timeLabels.setOutlineThickness(3);
+
         // crafting logic
         baseLabel = new SpriteFont(base.getBaseHealthS(), 10, 90, "Comic Sans", 30, Color.black);
         baseLabel.setOutlineColor(Color.white);
@@ -143,8 +145,9 @@ public class PlayLevelScreen extends Screen {
         inventoryLabel.setOutlineColor(Color.black);
         inventoryLabel.setOutlineThickness(2.0f);
 
+
+
         PauseScreen.initPause();
-        dayNight.initDayNight();
 
         winScreen = new WinScreen(this);
         keyTimer.setWaitTime(200);
@@ -161,7 +164,8 @@ public class PlayLevelScreen extends Screen {
                 map.update(player);
                 baseLabel.setText(base.getBaseHealthS());
                 livesLabels.setText(player.getPlayerLives());
-                timeLabels = dayNight.drawDayNight(runState);
+                timeLabels.setText(TheTimekeeperNecromaniac.getTime());
+                TheTimekeeperNecromaniac.increment();
                 break;
                 // if level has been completed, bring up level cleared screen
             case LEVEL_COMPLETED:
@@ -392,8 +396,14 @@ public class PlayLevelScreen extends Screen {
                     map.draw(player, graphicsHandler);
 
                     graphicsHandler.drawImageAlpha(backgroundFilter, 0, 0, 786, 568,
-                            (float) Math.sin(((double) ((runState.c.getHoursOfDay() * 60 + runState.c.getMinutesOfDay())
-                                    % (12 * 60)) / (12 * 60)) * Math.PI * 2));
+                        (float) Math.sin(
+                            (double) (TheTimekeeperNecromaniac.getHours() * 60 + TheTimekeeperNecromaniac.getMinutes() + 6 * 60) / (60 * 24) * Math.PI * 2
+                        )
+                    );
+
+                    // graphicsHandler.drawImageAlpha(backgroundFilter, 0, 0, 786, 568,
+                    //         (float) Math.sin(((double) ((TheTimekeeperNecromaniac.getHours() * 60 + TheTimekeeperNecromaniac.getMinutes())
+                    //                 % (12 * 60)) / (12 * 60)) * Math.PI * 2));
 
                     livesLabels.draw(graphicsHandler);
                     timeLabels.draw(graphicsHandler);
