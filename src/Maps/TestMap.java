@@ -44,6 +44,7 @@ public class TestMap extends Map {
         enhancedMapTiles.add(new Spear(getMapTile(3, 9).getLocation()));
         enhancedMapTiles.add(new Steel(getMapTile(5, 9).getLocation()));
         enhancedMapTiles.add(new CraftingTable(getMapTile(21, 21).getLocation()));
+        enhancedMapTiles.add(new MedKit(getMapTile(22, 22).getLocation()));
         return enhancedMapTiles;
     }
 
