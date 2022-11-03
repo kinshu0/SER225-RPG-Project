@@ -258,10 +258,8 @@ public class Camera extends Rectangle {
         player.draw(graphicsHandler);
 
         // npcs determined to be drawn after player from the above step are drawn here
-        if (Boolean.TRUE.equals(Cycle.getStateNight())) {
-            for (NPC npc : drawNpcsAfterPlayer) {
-                npc.draw(graphicsHandler);
-            }
+        for (NPC npc : drawNpcsAfterPlayer) {
+            npc.draw(graphicsHandler);
         }
 
         // Uncomment this to see triggers drawn on screen

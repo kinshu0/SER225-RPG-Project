@@ -46,7 +46,7 @@ public class PlayLevelScreen extends Screen {
     BufferedImage Machete = ImageLoader.load("machete.png");
     BufferedImage Spear = ImageLoader.load("Spear.png");
     BufferedImage Steel = ImageLoader.load("Steel.png");
-    BufferedImage circleImg = ImageLoader.load("Inv_cir.png");
+    BufferedImage MedKit = ImageLoader.load("MedKit.png");
     BufferedImage backgroundFilter = ImageLoader.load("background-filter.png");
 
     protected PlayLevelScreenState playLevelScreenState;

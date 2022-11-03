@@ -17,7 +17,8 @@ public class MedKit extends EnhancedMapTile {
     public void update(Player player) {
         super.update(player);
         if (player.overlaps(this) && player.getPlayerState() == PlayerState.WALKING) {
-            player.setPlayerLives(player.getLives() + 1);
+            player.setPlayerLives(player.getLives() + 5);
+            this.setLocation(1000, 1000);
         }
     }
 
