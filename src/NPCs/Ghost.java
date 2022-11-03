@@ -72,15 +72,11 @@ public class Ghost extends NPC {
     @Override
     public void update(Player player) {
         super.update(player);
-            
-        float dx = player.getLocation().x - this.getLocation().x;
-        float dy = player.getLocation().y - this.getLocation().y;
+        
+        if (!player.overlaps(this)) {
+            followGameObject(player);;
+        }
 
-        this.walk(dx > 0 ? Direction.RIGHT : Direction.LEFT, 1);
-        this.walk(dy > 0 ? Direction.DOWN : Direction.UP, 1);
-
-        //     System.out.printf("Zombie Position: %s\n", this.getLocation());
-        //     System.out.printf("Player Position: %s\n", player.getLocation());
         if (player.overlaps(this) && hitTimer.isTimeUp()) {
             music.playDG();
             player.setPlayerLives(player.getPlayerLivesI() - 1);

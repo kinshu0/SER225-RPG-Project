@@ -61,8 +61,9 @@ public class Camera extends Rectangle {
 
         // TODO: Fix reference
         // if (Boolean.TRUE.equals(Cycle.getStateNight())) {
-        //     updateMapEntities(player);
-        // }
+            // }
+        updateMapEntities(player);
+        
         updateScripts();
     }
 

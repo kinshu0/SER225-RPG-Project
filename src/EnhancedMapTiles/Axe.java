@@ -9,7 +9,6 @@ import Level.EnhancedMapTile;
 import Level.Player;
 import Level.PlayerState;
 import Level.TileType;
-import Utils.Direction;
 import Utils.Point;
 import Level.Inventory;
 

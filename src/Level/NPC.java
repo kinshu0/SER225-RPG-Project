@@ -2,6 +2,7 @@ package Level;
 
 import Engine.GraphicsHandler;
 import GameObject.Frame;
+import GameObject.GameObject;
 import GameObject.SpriteSheet;
 import Utils.Direction;
 
@@ -84,6 +85,15 @@ public class NPC extends MapEntity {
             moveX(speed);
         }
     }
+
+    public void followGameObject(GameObject gameObject) {
+        float dx = gameObject.getLocation().x - this.getLocation().x;
+        float dy = gameObject.getLocation().y - this.getLocation().y;
+
+        this.walk(dx > 0 ? Direction.RIGHT : Direction.LEFT, 1);
+        this.walk(dy > 0 ? Direction.DOWN : Direction.UP, 1);
+    }
+
 
     public void update(Player player) {
         super.update();
