@@ -16,7 +16,7 @@ import Level.Inventory;
 // when the player touches it, it will tell the player that the level has been completed
 public class Axe extends EnhancedMapTile {
     public Axe(Point location) {
-        super(location.x, location.y, new SpriteSheet(ImageLoader.load("Axe.png"), 16, 16), TileType.NOT_PASSABLE);
+        super(location.x, location.y, new SpriteSheet(ImageLoader.load("Axe.png"), 25, 25), TileType.NOT_PASSABLE);
     }
 
     @Override

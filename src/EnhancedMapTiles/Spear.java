@@ -17,7 +17,7 @@ import Utils.Point;
 // when the player touches it, it will tell the player that the level has been completed
 public class Spear extends EnhancedMapTile {
     public Spear(Point location) {
-        super(location.x, location.y, new SpriteSheet(ImageLoader.load("spear.png"), 16, 16), TileType.NOT_PASSABLE);
+        super(location.x, location.y, new SpriteSheet(ImageLoader.load("spear.png"), 24, 13), TileType.NOT_PASSABLE);
     }
 
     @Override

@@ -17,7 +17,7 @@ import Utils.Point;
 // when the player touches it, it will tell the player that the level has been completed
 public class Katana extends EnhancedMapTile {
     public Katana(Point location) {
-        super(location.x, location.y, new SpriteSheet(ImageLoader.load("Katana.png"), 16, 16), TileType.NOT_PASSABLE);
+        super(location.x, location.y, new SpriteSheet(ImageLoader.load("Katana.png"), 24, 22), TileType.NOT_PASSABLE);
     }
 
     @Override
