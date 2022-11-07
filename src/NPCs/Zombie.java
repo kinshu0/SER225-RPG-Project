@@ -14,7 +14,6 @@ import Level.base;
 import Utils.Direction;
 import Utils.Point;
 import Utils.Stopwatch;
-
 import java.util.HashMap;
 
 // This class is for the dinosaur NPC
@@ -115,6 +114,15 @@ public class Zombie extends NPC {
         // System.out.printf("Player Position: %s\n", player.getLocation());
 
         if (player.overlaps(this) && hitTimer.isTimeUp()) {
+            music.playDG();
+            lives = lives - 1;
+            System.out.println(lives);
+            player.setPlayerLives(player.getPlayerLivesI() - 1);
+            hitTimer.reset();
+        }
+
+        // need to add more for this range including the check to see if
+        if (player.axeRange(this, getX(), getY()) && hitTimer.isTimeUp()) {
             music.playDG();
             lives = lives - 1;
             System.out.println(lives);
