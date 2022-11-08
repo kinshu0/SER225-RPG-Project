@@ -193,13 +193,6 @@ public class PlayLevelScreen extends Screen {
             keyLocker.lockKey(pauseKey);
         }
 
-        // this is what actually draws it
-        if (GamePanel.isGamePaused()) {
-            if (PauseScreen.drawPause(graphicsHandler, keyTimer, screenCoordinator, keyLocker)){
-                GamePanel.setIsGamePaused(false);
-            }
-        }
-
         // this unlocks the screen
         if (Keyboard.isKeyUp(pauseKey)) {
             keyLocker.unlockKey(pauseKey);
@@ -443,6 +436,12 @@ public class PlayLevelScreen extends Screen {
                     break;
             }
 
+        }
+        // this is what actually draws it
+        if (GamePanel.isGamePaused()) {
+            if (PauseScreen.drawPause(graphicsHandler, keyTimer, screenCoordinator, keyLocker)){
+                GamePanel.setIsGamePaused(false);
+            }
         }
     }
 

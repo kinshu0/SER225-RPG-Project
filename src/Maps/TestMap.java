@@ -64,6 +64,14 @@ public class TestMap extends Map {
         // zombie.setInteractScript(zombieScript);
         npcs.add(zombie);
 
+        Zombie zombie1 = new Zombie(2, getMapTile(14, 4).getLocation());
+        // zombie.setInteractScript(zombieScript);
+        npcs.add(zombie1);
+
+        Zombie zombie2 = new Zombie(2, getMapTile(15, 4).getLocation());
+        // zombie.setInteractScript(zombieScript);
+        npcs.add(zombie2);
+
         // Dinosaur dinosaur = new Dinosaur(2, getMapTile(13, 4).getLocation());
         // dinosaur.setExistenceFlag("hasTalkedToDinosaur");
         // dinosaur.setInteractScript(new DinoScript());
