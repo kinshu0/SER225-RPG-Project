@@ -387,10 +387,10 @@ public class PlayLevelScreen extends Screen {
                     map.draw(player, graphicsHandler);
 
                     graphicsHandler.drawImageAlpha(backgroundFilter, 0, 0, 786, 568,
-                            (float) Math.sin(
+                            (float) (0.95 * Math.sin(
                                     (double) (TheTimekeeperNecromaniac.getHours() * 60
                                             + TheTimekeeperNecromaniac.getMinutes() + 6 * 60) / (60 * 24) * Math.PI
-                                            * 2));
+                                            * 2)));
 
                     // graphicsHandler.drawImageAlpha(backgroundFilter, 0, 0, 786, 568,
                     // (float) Math.sin(((double) ((TheTimekeeperNecromaniac.getHours() * 60 +
