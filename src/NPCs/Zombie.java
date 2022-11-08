@@ -81,20 +81,7 @@ public class Zombie extends NPC {
     public void update(Player player) {
         super.update(player);
 
-        if (this.getLocation().x > 480) {
-            dx = 1 - this.getLocation().x;
-        } else if (this.getLocation().x < 520) {
-            dx = 1 + this.getLocation().x;
-        }
-
-        if (this.getLocation().y > 480) {
-            dy = 1 - this.getLocation().x;
-        } else if (this.getLocation().y < 520) {
-            dy = 1 + this.getLocation().y;
-        }
-
-        this.walk(dx > 0 ? Direction.RIGHT : Direction.LEFT, 1);
-        this.walk(dy > 0 ? Direction.DOWN : Direction.UP, 1);
+        followRectangle(new Point(480, 480), new Point(520, 520));
 
         if (this.getLocation().x == 480 && hitTimer.isTimeUp()) {
             base.baseDam();

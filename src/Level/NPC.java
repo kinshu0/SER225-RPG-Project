@@ -5,6 +5,7 @@ import GameObject.Frame;
 import GameObject.GameObject;
 import GameObject.SpriteSheet;
 import Utils.Direction;
+import Utils.Point;
 
 import java.util.HashMap;
 
@@ -93,6 +94,35 @@ public class NPC extends MapEntity {
         this.walk(dx > 0 ? Direction.RIGHT : Direction.LEFT, 1);
         this.walk(dy > 0 ? Direction.DOWN : Direction.UP, 1);
     }
+
+    public void followPoint(Point point) {
+        float dx = point.x - this.getLocation().x;
+        float dy = point.y - this.getLocation().y;
+
+        this.walk(dx > 0 ? Direction.RIGHT : Direction.LEFT, 1);
+        this.walk(dy > 0 ? Direction.DOWN : Direction.UP, 1);
+    }
+
+    public void followRectangle(Point topLeft, Point bottomRight) {
+        float dx = 0, dy = 0;
+
+        if (this.getLocation().x > 480) {
+            dx = 1 - this.getLocation().x;
+        } else if (this.getLocation().x < 520) {
+            dx = 1 + this.getLocation().x;
+        }
+
+        if (this.getLocation().y > 480) {
+            dy = 1 - this.getLocation().x;
+        } else if (this.getLocation().y < 520) {
+            dy = 1 + this.getLocation().y;
+        }
+
+        
+        this.walk(dx > 0 ? Direction.RIGHT : Direction.LEFT, 1);
+        this.walk(dy > 0 ? Direction.DOWN : Direction.UP, 1);
+    }
+
 
 
     public void update(Player player) {
