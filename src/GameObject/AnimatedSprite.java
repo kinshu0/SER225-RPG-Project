@@ -308,8 +308,6 @@ public class AnimatedSprite implements IntersectableRectangle {
 		double distance = inital;
 		distance = Math.sqrt(distance);
 
-		System.out.println(distance);
-
 		if (distance <= 60) {
 			return true;
 		} else {
