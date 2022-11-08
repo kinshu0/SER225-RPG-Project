@@ -36,7 +36,6 @@ public class PlayLevelScreen extends Screen {
 
     protected Stopwatch keyTimer = new Stopwatch();
 
-
     BufferedImage rect = ImageLoader.load("rect.png");
     BufferedImage Axe = ImageLoader.load("Axe.png");
     BufferedImage AxePlus1 = ImageLoader.load("Axe+1.png");
@@ -60,7 +59,6 @@ public class PlayLevelScreen extends Screen {
     private static boolean isInventoryScreen = false;
     private KeyLocker keyLocker = new KeyLocker();
     private final Key pauseKey = Key.P;
-
 
     public PlayLevelScreen(ScreenCoordinator screenCoordinator) {
         this.screenCoordinator = screenCoordinator;
@@ -123,7 +121,6 @@ public class PlayLevelScreen extends Screen {
         livesLabels.setOutlineColor(Color.white);
         livesLabels.setOutlineThickness(3);
 
-        
         // lives
         timeLabels = new SpriteFont("", 10, 30, "Comic Sans", 30, Color.black);
         timeLabels.setOutlineColor(Color.white);
@@ -134,7 +131,6 @@ public class PlayLevelScreen extends Screen {
         baseLabel.setOutlineColor(Color.white);
         baseLabel.setOutlineThickness(3);
 
-
         // crafting logic
         craftingLabel = new SpriteFont("Crafting", 400, 500, "Comic Sans", 24, Color.white);
         craftingLabel.setOutlineColor(Color.black);
@@ -144,8 +140,6 @@ public class PlayLevelScreen extends Screen {
         inventoryLabel = new SpriteFont("Inventory", 365, 330, "Comic Sans", 24, Color.white);
         inventoryLabel.setOutlineColor(Color.black);
         inventoryLabel.setOutlineThickness(2.0f);
-
-
 
         PauseScreen.initPause();
 
@@ -167,7 +161,7 @@ public class PlayLevelScreen extends Screen {
                 timeLabels.setText(TheTimekeeperNecromaniac.getTime());
                 TheTimekeeperNecromaniac.increment();
                 break;
-                // if level has been completed, bring up level cleared screen
+            // if level has been completed, bring up level cleared screen
             case LEVEL_COMPLETED:
                 winScreen.update();
                 break;
@@ -177,7 +171,6 @@ public class PlayLevelScreen extends Screen {
         if (base.getBaseHealth() <= 0 || player.getPlayerLivesI() <= 0) {
             screenCoordinator.setGameState(GameState.DEATH);
         }
-
 
         // if flag is set at any point during gameplay, game is "won"
         if (map.getFlagManager().isFlagSet("hasFoundBall")) {
@@ -192,7 +185,12 @@ public class PlayLevelScreen extends Screen {
             GamePanel.setIsGamePaused(!GamePanel.isGamePaused());
             keyLocker.lockKey(pauseKey);
         }
-
+        // this is what actually draws it
+        if (GamePanel.isGamePaused()) {
+            if (PauseScreen.drawPause(graphicsHandler, keyTimer, screenCoordinator, keyLocker)) {
+                GamePanel.setIsGamePaused(false);
+            }
+        }
         // this unlocks the screen
         if (Keyboard.isKeyUp(pauseKey)) {
             keyLocker.unlockKey(pauseKey);
@@ -389,14 +387,15 @@ public class PlayLevelScreen extends Screen {
                     map.draw(player, graphicsHandler);
 
                     graphicsHandler.drawImageAlpha(backgroundFilter, 0, 0, 786, 568,
-                        (float) Math.sin(
-                            (double) (TheTimekeeperNecromaniac.getHours() * 60 + TheTimekeeperNecromaniac.getMinutes() + 6 * 60) / (60 * 24) * Math.PI * 2
-                        )
-                    );
+                            (float) Math.sin(
+                                    (double) (TheTimekeeperNecromaniac.getHours() * 60
+                                            + TheTimekeeperNecromaniac.getMinutes() + 6 * 60) / (60 * 24) * Math.PI
+                                            * 2));
 
                     // graphicsHandler.drawImageAlpha(backgroundFilter, 0, 0, 786, 568,
-                    //         (float) Math.sin(((double) ((TheTimekeeperNecromaniac.getHours() * 60 + TheTimekeeperNecromaniac.getMinutes())
-                    //                 % (12 * 60)) / (12 * 60)) * Math.PI * 2));
+                    // (float) Math.sin(((double) ((TheTimekeeperNecromaniac.getHours() * 60 +
+                    // TheTimekeeperNecromaniac.getMinutes())
+                    // % (12 * 60)) / (12 * 60)) * Math.PI * 2));
 
                     livesLabels.draw(graphicsHandler);
                     timeLabels.draw(graphicsHandler);
