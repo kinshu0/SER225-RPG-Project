@@ -313,6 +313,18 @@ public class PlayLevelScreen extends Screen {
                 }
             }
 
+            if (Keyboard.isKeyDown(Key.ONE) && keyTimer.isTimeUp()) {
+                keyTimer.reset();
+            } else if (Keyboard.isKeyDown(Key.TWO) && keyTimer.isTimeUp()) {
+                keyTimer.reset();
+            } else if (Keyboard.isKeyDown(Key.THREE) && keyTimer.isTimeUp()) {
+                keyTimer.reset();
+            } else if (Keyboard.isKeyDown(Key.FOUR) && keyTimer.isTimeUp()) {
+                keyTimer.reset();
+            }
+
+
+
             if (CraftingInventory.contains("Axe") && CraftingInventory.contains("Steel")) {
                 graphicsHandler.drawImage(AxePlus1, 410, 400, 90, 80);
                 String crafted = CraftingInventory.craft();
