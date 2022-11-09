@@ -228,6 +228,30 @@ public class PlayLevelScreen extends Screen {
             keyLocker.lockKey(inventoryScreen);
         }
 
+        if (Keyboard.isKeyDown(Key.J) && keyTimer.isTimeUp()) {
+
+            System.out.println("worked");
+            if (Inventory.contains("Axe")) {
+                CurrentWeapon.equipWeapon("Axe");
+            }
+            keyTimer.reset();
+        } else if (Keyboard.isKeyDown(Key.TWO) && keyTimer.isTimeUp()) {
+            if (Inventory.contains("Spear")) {
+                CurrentWeapon.equipWeapon("Spear");
+            }
+            keyTimer.reset();
+        } else if (Keyboard.isKeyDown(Key.THREE) && keyTimer.isTimeUp()) {
+            if (Inventory.contains("Machete")) {
+                CurrentWeapon.equipWeapon("Machete");
+            }
+            keyTimer.reset();
+        } else if (Keyboard.isKeyDown(Key.FOUR) && keyTimer.isTimeUp()) {
+            if (Inventory.contains("Katana")) {
+                CurrentWeapon.equipWeapon("Katana");
+            }
+            keyTimer.reset();
+        }
+
         if (isInventoryScreen) {
             graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(),
                     new Color(245, 245, 220));
@@ -312,18 +336,6 @@ public class PlayLevelScreen extends Screen {
                     graphicsHandler.drawImage(Steel, 260, 400, 90, 80);
                 }
             }
-
-            if (Keyboard.isKeyDown(Key.ONE) && keyTimer.isTimeUp()) {
-                keyTimer.reset();
-            } else if (Keyboard.isKeyDown(Key.TWO) && keyTimer.isTimeUp()) {
-                keyTimer.reset();
-            } else if (Keyboard.isKeyDown(Key.THREE) && keyTimer.isTimeUp()) {
-                keyTimer.reset();
-            } else if (Keyboard.isKeyDown(Key.FOUR) && keyTimer.isTimeUp()) {
-                keyTimer.reset();
-            }
-
-
 
             if (CraftingInventory.contains("Axe") && CraftingInventory.contains("Steel")) {
                 graphicsHandler.drawImage(AxePlus1, 410, 400, 90, 80);
@@ -450,7 +462,7 @@ public class PlayLevelScreen extends Screen {
         }
         // this is what actually draws it
         if (GamePanel.isGamePaused()) {
-            if (PauseScreen.drawPause(graphicsHandler, keyTimer, screenCoordinator, keyLocker)){
+            if (PauseScreen.drawPause(graphicsHandler, keyTimer, screenCoordinator, keyLocker)) {
                 GamePanel.setIsGamePaused(false);
             }
         }

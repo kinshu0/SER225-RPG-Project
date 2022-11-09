@@ -8,6 +8,7 @@ import GameObject.Frame;
 import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
 import Level.Camera;
+import Level.CurrentWeapon;
 import Level.NPC;
 import Level.Player;
 import Level.base;
@@ -100,16 +101,18 @@ public class Zombie extends NPC {
         // System.out.printf("Zombie Position: %s\n", this.getLocation());
         // System.out.printf("Player Position: %s\n", player.getLocation());
 
-        if (player.overlaps(this) && hitTimer.isTimeUp()) {
-            music.playDG();
-            lives = lives - 1;
-            System.out.println(lives);
-            player.setPlayerLives(player.getPlayerLivesI() - 1);
-            hitTimer.reset();
+        // need to add more for this range including the check to see if
+        if (CurrentWeapon.getWeapon() == "Axe") {
+            if (player.axeRange(this, getX(), getY()) && hitTimer.isTimeUp()) {
+                music.playDG();
+                lives = lives - 1;
+                System.out.println(lives);
+                player.setPlayerLives(player.getPlayerLivesI() - 1);
+                hitTimer.reset();
+            }
         }
 
-        // need to add more for this range including the check to see if
-        if (player.axeRange(this, getX(), getY()) && hitTimer.isTimeUp()) {
+        else if (player.overlaps(this) && hitTimer.isTimeUp()) {
             music.playDG();
             lives = lives - 1;
             System.out.println(lives);

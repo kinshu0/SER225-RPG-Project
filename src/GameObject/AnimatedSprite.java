@@ -308,7 +308,7 @@ public class AnimatedSprite implements IntersectableRectangle {
 		double distance = inital;
 		distance = Math.sqrt(distance);
 
-		if (distance <= 60) {
+		if (distance <= 100) {
 			return true;
 		} else {
 			return false;
