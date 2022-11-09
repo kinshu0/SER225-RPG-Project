@@ -233,6 +233,7 @@ public class PlayLevelScreen extends Screen {
             System.out.println("axe");
             if (Inventory.contains("Axe")) {
                 CurrentWeapon.equipWeapon("Axe");
+
             }
             keyTimer.reset();
         } else if (Keyboard.isKeyDown(Key.J) && keyTimer.isTimeUp()) {
