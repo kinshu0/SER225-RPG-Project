@@ -228,24 +228,30 @@ public class PlayLevelScreen extends Screen {
             keyLocker.lockKey(inventoryScreen);
         }
 
-        if (Keyboard.isKeyDown(Key.J) && keyTimer.isTimeUp()) {
+        if (Keyboard.isKeyDown(Key.H) && keyTimer.isTimeUp()) {
 
-            System.out.println("worked");
+            System.out.println("axe");
             if (Inventory.contains("Axe")) {
                 CurrentWeapon.equipWeapon("Axe");
             }
             keyTimer.reset();
-        } else if (Keyboard.isKeyDown(Key.TWO) && keyTimer.isTimeUp()) {
+        } else if (Keyboard.isKeyDown(Key.J) && keyTimer.isTimeUp()) {
+
+            System.out.println("spear");
             if (Inventory.contains("Spear")) {
                 CurrentWeapon.equipWeapon("Spear");
             }
             keyTimer.reset();
-        } else if (Keyboard.isKeyDown(Key.THREE) && keyTimer.isTimeUp()) {
+        } else if (Keyboard.isKeyDown(Key.K) && keyTimer.isTimeUp()) {
+
+            System.out.println("machete");
             if (Inventory.contains("Machete")) {
                 CurrentWeapon.equipWeapon("Machete");
             }
             keyTimer.reset();
-        } else if (Keyboard.isKeyDown(Key.FOUR) && keyTimer.isTimeUp()) {
+        } else if (Keyboard.isKeyDown(Key.L) && keyTimer.isTimeUp()) {
+
+            System.out.println("katana");
             if (Inventory.contains("Katana")) {
                 CurrentWeapon.equipWeapon("Katana");
             }

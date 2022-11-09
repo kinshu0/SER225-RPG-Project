@@ -23,7 +23,7 @@ public class Zombie extends NPC {
     PlayMusic music = new PlayMusic();
     protected Stopwatch hitTimer = new Stopwatch();
 
-    int lives = 5;
+    int lives = 15;
 
     float dx;
     float dy;
@@ -106,6 +106,46 @@ public class Zombie extends NPC {
             if (player.axeRange(this, getX(), getY()) && hitTimer.isTimeUp()) {
                 music.playDG();
                 lives = lives - 1;
+                System.out.println(lives);
+                player.setPlayerLives(player.getPlayerLivesI() - 1);
+                hitTimer.reset();
+            }
+        }
+
+        if (CurrentWeapon.getWeapon() == "Axe") {
+            if (player.axeRange(this, getX(), getY()) && hitTimer.isTimeUp()) {
+                music.playDG();
+                lives = lives - 5;
+                System.out.println(lives);
+                player.setPlayerLives(player.getPlayerLivesI() - 1);
+                hitTimer.reset();
+            }
+        }
+
+        if (CurrentWeapon.getWeapon() == "Spear") {
+            if (player.spearRange(this, getX(), getY()) && hitTimer.isTimeUp()) {
+                music.playDG();
+                lives = lives - 3;
+                System.out.println(lives);
+                player.setPlayerLives(player.getPlayerLivesI() - 1);
+                hitTimer.reset();
+            }
+        }
+
+        if (CurrentWeapon.getWeapon() == "Machete") {
+            if (player.spearRange(this, getX(), getY()) && hitTimer.isTimeUp()) {
+                music.playDG();
+                lives = lives - 6;
+                System.out.println(lives);
+                player.setPlayerLives(player.getPlayerLivesI() - 1);
+                hitTimer.reset();
+            }
+        }
+
+        if (CurrentWeapon.getWeapon() == "Katana") {
+            if (player.spearRange(this, getX(), getY()) && hitTimer.isTimeUp()) {
+                music.playDG();
+                lives = lives - 4;
                 System.out.println(lives);
                 player.setPlayerLives(player.getPlayerLivesI() - 1);
                 hitTimer.reset();

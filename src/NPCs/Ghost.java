@@ -8,6 +8,7 @@ import GameObject.Frame;
 import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
 import Level.Camera;
+import Level.CurrentWeapon;
 import Level.NPC;
 import Level.Player;
 import Level.base;
@@ -19,7 +20,7 @@ import java.util.HashMap;
 // This class is for the dinosaur NPC
 public class Ghost extends NPC {
 
-    int lives = 5;
+    int lives = 20;
 
     PlayMusic music = new PlayMusic();
     protected Stopwatch hitTimer = new Stopwatch();
@@ -86,13 +87,47 @@ public class Ghost extends NPC {
             ;
         }
 
-        if (player.overlaps(this) && hitTimer.isTimeUp()) {
-            music.playDG();
-            player.setPlayerLives(player.getPlayerLivesI() - 1);
-            hitTimer.reset();
+        if (CurrentWeapon.getWeapon() == "Axe") {
+            if (player.axeRange(this, getX(), getY()) && hitTimer.isTimeUp()) {
+                music.playDG();
+                lives = lives - 5;
+                System.out.println(lives);
+                player.setPlayerLives(player.getPlayerLivesI() - 1);
+                hitTimer.reset();
+            }
         }
 
-        if (player.axeRange(this, getX(), getY()) && hitTimer.isTimeUp()) {
+        if (CurrentWeapon.getWeapon() == "Spear") {
+            if (player.spearRange(this, getX(), getY()) && hitTimer.isTimeUp()) {
+                music.playDG();
+                lives = lives - 3;
+                System.out.println(lives);
+                player.setPlayerLives(player.getPlayerLivesI() - 1);
+                hitTimer.reset();
+            }
+        }
+
+        if (CurrentWeapon.getWeapon() == "Machete") {
+            if (player.spearRange(this, getX(), getY()) && hitTimer.isTimeUp()) {
+                music.playDG();
+                lives = lives - 6;
+                System.out.println(lives);
+                player.setPlayerLives(player.getPlayerLivesI() - 1);
+                hitTimer.reset();
+            }
+        }
+
+        if (CurrentWeapon.getWeapon() == "Katana") {
+            if (player.spearRange(this, getX(), getY()) && hitTimer.isTimeUp()) {
+                music.playDG();
+                lives = lives - 4;
+                System.out.println(lives);
+                player.setPlayerLives(player.getPlayerLivesI() - 1);
+                hitTimer.reset();
+            }
+        }
+
+        else if (player.overlaps(this) && hitTimer.isTimeUp()) {
             music.playDG();
             lives = lives - 1;
             System.out.println(lives);
