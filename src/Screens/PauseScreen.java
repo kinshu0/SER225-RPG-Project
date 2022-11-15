@@ -27,6 +27,8 @@ public class PauseScreen {
 
     public static void initPause(){
         // pause logic
+        ControlsScreen.initControl();
+        OptionsClass.initOptions();
         pauseLabel = new SpriteFont("PAUSE SCREEN", 325, 50, "Comic Sans", 24, Color.white);
         pauseLabel.setOutlineColor(Color.black);
         pauseLabel.setOutlineThickness(2.0f);
@@ -119,7 +121,7 @@ public class PauseScreen {
         }
 
         if (OptionsOn){
-            OptionsClass.drawOptionScreen(graphicsHandler);
+            OptionsClass.drawOptionScreen(graphicsHandler, keyTimer);
             menuItemSelected = 2;
         }
 

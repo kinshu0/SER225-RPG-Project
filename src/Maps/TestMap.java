@@ -10,6 +10,7 @@ import NPCs.Dinosaur;
 import NPCs.Ghost;
 import NPCs.Walrus;
 import NPCs.Zombie;
+import Screens.OptionsClass;
 import Scripts.SimpleTextScript;
 import Scripts.TestMap.DinoScript;
 import Scripts.TestMap.GhostScript;
@@ -50,6 +51,7 @@ public class TestMap extends Map {
     @Override
     public ArrayList<NPC> loadNPCs() {
         ArrayList<NPC> npcs = new ArrayList<>();
+
 
         ghostScript = new GhostScript();
         Ghost ghost = new Ghost(1, getMapTile(4, 28).getLocation().subtractY(40));

@@ -150,6 +150,10 @@ public class PlayLevelScreen extends Screen {
 
     public void update() {
         // based on screen state, perform specific actions
+        if (!OptionsClass.getZomAct()) {
+            map.claerNPC();
+        }
+
         switch (playLevelScreenState) {
             // if level is "running" update player and map to keep game logic for the
             // platformer level going
