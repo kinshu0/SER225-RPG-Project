@@ -5,9 +5,18 @@ public class TheTimekeeperNecromaniac {
     public static int DEFAULT_UPDATE_INCREMENT = 30;
 
     private static int updateCount = 0;
+    public static int night = 1;
 
     public static void increment() {
         updateCount = (updateCount + DEFAULT_UPDATE_INCREMENT) % (60 * 60 * 24);
+    }
+    public static void nightCheck() {
+        if(updateCount == 0) {
+            night += 1;
+        }
+    }
+    public static String getNight(){
+        return "Night: " + Integer.toString(night);
     }
 
     public static void increment(int updateAmount) {
@@ -30,7 +39,7 @@ public class TheTimekeeperNecromaniac {
         return String.format("Time: %02d:%02d", getHours(), getMinutes());
     }
 
-    public boolean isDark() {
+    public static boolean isDark() {
         int h = getHours();
         return h > 18 || h < 6;
     }

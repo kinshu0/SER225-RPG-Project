@@ -29,6 +29,7 @@ public class PlayLevelScreen extends Screen {
     protected Player player;
     protected Player player1;
     protected SpriteFont livesLabels;
+    protected SpriteFont NightLabels;
     protected SpriteFont timeLabels;
     protected SpriteFont craftingLabel;
     protected SpriteFont inventoryLabel;
@@ -138,8 +139,12 @@ public class PlayLevelScreen extends Screen {
 
         // inventory logic
         inventoryLabel = new SpriteFont("Inventory", 365, 330, "Comic Sans", 24, Color.white);
-        inventoryLabel.setOutlineColor(Color.black);
+        inventoryLabel.setOutlineColor(Color.black);    
         inventoryLabel.setOutlineThickness(2.0f);
+
+        NightLabels = new SpriteFont(TheTimekeeperNecromaniac.getNight(), 10, 120, "Comic Sans", 24, Color.white);
+        NightLabels.setOutlineColor(Color.white);
+        NightLabels.setOutlineThickness(3);
 
         PauseScreen.initPause();
 
@@ -163,7 +168,9 @@ public class PlayLevelScreen extends Screen {
                 baseLabel.setText(base.getBaseHealthS());
                 livesLabels.setText(player.getPlayerLives());
                 timeLabels.setText(TheTimekeeperNecromaniac.getTime());
+                NightLabels.setText(TheTimekeeperNecromaniac.getNight());
                 TheTimekeeperNecromaniac.increment();
+                TheTimekeeperNecromaniac.nightCheck();
                 break;
             // if level has been completed, bring up level cleared screen
             case LEVEL_COMPLETED:
@@ -435,6 +442,7 @@ public class PlayLevelScreen extends Screen {
                     livesLabels.draw(graphicsHandler);
                     timeLabels.draw(graphicsHandler);
                     baseLabel.draw(graphicsHandler);
+                    NightLabels.draw(graphicsHandler);
 
                     for (int i = 250; i < 550; i += 50) {
                         graphicsHandler.drawImage(rect, i, 500, 50, 50);
