@@ -209,12 +209,14 @@ public class PlayLevelScreen extends Screen {
 
         // **end pause screen**
 
-        if (Inventory.getSize() > 1) {
-            float xLoc = player.getX();
-            float yLoc = player.getY();
-            this.player1.setLocation(xLoc, yLoc);
-            player = player1;
-            // System.out.println(map.getPlayerStartPosition().x);
+        if (Inventory.getSize() > 0) {
+            if (CurrentWeapon.getWeapon() == "Axe") {
+                float xLoc = player.getX();
+                float yLoc = player.getY();
+                this.player1.setLocation(xLoc, yLoc);
+                player = player1;
+                // System.out.println(map.getPlayerStartPosition().x);
+            }
         }
 
         // ** crafting screen **
