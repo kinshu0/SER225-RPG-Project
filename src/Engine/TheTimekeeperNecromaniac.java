@@ -19,6 +19,14 @@ public class TheTimekeeperNecromaniac {
         return "Night: " + Integer.toString(night);
     }
 
+    public static String getNightTitle() {
+        if (getHours() == 0 && getMinutes() < 25) {
+            return getNight();
+        } else {
+            return "";
+        }
+    }
+
     public static void increment(int updateAmount) {
         updateCount = (updateCount + updateAmount) % (60 * 60 * 24);
     }

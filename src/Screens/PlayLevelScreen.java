@@ -61,6 +61,10 @@ public class PlayLevelScreen extends Screen {
     private KeyLocker keyLocker = new KeyLocker();
     private final Key pauseKey = Key.P;
 
+    protected SpriteFont NightTitleScreen;
+
+    protected boolean titleScreenOn = false;
+
     public PlayLevelScreen(ScreenCoordinator screenCoordinator) {
         this.screenCoordinator = screenCoordinator;
     }
@@ -146,6 +150,11 @@ public class PlayLevelScreen extends Screen {
         NightLabels.setOutlineColor(Color.white);
         NightLabels.setOutlineThickness(3);
 
+        NightTitleScreen = new SpriteFont("", 80, 330, "Times New Roman", 170, Color.WHITE);
+        NightTitleScreen.setOutlineColor(Color.BLACK);
+        NightTitleScreen.setOutlineThickness(5);
+
+
         PauseScreen.initPause();
 
         winScreen = new WinScreen(this);
@@ -169,6 +178,7 @@ public class PlayLevelScreen extends Screen {
                 livesLabels.setText(player.getPlayerLives());
                 timeLabels.setText(TheTimekeeperNecromaniac.getTime());
                 NightLabels.setText(TheTimekeeperNecromaniac.getNight());
+                NightTitleScreen.setText(TheTimekeeperNecromaniac.getNightTitle());
                 TheTimekeeperNecromaniac.increment();
                 TheTimekeeperNecromaniac.nightCheck();
                 break;
@@ -443,6 +453,7 @@ public class PlayLevelScreen extends Screen {
                     timeLabels.draw(graphicsHandler);
                     baseLabel.draw(graphicsHandler);
                     NightLabels.draw(graphicsHandler);
+                    NightTitleScreen.draw(graphicsHandler);
 
                     for (int i = 250; i < 550; i += 50) {
                         graphicsHandler.drawImage(rect, i, 500, 50, 50);
