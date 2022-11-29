@@ -13,13 +13,17 @@ import Utils.Direction;
 import Utils.Point;
 import Utils.Stopwatch;
 
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 //import javax.lang.model.util.ElementScanner14;
 
 // This class is for when the platformer game is actually being played
 public class PlayLevelScreen extends Screen {
+
+    Random rand = new Random();
 
     protected int xInvSelect = 0;
     protected int yInvSelect = 0;
@@ -149,9 +153,9 @@ public class PlayLevelScreen extends Screen {
 
         PauseScreen.initPause();
 
-        Map.addNPC(new Zombie(1, new Point(30, 30)), map);
-        Map.addNPC(new Zombie(2, new Point(30, 30)), map);
-        Map.addNPC(new Zombie(3, new Point(30, 30)), map);
+        //Map.addNPC(new Zombie(1, new Point(30, 30)), map);
+        //Map.addNPC(new Zombie(2, new Point(30, 30)), map);
+        //Map.addNPC(new Zombie(3, new Point(30, 30)), map);
 
         winScreen = new WinScreen(this);
         keyTimer.setWaitTime(200);
@@ -178,7 +182,9 @@ public class PlayLevelScreen extends Screen {
                 if(TheTimekeeperNecromaniac.nightCheck()) {
                     int numb = TheTimekeeperNecromaniac.getNightI();
                     for(int i = 0; i <= numb*3; i++){
-                        Map.addNPC(new Zombie(i, new Point(30, 30)), map);
+                        int xZ =  rand.nextInt(50);
+                        int xY=  rand.nextInt(50);
+                        Map.addNPC(new Zombie(i, new Point(xZ, xY)), map);
                     }
                 }
                 break;
