@@ -10,14 +10,18 @@ public class TheTimekeeperNecromaniac {
     public static void increment() {
         updateCount = (updateCount + DEFAULT_UPDATE_INCREMENT) % (60 * 60 * 24);
     }
-    public static void nightCheck() {
+    public static boolean nightCheck() {
         if(updateCount == 0) {
             night += 1;
+            return true;
         }
+        return false;
     }
     public static String getNight(){
         return "Night: " + Integer.toString(night);
     }
+
+    public static int getNightI() {return night;}
 
     public static void increment(int updateAmount) {
         updateCount = (updateCount + updateAmount) % (60 * 60 * 24);

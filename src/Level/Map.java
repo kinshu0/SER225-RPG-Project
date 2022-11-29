@@ -29,8 +29,8 @@ public abstract class Map {
     protected MapTile[] mapTiles;
 
     // width and height of the map in terms of the number of tiles width-wise and height-wise
-    protected int width;
-    protected int height;
+    protected static int width;
+    protected static int height;
 
     // the tileset this map uses for its map tiles
     protected Tileset tileset;
@@ -260,7 +260,7 @@ public abstract class Map {
     }
 
     // checks if map tile being requested is in bounds of the tile map array
-    private boolean isInBounds(int x, int y) {
+    private static boolean isInBounds(int x, int y) {
         return x >= 0 && y >= 0 && x < width && y < height;
     }
 
@@ -343,9 +343,9 @@ public abstract class Map {
     }
 
     // add an npc to the map's list of npcs
-    public void addNPC(NPC npc) {
-        npc.setMap(this);
-        this.npcs.add(npc);
+    public static void addNPC(NPC npc, Map map) {
+        npc.setMap(map);
+        map.npcs.add(npc);
     }
 
     public void claerNPC() {

@@ -5,6 +5,7 @@ import Game.GameState;
 import Game.ScreenCoordinator;
 import Level.*;
 import Maps.TestMap;
+import NPCs.Zombie;
 import Players.Cat;
 import Players.CatWep;
 import SpriteFont.SpriteFont;
@@ -148,6 +149,10 @@ public class PlayLevelScreen extends Screen {
 
         PauseScreen.initPause();
 
+        Map.addNPC(new Zombie(1, new Point(30, 30)), map);
+        Map.addNPC(new Zombie(2, new Point(30, 30)), map);
+        Map.addNPC(new Zombie(3, new Point(30, 30)), map);
+
         winScreen = new WinScreen(this);
         keyTimer.setWaitTime(200);
         base.setBaseHealth(100);
@@ -170,7 +175,12 @@ public class PlayLevelScreen extends Screen {
                 timeLabels.setText(TheTimekeeperNecromaniac.getTime());
                 NightLabels.setText(TheTimekeeperNecromaniac.getNight());
                 TheTimekeeperNecromaniac.increment();
-                TheTimekeeperNecromaniac.nightCheck();
+                if(TheTimekeeperNecromaniac.nightCheck()) {
+                    int numb = TheTimekeeperNecromaniac.getNightI();
+                    for(int i = 0; i <= numb*3; i++){
+                        Map.addNPC(new Zombie(i, new Point(30, 30)), map);
+                    }
+                }
                 break;
             // if level has been completed, bring up level cleared screen
             case LEVEL_COMPLETED:
