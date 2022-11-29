@@ -5,6 +5,7 @@ import Game.GameState;
 import Game.ScreenCoordinator;
 import Level.*;
 import Maps.TestMap;
+import NPCs.Zombie;
 import Players.Cat;
 import Players.CatWep;
 import SpriteFont.SpriteFont;
@@ -12,13 +13,17 @@ import Utils.Direction;
 import Utils.Point;
 import Utils.Stopwatch;
 
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 //import javax.lang.model.util.ElementScanner14;
 
 // This class is for when the platformer game is actually being played
 public class PlayLevelScreen extends Screen {
+
+    Random rand = new Random();
 
     protected int xInvSelect = 0;
     protected int yInvSelect = 0;
@@ -148,6 +153,10 @@ public class PlayLevelScreen extends Screen {
 
         PauseScreen.initPause();
 
+        //Map.addNPC(new Zombie(1, new Point(30, 30)), map);
+        //Map.addNPC(new Zombie(2, new Point(30, 30)), map);
+        //Map.addNPC(new Zombie(3, new Point(30, 30)), map);
+
         winScreen = new WinScreen(this);
         keyTimer.setWaitTime(200);
         base.setBaseHealth(100);
@@ -170,7 +179,14 @@ public class PlayLevelScreen extends Screen {
                 timeLabels.setText(TheTimekeeperNecromaniac.getTime());
                 NightLabels.setText(TheTimekeeperNecromaniac.getNight());
                 TheTimekeeperNecromaniac.increment();
-                TheTimekeeperNecromaniac.nightCheck();
+                if(TheTimekeeperNecromaniac.nightCheck()) {
+                    int numb = TheTimekeeperNecromaniac.getNightI();
+                    for(int i = 0; i <= numb*3; i++){
+                        int xZ =  rand.nextInt(50);
+                        int xY=  rand.nextInt(50);
+                        Map.addNPC(new Zombie(i, new Point(xZ, xY)), map);
+                    }
+                }
                 break;
             // if level has been completed, bring up level cleared screen
             case LEVEL_COMPLETED:
