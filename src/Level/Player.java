@@ -7,6 +7,7 @@ import GameObject.GameObject;
 import GameObject.Rectangle;
 import GameObject.SpriteSheet;
 import Utils.Direction;
+import Screens.*;
 
 import java.util.ArrayList;
 
@@ -16,6 +17,7 @@ public abstract class Player extends GameObject {
     protected float walkSpeed = 0;
 
     protected int lives = 50;
+    protected int priorLives = lives;
     protected int interactionRange = 5;
     protected Direction currentWalkingXDirection;
     protected Direction currentWalkingYDirection;
@@ -59,6 +61,13 @@ public abstract class Player extends GameObject {
         // if player is currently playing through level (has not won or lost)
         // update player's state and current actions, which includes things like
         // determining how much it should move each frame and if its walking or jumping
+        if (OptionsClass.getGodMode() == true) {
+            lives = 50;
+        } else if (OptionsClass.getGodMode() == false && OptionsClass.turnedGodOff() == true) {
+            lives = priorLives;
+            OptionsClass.turnFalseGod();
+        }
+
         do {
             previousPlayerState = playerState;
             handlePlayerState();

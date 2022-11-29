@@ -1,4 +1,5 @@
 package EnhancedMapTiles;
+
 import GameObject.Frame;
 import Builders.FrameBuilder;
 import Engine.ImageLoader;
@@ -9,6 +10,8 @@ import Utils.Point;
 
 public class MedKit extends EnhancedMapTile {
 
+    boolean start = false;
+
     public MedKit(Point location) {
         super(location.x, location.y, new SpriteSheet(ImageLoader.load("MedKit.png"), 16, 16), TileType.NOT_PASSABLE);
     }
@@ -16,10 +19,20 @@ public class MedKit extends EnhancedMapTile {
     @Override
     public void update(Player player) {
         super.update(player);
+
+        if (start == false) {
+            this.setLocation(1000, 1000);
+            start = true;
+        }
         if (player.overlaps(this) && player.getPlayerState() == PlayerState.WALKING) {
             player.setPlayerLives(player.getLives() + 5);
             this.setLocation(1000, 1000);
         }
+
+        if (Deaths.didGhostDie() == true) {
+            this.setLocation((int) Deaths.getXGhost(), (int) Deaths.getYGhost());
+        }
+
     }
 
     private boolean canMoveLeft(Player player) {

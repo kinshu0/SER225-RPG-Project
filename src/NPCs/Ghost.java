@@ -9,6 +9,8 @@ import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
 import Level.Camera;
 import Level.CurrentWeapon;
+import Level.Deaths;
+import Level.Inventory;
 import Level.NPC;
 import Level.Player;
 import Level.base;
@@ -16,6 +18,8 @@ import Utils.Direction;
 import Utils.Point;
 import Utils.Stopwatch;
 import java.util.HashMap;
+import Maps.TestMap;
+import Screens.deathScreen;
 
 // This class is for the dinosaur NPC
 public class Ghost extends NPC {
@@ -27,6 +31,7 @@ public class Ghost extends NPC {
 
     float dx;
     float dy;
+    boolean died = false;
 
     public Ghost(int id, Point location) {
         super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("Ghost.png"), 14, 17), "STAND_LEFT");
@@ -136,8 +141,21 @@ public class Ghost extends NPC {
         }
 
         if (lives < 1) {
+            if (died == false) {
+                Deaths.addGhostDeath();
+                Deaths.lastGhostX(getX());
+                Deaths.lastGhostY(getY());
+                died = true;
+            }
             this.setLocation(1000, 1000);
+        }
+    }
 
+    public boolean isGhostDead() {
+        if (lives < 1) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -148,4 +166,5 @@ public class Ghost extends NPC {
             super.draw(graphicsHandler);
         }
     }
+
 }

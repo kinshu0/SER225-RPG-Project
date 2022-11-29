@@ -9,7 +9,7 @@ public class base {
         return baseHealth;
     }
 
-    public static void setBaseHealth(int baseHealth1){
+    public static void setBaseHealth(int baseHealth1) {
         baseHealth = baseHealth1;
     }
 
@@ -17,7 +17,7 @@ public class base {
         baseHealth = baseHealth - 1;
     }
 
-    public static String getBaseHealthS(){
+    public static String getBaseHealthS() {
         return ("Base Health: " + String.valueOf(baseHealth));
     }
 

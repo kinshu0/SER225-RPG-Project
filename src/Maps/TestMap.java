@@ -20,6 +20,7 @@ import Scripts.TestMap.WalrusScript;
 import Scripts.TestMap.ZombieScript;
 import Tilesets.CommonTileset;
 import Utils.Direction;
+import Level.*;
 
 import java.util.ArrayList;
 
@@ -44,14 +45,14 @@ public class TestMap extends Map {
         enhancedMapTiles.add(new Spear(getMapTile(3, 9).getLocation()));
         enhancedMapTiles.add(new Steel(getMapTile(5, 9).getLocation()));
         enhancedMapTiles.add(new CraftingTable(getMapTile(21, 21).getLocation()));
-        enhancedMapTiles.add(new MedKit(getMapTile(22, 22).getLocation()));
+        enhancedMapTiles.add(new MedKit(getMapTile(20, 20).getLocation()));
+
         return enhancedMapTiles;
     }
 
     @Override
     public ArrayList<NPC> loadNPCs() {
         ArrayList<NPC> npcs = new ArrayList<>();
-
 
         ghostScript = new GhostScript();
         Ghost ghost = new Ghost(1, getMapTile(4, 28).getLocation().subtractY(40));
@@ -92,11 +93,11 @@ public class TestMap extends Map {
         // triggers.add(new Trigger(790, 960, 10, 80, zombieScript));
         // triggers.add(new Trigger(890, 960, 10, 80, zombieScript));
         triggers.add(new Trigger(790, 1030, 100, 10, new LostBallScript(),
-        "hasLostBall"));
+                "hasLostBall"));
         triggers.add(new Trigger(790, 960, 10, 80, new LostBallScript(),
-        "hasLostBall"));
+                "hasLostBall"));
         triggers.add(new Trigger(890, 960, 10, 80, new LostBallScript(),
-        "hasLostBall"));
+                "hasLostBall"));
         return triggers;
     }
 
