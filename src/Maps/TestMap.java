@@ -11,6 +11,7 @@ import NPCs.Ghost;
 import NPCs.Knight;
 import NPCs.Walrus;
 import NPCs.Zombie;
+import NPCs.ZombieBoss;
 import Screens.OptionsClass;
 import Scripts.SimpleTextScript;
 import Scripts.TestMap.DinoScript;
@@ -55,13 +56,17 @@ public class TestMap extends Map {
     public ArrayList<NPC> loadNPCs() {
         ArrayList<NPC> npcs = new ArrayList<>();
 
-        ghostScript = new GhostScript();
-        Ghost ghost = new Ghost(1, getMapTile(4, 28).getLocation().subtractY(40));
-        ghostScript = new GhostScript();
-        Knight knight = new Knight(1, getMapTile(10, 28).getLocation().subtractY(40));
+        // ghostScript = new GhostScript();
+        ZombieBoss zombieBoss = new ZombieBoss(1, getMapTile(4, 28).getLocation().subtractY(40));
+        npcs.add(zombieBoss);
+        // Ghost ghost = new Ghost(1, getMapTile(4, 28).getLocation().subtractY(40));
+
+        // ghostScript = new GhostScript();
+        // Knight knight = new Knight(1, getMapTile(10,
+        // 28).getLocation().subtractY(40));
         // ghost.setInteractScript(ghostScript);
-        npcs.add(ghost);
-        npcs.add(knight);
+        // npcs.add(ghost);
+        // npcs.add(knight);
         // Walrus walrus = new Walrus(1, getMapTile(4, 28).getLocation().subtractY(40));
         // walrus.setInteractScript(new WalrusScript());
         // npcs.add(walrus);
