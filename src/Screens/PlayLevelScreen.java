@@ -5,6 +5,8 @@ import Game.GameState;
 import Game.ScreenCoordinator;
 import Level.*;
 import Maps.TestMap;
+import NPCs.Ghost;
+import NPCs.Knight;
 import NPCs.Zombie;
 import Players.Cat;
 import Players.CatWep;
@@ -176,9 +178,9 @@ public class PlayLevelScreen extends Screen {
 
         PauseScreen.initPause();
 
-        // Map.addNPC(new Zombie(1, new Point(30, 30)), map);
-        // Map.addNPC(new Zombie(2, new Point(30, 30)), map);
-        // Map.addNPC(new Zombie(3, new Point(30, 30)), map);
+        Map.addNPC(new Zombie(1, new Point(30, 30)), map);
+        Map.addNPC(new Zombie(2, new Point(30, 30)), map);
+        Map.addNPC(new Zombie(3, new Point(30, 30)), map);
 
         winScreen = new WinScreen(this);
         keyTimer.setWaitTime(200);
@@ -206,9 +208,19 @@ public class PlayLevelScreen extends Screen {
                 if (TheTimekeeperNecromaniac.nightCheck()) {
                     int numb = TheTimekeeperNecromaniac.getNightI();
                     for (int i = 0; i <= numb * 3; i++) {
-                        int xZ = rand.nextInt(50);
-                        int xY = rand.nextInt(50);
+                        int xZ = rand.nextInt(500);
+                        int xY = rand.nextInt(500);
                         Map.addNPC(new Zombie(i, new Point(xZ, xY)), map);
+                    }
+                    for (int j = 0; j <= numb + 2; j++) {
+                        int xZ = rand.nextInt(500);
+                        int xY = rand.nextInt(500);
+                        Map.addNPC(new Ghost(j, new Point(xZ, xY)), map);
+                    }
+                    if (numb >= 3){
+                        int xZ = rand.nextInt(500);
+                        int xY = rand.nextInt(500);
+                        Map.addNPC(new Knight(0, new Point(xZ, xY)), map);
                     }
                 }
                 break;
