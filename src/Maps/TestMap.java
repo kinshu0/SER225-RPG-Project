@@ -63,17 +63,17 @@ public class TestMap extends Map {
         // npcs.add(walrus);
 
         zombieScript = new ZombieScript();
-        Zombie zombie = new Zombie(2, getMapTile(13, 4).getLocation());
+        //Zombie zombie = new Zombie(2, getMapTile(13, 4).getLocation());
         // zombie.setInteractScript(zombieScript);
-        npcs.add(zombie);
+        //npcs.add(zombie);
 
-        Zombie zombie1 = new Zombie(2, getMapTile(14, 4).getLocation());
+        //Zombie zombie1 = new Zombie(2, getMapTile(14, 4).getLocation());
         // zombie.setInteractScript(zombieScript);
-        npcs.add(zombie1);
+        //npcs.add(zombie1);
 
-        Zombie zombie2 = new Zombie(2, getMapTile(15, 4).getLocation());
+        //Zombie zombie2 = new Zombie(2, getMapTile(15, 4).getLocation());
         // zombie.setInteractScript(zombieScript);
-        npcs.add(zombie2);
+        //npcs.add(zombie2);
 
         // Dinosaur dinosaur = new Dinosaur(2, getMapTile(13, 4).getLocation());
         // dinosaur.setExistenceFlag("hasTalkedToDinosaur");
