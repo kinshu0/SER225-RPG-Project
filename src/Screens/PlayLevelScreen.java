@@ -8,11 +8,11 @@ import Maps.TestMap;
 import NPCs.Zombie;
 import Players.Cat;
 import Players.CatWep;
+import Players.*;
 import SpriteFont.SpriteFont;
 import Utils.Direction;
 import Utils.Point;
 import Utils.Stopwatch;
-
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -33,6 +33,9 @@ public class PlayLevelScreen extends Screen {
     protected Map map;
     protected Player player;
     protected Player player1;
+    protected Player playerKatana;
+    protected Player playerMachete;
+    protected Player playerSpear;
     protected SpriteFont livesLabels;
     protected SpriteFont NightLabels;
     protected SpriteFont timeLabels;
@@ -90,14 +93,26 @@ public class PlayLevelScreen extends Screen {
         // setup player
         this.player = new Cat(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
         this.player1 = new CatWep(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
+        this.playerKatana = new CatKatana(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
+        this.playerMachete = new CatMachete(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
+        this.playerSpear = new CatSpear(map.getPlayerStartPosition().x, map.getPlayerStartPosition().y);
         this.player.setMap(map);
         this.player1.setMap(map);
+        this.playerKatana.setMap(map);
+        this.playerMachete.setMap(map);
+        this.playerSpear.setMap(map);
         Point playerStartPosition = map.getPlayerStartPosition();
         this.player.setLocation(playerStartPosition.x, playerStartPosition.y);
         this.playLevelScreenState = PlayLevelScreenState.RUNNING;
         this.player.setFacingDirection(Direction.LEFT);
         this.player1.setLocation(player.getX(), player.getY());
         this.player1.setFacingDirection(Direction.LEFT);
+        this.playerKatana.setLocation(player.getX(), player.getY());
+        this.playerKatana.setFacingDirection(Direction.LEFT);
+        this.playerMachete.setLocation(player.getX(), player.getY());
+        this.playerMachete.setFacingDirection(Direction.LEFT);
+        this.playerSpear.setLocation(player.getX(), player.getY());
+        this.playerSpear.setFacingDirection(Direction.LEFT);
 
         // let pieces of map know which button to listen for as the "interact" button
         map.getTextbox().setInteractKey(player.getInteractKey());
@@ -159,12 +174,11 @@ public class PlayLevelScreen extends Screen {
         NightTitleScreen.setOutlineColor(Color.BLACK);
         NightTitleScreen.setOutlineThickness(5);
 
-
         PauseScreen.initPause();
 
-        //Map.addNPC(new Zombie(1, new Point(30, 30)), map);
-        //Map.addNPC(new Zombie(2, new Point(30, 30)), map);
-        //Map.addNPC(new Zombie(3, new Point(30, 30)), map);
+        // Map.addNPC(new Zombie(1, new Point(30, 30)), map);
+        // Map.addNPC(new Zombie(2, new Point(30, 30)), map);
+        // Map.addNPC(new Zombie(3, new Point(30, 30)), map);
 
         winScreen = new WinScreen(this);
         keyTimer.setWaitTime(200);
@@ -189,11 +203,11 @@ public class PlayLevelScreen extends Screen {
                 NightLabels.setText(TheTimekeeperNecromaniac.getNight());
                 NightTitleScreen.setText(TheTimekeeperNecromaniac.getNightTitle());
                 TheTimekeeperNecromaniac.increment();
-                if(TheTimekeeperNecromaniac.nightCheck()) {
+                if (TheTimekeeperNecromaniac.nightCheck()) {
                     int numb = TheTimekeeperNecromaniac.getNightI();
-                    for(int i = 0; i <= numb*3; i++){
-                        int xZ =  rand.nextInt(50);
-                        int xY=  rand.nextInt(50);
+                    for (int i = 0; i <= numb * 3; i++) {
+                        int xZ = rand.nextInt(50);
+                        int xY = rand.nextInt(50);
                         Map.addNPC(new Zombie(i, new Point(xZ, xY)), map);
                     }
                 }
@@ -241,6 +255,24 @@ public class PlayLevelScreen extends Screen {
                 float yLoc = player.getY();
                 this.player1.setLocation(xLoc, yLoc);
                 player = player1;
+                // System.out.println(map.getPlayerStartPosition().x);
+            } else if (CurrentWeapon.getWeapon() == "Katana") {
+                float xLoc = player.getX();
+                float yLoc = player.getY();
+                this.playerKatana.setLocation(xLoc, yLoc);
+                player = playerKatana;
+                // System.out.println(map.getPlayerStartPosition().x);
+            } else if (CurrentWeapon.getWeapon() == "Machete") {
+                float xLoc = player.getX();
+                float yLoc = player.getY();
+                this.playerMachete.setLocation(xLoc, yLoc);
+                player = playerMachete;
+                // System.out.println(map.getPlayerStartPosition().x);
+            } else if (CurrentWeapon.getWeapon() == "Spear") {
+                float xLoc = player.getX();
+                float yLoc = player.getY();
+                this.playerSpear.setLocation(xLoc, yLoc);
+                player = playerSpear;
                 // System.out.println(map.getPlayerStartPosition().x);
             }
         }
