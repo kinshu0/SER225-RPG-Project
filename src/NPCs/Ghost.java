@@ -95,9 +95,9 @@ public class Ghost extends NPC {
         if (CurrentWeapon.getWeapon() == "Axe") {
             if (player.axeRange(this, getX(), getY()) && hitTimer.isTimeUp()) {
                 music.playDG();
-                lives = lives - 5;
+                lives = lives - (5 + Inventory.returnAxe());
                 System.out.println(lives);
-                player.setPlayerLives(player.getPlayerLivesI() - 1);
+                // player.setPlayerLives(player.getPlayerLivesI() - 1);
                 hitTimer.reset();
             }
         }
@@ -105,9 +105,9 @@ public class Ghost extends NPC {
         if (CurrentWeapon.getWeapon() == "Spear") {
             if (player.spearRange(this, getX(), getY()) && hitTimer.isTimeUp()) {
                 music.playDG();
-                lives = lives - 3;
+                lives = lives - (3 + Inventory.returnSpear());
                 System.out.println(lives);
-                player.setPlayerLives(player.getPlayerLivesI() - 1);
+                // player.setPlayerLives(player.getPlayerLivesI() - 1);
                 hitTimer.reset();
             }
         }
@@ -115,9 +115,9 @@ public class Ghost extends NPC {
         if (CurrentWeapon.getWeapon() == "Machete") {
             if (player.spearRange(this, getX(), getY()) && hitTimer.isTimeUp()) {
                 music.playDG();
-                lives = lives - 6;
+                lives = lives - (6 + Inventory.returnMachete());
                 System.out.println(lives);
-                player.setPlayerLives(player.getPlayerLivesI() - 1);
+                // player.setPlayerLives(player.getPlayerLivesI() - 1);
                 hitTimer.reset();
             }
         }
@@ -125,9 +125,9 @@ public class Ghost extends NPC {
         if (CurrentWeapon.getWeapon() == "Katana") {
             if (player.spearRange(this, getX(), getY()) && hitTimer.isTimeUp()) {
                 music.playDG();
-                lives = lives - 4;
+                lives = lives - (4 + Inventory.returnKatana());
                 System.out.println(lives);
-                player.setPlayerLives(player.getPlayerLivesI() - 1);
+                // player.setPlayerLives(player.getPlayerLivesI() - 1);
                 hitTimer.reset();
             }
         }

@@ -7,6 +7,42 @@ import Level.Player;
 public class Inventory {
     // static for adding, listing, get item, clearing
     static ArrayList<String> playerInventory = new ArrayList<String>();
+    static int axeDamage = 0;
+    static int katanaDamage = 0;
+    static int macheteDamage = 0;
+    static int spearDamage = 0;
+
+    public static void upgradeAxe() {
+        axeDamage = axeDamage + 5;
+    }
+
+    public static void upgradeMachete() {
+        macheteDamage = macheteDamage + 5;
+    }
+
+    public static void upgradeKatana() {
+        katanaDamage = katanaDamage + 5;
+    }
+
+    public static void upgradeSpear() {
+        spearDamage = spearDamage + 5;
+    }
+
+    public static int returnSpear() {
+        return spearDamage;
+    }
+
+    public static int returnAxe() {
+        return axeDamage;
+    }
+
+    public static int returnMachete() {
+        return macheteDamage;
+    }
+
+    public static int returnKatana() {
+        return katanaDamage;
+    }
 
     public static void addItem(String item) {
         playerInventory.add(item);

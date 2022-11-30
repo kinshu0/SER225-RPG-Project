@@ -416,12 +416,21 @@ public class PlayLevelScreen extends Screen {
             }
 
             if (CraftingInventory.contains("Axe") && CraftingInventory.contains("Steel")) {
-                graphicsHandler.drawImage(AxePlus1, 410, 400, 90, 80);
-                String crafted = CraftingInventory.craft();
-                Inventory.replace("Axe", "Axe+1");
-
-                System.out.println(Inventory.getItem(0));
-
+                // incerase damage of axe
+                Inventory.upgradeAxe();
+                CraftingInventory.clearInventory();
+            } else if (CraftingInventory.contains("Katana") && CraftingInventory.contains("Steel")) {
+                // incerase damage of axe
+                Inventory.upgradeKatana();
+                CraftingInventory.clearInventory();
+            } else if (CraftingInventory.contains("Machete") && CraftingInventory.contains("Steel")) {
+                // incerase damage of axe
+                Inventory.upgradeMachete();
+                CraftingInventory.clearInventory();
+            } else if (CraftingInventory.contains("Spear") && CraftingInventory.contains("Steel")) {
+                // incerase damage of axe
+                Inventory.upgradeSpear();
+                CraftingInventory.clearInventory();
             }
 
             if (Keyboard.isKeyDown(Key.DOWN) && keyTimer.isTimeUp()) {

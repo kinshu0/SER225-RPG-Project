@@ -9,6 +9,8 @@ import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
 import Level.Camera;
 import Level.CurrentWeapon;
+import Level.Deaths;
+import Level.Inventory;
 import Level.NPC;
 import Level.Player;
 import Level.base;
@@ -16,22 +18,24 @@ import Utils.Direction;
 import Utils.Point;
 import Utils.Stopwatch;
 import java.util.HashMap;
-import Level.Inventory;
+import Maps.TestMap;
+import Screens.deathScreen;
 
 // This class is for the dinosaur NPC
-public class Zombie extends NPC {
+public class Knight extends NPC {
+
+    int lives = 75;
 
     PlayMusic music = new PlayMusic();
     protected Stopwatch hitTimer = new Stopwatch();
 
-    int lives = 15;
-
     float dx;
     float dy;
+    boolean died = false;
 
-    public Zombie(int id, Point location) {
-        super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("Zombie.png"), 14, 17), "STAND_LEFT");
-        hitTimer.setWaitTime(200);
+    public Knight(int id, Point location) {
+        super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("Knight.png"), 14, 17), "STAND_LEFT");
+        hitTimer.setWaitTime(500);
     }
 
     @Override
@@ -83,26 +87,11 @@ public class Zombie extends NPC {
     public void update(Player player) {
         super.update(player);
 
-        followRectangle(new Point(480, 480), new Point(520, 520));
-
-        if (this.getLocation().x == 480 && hitTimer.isTimeUp()) {
-            base.baseDam();
-            hitTimer.reset();
-        } else if (this.getLocation().x == 520 && hitTimer.isTimeUp()) {
-            base.baseDam();
-            hitTimer.reset();
-        } else if (this.getLocation().y == 480 && hitTimer.isTimeUp()) {
-            base.baseDam();
-            hitTimer.reset();
-        } else if (this.getLocation().y == 520 && hitTimer.isTimeUp()) {
-            base.baseDam();
-            hitTimer.reset();
+        if (!player.overlaps(this)) {
+            followGameObject(player);
+            ;
         }
 
-        // System.out.printf("Zombie Position: %s\n", this.getLocation());
-        // System.out.printf("Player Position: %s\n", player.getLocation());
-
-        // need to add more for this range including the check to see if
         if (CurrentWeapon.getWeapon() == "Axe") {
             if (player.axeRange(this, getX(), getY()) && hitTimer.isTimeUp()) {
                 music.playDG();
@@ -147,22 +136,35 @@ public class Zombie extends NPC {
             music.playDG();
             lives = lives - 1;
             System.out.println(lives);
-            player.setPlayerLives(player.getPlayerLivesI() - 1);
+            player.setPlayerLives(player.getPlayerLivesI() - 3);
             hitTimer.reset();
         }
 
         if (lives < 1) {
+            if (died == false) {
+                Deaths.addKnightDeath();
+                Deaths.lastKnightX(getX());
+                Deaths.lastKnightY(getY());
+                died = true;
+            }
             this.setLocation(1000, 1000);
-
         }
+    }
 
+    public boolean isKnightDead() {
+        if (lives < 1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public void draw(GraphicsHandler graphicsHandler) {
 
-        if (lives > 0) {
+        if (lives > 1) {
             super.draw(graphicsHandler);
         }
     }
+
 }

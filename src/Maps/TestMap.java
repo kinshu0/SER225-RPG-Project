@@ -8,6 +8,7 @@ import Level.Script;
 import Level.Trigger;
 import NPCs.Dinosaur;
 import NPCs.Ghost;
+import NPCs.Knight;
 import NPCs.Walrus;
 import NPCs.Zombie;
 import Screens.OptionsClass;
@@ -56,24 +57,27 @@ public class TestMap extends Map {
 
         ghostScript = new GhostScript();
         Ghost ghost = new Ghost(1, getMapTile(4, 28).getLocation().subtractY(40));
+        ghostScript = new GhostScript();
+        Knight knight = new Knight(1, getMapTile(10, 28).getLocation().subtractY(40));
         // ghost.setInteractScript(ghostScript);
         npcs.add(ghost);
+        npcs.add(knight);
         // Walrus walrus = new Walrus(1, getMapTile(4, 28).getLocation().subtractY(40));
         // walrus.setInteractScript(new WalrusScript());
         // npcs.add(walrus);
 
         zombieScript = new ZombieScript();
-        //Zombie zombie = new Zombie(2, getMapTile(13, 4).getLocation());
+        // Zombie zombie = new Zombie(2, getMapTile(13, 4).getLocation());
         // zombie.setInteractScript(zombieScript);
-        //npcs.add(zombie);
+        // npcs.add(zombie);
 
-        //Zombie zombie1 = new Zombie(2, getMapTile(14, 4).getLocation());
+        // Zombie zombie1 = new Zombie(2, getMapTile(14, 4).getLocation());
         // zombie.setInteractScript(zombieScript);
-        //npcs.add(zombie1);
+        // npcs.add(zombie1);
 
-        //Zombie zombie2 = new Zombie(2, getMapTile(15, 4).getLocation());
+        // Zombie zombie2 = new Zombie(2, getMapTile(15, 4).getLocation());
         // zombie.setInteractScript(zombieScript);
-        //npcs.add(zombie2);
+        // npcs.add(zombie2);
 
         // Dinosaur dinosaur = new Dinosaur(2, getMapTile(13, 4).getLocation());
         // dinosaur.setExistenceFlag("hasTalkedToDinosaur");

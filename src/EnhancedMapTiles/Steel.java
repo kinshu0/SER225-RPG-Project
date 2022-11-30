@@ -12,6 +12,7 @@ import Level.PlayerState;
 import Level.TileType;
 import Utils.Direction;
 import Utils.Point;
+import Level.*;
 
 // This class is for the end level gold box tile
 // when the player touches it, it will tell the player that the level has been completed
@@ -20,12 +21,24 @@ public class Steel extends EnhancedMapTile {
         super(location.x, location.y, new SpriteSheet(ImageLoader.load("Steel.png"), 16, 16), TileType.NOT_PASSABLE);
     }
 
+    boolean start = false;
+
     @Override
     public void update(Player player) {
         super.update(player);
+
+        if (start == false) {
+            this.setLocation(1000, 1000);
+            start = true;
+        }
+
         if (player.overlaps(this) && player.getPlayerState() == PlayerState.WALKING) {
             Inventory.addItem("Steel");
             this.setLocation(1000, 1000);
+        }
+
+        if (Deaths.didKnightDie() == true) {
+            this.setLocation((int) Deaths.getXKnight(), (int) Deaths.getYKnight());
         }
     }
 
