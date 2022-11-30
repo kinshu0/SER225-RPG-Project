@@ -74,16 +74,20 @@ public class NPC extends MapEntity {
             }
         }
         if (direction == Direction.UP) {
-            moveY(-speed);
+            // moveY(-speed);
+            moveYHandleCollision(-speed);
         }
         else if (direction == Direction.DOWN) {
-            moveY(speed);
+            // moveY(speed);
+            moveYHandleCollision(speed);
         }
         else if (direction == Direction.LEFT) {
-            moveX(-speed);
+            // moveX(-speed);
+            moveXHandleCollision(-speed);
         }
         else if (direction == Direction.RIGHT) {
-            moveX(speed);
+            // moveX(speed);
+            moveXHandleCollision(speed);
         }
     }
 
