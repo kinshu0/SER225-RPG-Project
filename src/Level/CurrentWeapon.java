@@ -6,10 +6,9 @@ import Level.Player;
 
 public class CurrentWeapon {
     // static for adding, listing, get item, clearing
-    static String currentWeapon;
+    static String currentWeapon = "";
 
-    public static void equipWeapon(String item) 
-    {
+    public static void equipWeapon(String item) {
         currentWeapon = item;
     }
 
@@ -17,12 +16,8 @@ public class CurrentWeapon {
         return currentWeapon;
     }
 
-   
-
     public static void clearWeapon() {
         currentWeapon = "";
     }
-
-    
 
 }

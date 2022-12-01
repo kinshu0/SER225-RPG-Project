@@ -12,7 +12,7 @@ import Level.CurrentWeapon;
 import Level.Deaths;
 import Level.Inventory;
 import Level.NPC;
-import Level.Player;
+import Level.*;
 import Level.base;
 import Utils.Direction;
 import Utils.Point;
@@ -28,6 +28,7 @@ public class Ghost extends NPC {
 
     PlayMusic music = new PlayMusic();
     protected Stopwatch hitTimer = new Stopwatch();
+    protected Stopwatch hitTimer2 = new Stopwatch();
 
     float dx;
     float dy;
@@ -36,6 +37,7 @@ public class Ghost extends NPC {
     public Ghost(int id, Point location) {
         super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("Ghost.png"), 14, 17), "STAND_LEFT");
         hitTimer.setWaitTime(500);
+        hitTimer2.setWaitTime(300);
     }
 
     @Override
@@ -89,7 +91,7 @@ public class Ghost extends NPC {
 
         if (!player.overlaps(this)) {
             followGameObject(player);
-            ;
+            // player.setPlayerLives(player.getPlayerLivesI() - 1);
         }
 
         if (CurrentWeapon.getWeapon() == "Axe") {
@@ -107,9 +109,11 @@ public class Ghost extends NPC {
                 music.playDG();
                 lives = lives - (3 + Inventory.returnSpear());
                 System.out.println(lives);
+
                 // player.setPlayerLives(player.getPlayerLivesI() - 1);
                 hitTimer.reset();
             }
+
         }
 
         if (CurrentWeapon.getWeapon() == "Machete") {
@@ -132,12 +136,12 @@ public class Ghost extends NPC {
             }
         }
 
-        else if (player.overlaps(this) && hitTimer.isTimeUp()) {
+        if (player.overlaps(this) && hitTimer2.isTimeUp()) {
             music.playDG();
-            lives = lives - 1;
-            System.out.println(lives);
-            player.setPlayerLives(player.getPlayerLivesI() - 1);
-            hitTimer.reset();
+            // System.out.println(lives);
+            // player.setPlayerLives(player.getPlayerLivesI() - 1);
+            Deaths.hitPlayer(1);
+            hitTimer2.reset();
         }
 
         if (lives < 1) {

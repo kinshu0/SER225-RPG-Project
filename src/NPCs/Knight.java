@@ -28,6 +28,7 @@ public class Knight extends NPC {
 
     PlayMusic music = new PlayMusic();
     protected Stopwatch hitTimer = new Stopwatch();
+    protected Stopwatch hitTimer2 = new Stopwatch();
 
     float dx;
     float dy;
@@ -36,6 +37,7 @@ public class Knight extends NPC {
     public Knight(int id, Point location) {
         super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("Knight.png"), 14, 17), "STAND_LEFT");
         hitTimer.setWaitTime(500);
+        hitTimer2.setWaitTime(300);
     }
 
     @Override
@@ -132,12 +134,12 @@ public class Knight extends NPC {
             }
         }
 
-        else if (player.overlaps(this) && hitTimer.isTimeUp()) {
+        else if (player.overlaps(this) && hitTimer2.isTimeUp()) {
             music.playDG();
             lives = lives - 1;
             System.out.println(lives);
-            player.setPlayerLives(player.getPlayerLivesI() - 3);
-            hitTimer.reset();
+            Deaths.hitPlayer(4);
+            hitTimer2.reset();
         }
 
         if (lives < 1) {

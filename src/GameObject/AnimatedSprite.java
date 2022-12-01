@@ -315,6 +315,21 @@ public class AnimatedSprite implements IntersectableRectangle {
 		}
 	}
 
+	public boolean hitRange(IntersectableRectangle other, float x, float y) {
+		float pX = getX();
+		float pY = getY();
+
+		float inital = ((pX - x) * (pX - x)) + ((pY - y) * (pY - y));
+		double distance = inital;
+		distance = Math.sqrt(distance);
+
+		if (distance <= 30) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public boolean spearRange(IntersectableRectangle other, float x, float y) {
 		float pX = getX();
 		float pY = getY();

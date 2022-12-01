@@ -57,8 +57,9 @@ public class TestMap extends Map {
         ArrayList<NPC> npcs = new ArrayList<>();
 
         // ghostScript = new GhostScript();
-        ZombieBoss zombieBoss = new ZombieBoss(1, getMapTile(4, 28).getLocation().subtractY(40));
-        npcs.add(zombieBoss);
+        // ZombieBoss zombieBoss = new ZombieBoss(1, getMapTile(4,
+        // 28).getLocation().subtractY(40));
+        // npcs.add(zombieBoss);
         // Ghost ghost = new Ghost(1, getMapTile(4, 28).getLocation().subtractY(40));
 
         // ghostScript = new GhostScript();

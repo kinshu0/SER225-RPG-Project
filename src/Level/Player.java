@@ -62,9 +62,9 @@ public abstract class Player extends GameObject {
         // update player's state and current actions, which includes things like
         // determining how much it should move each frame and if its walking or jumping
         if (OptionsClass.getGodMode() == true) {
-            lives = 50;
+            Deaths.setPlayerLives();
         } else if (OptionsClass.getGodMode() == false && OptionsClass.turnedGodOff() == true) {
-            lives = priorLives;
+            Deaths.setPlayerLives();
             OptionsClass.turnFalseGod();
         }
 

@@ -14,6 +14,27 @@ public class Deaths {
     static double ghostY = 0;
     static double knightX = 0;
     static double knightY = 0;
+    static int playerLives = 50;
+
+    public static int getPlayerLives() {
+        return playerLives;
+    }
+
+    public static void setPlayerLives() {
+        playerLives = 50;
+    }
+
+    public static String getPlayerLivesString() {
+
+        int live = playerLives;
+        String livesIntro = "Lives: ";
+        return livesIntro.concat(Integer.toString(live));
+    }
+
+    public static void hitPlayer(int damage) {
+        playerLives = playerLives - damage;
+        System.out.println("y");
+    }
 
     public static void addKnightDeath() {
         knightDeaths = knightDeaths + 1;

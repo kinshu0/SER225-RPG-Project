@@ -17,12 +17,14 @@ import Utils.Point;
 import Utils.Stopwatch;
 import java.util.HashMap;
 import Level.Inventory;
+import Level.*;
 
 // This class is for the dinosaur NPC
 public class ZombieBoss extends NPC {
 
     PlayMusic music = new PlayMusic();
     protected Stopwatch hitTimer = new Stopwatch();
+    protected Stopwatch hitTimer2 = new Stopwatch();
 
     int lives = 50;
 
@@ -34,6 +36,7 @@ public class ZombieBoss extends NPC {
     public ZombieBoss(int id, Point location) {
         super(id, location.x, location.y, new SpriteSheet(ImageLoader.load("ZombieBoss.png"), 14, 17), "STAND_LEFT");
         hitTimer.setWaitTime(200);
+        hitTimer2.setWaitTime(200);
     }
 
     @Override
@@ -88,16 +91,16 @@ public class ZombieBoss extends NPC {
         followRectangle(new Point(480, 480), new Point(520, 520));
 
         if (this.getLocation().x == 480 && hitTimer.isTimeUp()) {
-            base.baseDam();
+            base.baseDam3();
             hitTimer.reset();
         } else if (this.getLocation().x == 520 && hitTimer.isTimeUp()) {
-            base.baseDam();
+            base.baseDam3();
             hitTimer.reset();
         } else if (this.getLocation().y == 480 && hitTimer.isTimeUp()) {
-            base.baseDam();
+            base.baseDam3();
             hitTimer.reset();
         } else if (this.getLocation().y == 520 && hitTimer.isTimeUp()) {
-            base.baseDam();
+            base.baseDam3();
             hitTimer.reset();
         }
 
@@ -145,12 +148,11 @@ public class ZombieBoss extends NPC {
             }
         }
 
-        else if (player.overlaps(this) && hitTimer.isTimeUp()) {
+        else if (player.overlaps(this) && hitTimer2.isTimeUp()) {
             music.playDG();
-            lives = lives - 1;
             System.out.println(lives);
-            player.setPlayerLives(player.getPlayerLivesI() - 1);
-            hitTimer.reset();
+            Deaths.hitPlayer(2);
+            hitTimer2.reset();
         }
 
         if (lives < 1) {

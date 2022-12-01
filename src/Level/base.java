@@ -17,6 +17,10 @@ public class base {
         baseHealth = baseHealth - 1;
     }
 
+    public static void baseDam3() {
+        baseHealth = baseHealth - 3;
+    }
+
     public static String getBaseHealthS() {
         return ("Base Health: " + String.valueOf(baseHealth));
     }

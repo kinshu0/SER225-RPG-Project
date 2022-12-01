@@ -8,6 +8,7 @@ import Maps.TestMap;
 import NPCs.Ghost;
 import NPCs.Knight;
 import NPCs.Zombie;
+import NPCs.ZombieBoss;
 import Players.Cat;
 import Players.CatWep;
 import Players.*;
@@ -19,6 +20,8 @@ import Utils.Stopwatch;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Random;
+
+import javax.lang.model.util.ElementScanner14;
 
 //import javax.lang.model.util.ElementScanner14;
 
@@ -181,10 +184,11 @@ public class PlayLevelScreen extends Screen {
         Map.addNPC(new Zombie(1, new Point(30, 30)), map);
         Map.addNPC(new Zombie(2, new Point(30, 30)), map);
         Map.addNPC(new Zombie(3, new Point(30, 30)), map);
+        Map.addNPC(new Ghost(0, new Point(15, 15)), map);
 
         winScreen = new WinScreen(this);
         keyTimer.setWaitTime(200);
-        base.setBaseHealth(100);
+        base.setBaseHealth(9999999);
     }
 
     public void update() {
@@ -197,10 +201,37 @@ public class PlayLevelScreen extends Screen {
             // if level is "running" update player and map to keep game logic for the
             // platformer level going
             case RUNNING:
+
                 player.update();
                 map.update(player);
+
+                /*
+                 * if (CurrentWeapon.getWeapon() == "Spear") {
+                 * playerSpear.update();
+                 * map.update(playerSpear);
+                 * 
+                 * } else if (CurrentWeapon.getWeapon() == "Axe") {
+                 * playerSpear.update();
+                 * map.update(playerSpear);
+                 * 
+                 * } else if (CurrentWeapon.getWeapon() == "Machete") {
+                 * playerSpear.update();
+                 * map.update(playerSpear);
+                 * 
+                 * } else if (CurrentWeapon.getWeapon() == "Katana") {
+                 * playerSpear.update();
+                 * map.update(playerSpear);
+                 * 
+                 * } else {
+                 * player.update();
+                 * map.update(player);
+                 * }
+                 * 
+                 */
+                // System.out.println(CurrentWeapon.getWeapon());
+
                 baseLabel.setText(base.getBaseHealthS());
-                livesLabels.setText(player.getPlayerLives());
+                livesLabels.setText(Deaths.getPlayerLivesString());
                 timeLabels.setText(TheTimekeeperNecromaniac.getTime());
                 NightLabels.setText(TheTimekeeperNecromaniac.getNight());
                 NightTitleScreen.setText(TheTimekeeperNecromaniac.getNightTitle());
@@ -217,10 +248,24 @@ public class PlayLevelScreen extends Screen {
                         int xY = rand.nextInt(500);
                         Map.addNPC(new Ghost(j, new Point(xZ, xY)), map);
                     }
-                    if (numb >= 3){
-                        int xZ = rand.nextInt(500);
-                        int xY = rand.nextInt(500);
-                        Map.addNPC(new Knight(0, new Point(xZ, xY)), map);
+                    if (numb >= 3) {
+
+                        int l = numb - 2;
+                        for (int i = 0; i < l; i++) {
+                            int xZ = rand.nextInt(500);
+                            int xY = rand.nextInt(500);
+                            Map.addNPC(new Knight(l, new Point(xZ, xY)), map);
+                        }
+                    }
+                    if (numb >= 2) {
+
+                        int g = (numb) - 1;
+                        for (int i = 0; i < g; i++) {
+                            int xZ = rand.nextInt(500);
+                            int xY = rand.nextInt(500);
+                            Map.addNPC(new ZombieBoss(g, new Point(xZ, xY)), map);
+                        }
+
                     }
                 }
                 break;
@@ -231,7 +276,7 @@ public class PlayLevelScreen extends Screen {
         }
 
         // death screen
-        if (base.getBaseHealth() <= 0 || player.getPlayerLivesI() <= 0) {
+        if (base.getBaseHealth() <= 0 || Deaths.getPlayerLives() <= 0) {
             screenCoordinator.setGameState(GameState.DEATH);
         }
 
