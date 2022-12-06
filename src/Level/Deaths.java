@@ -33,7 +33,6 @@ public class Deaths {
 
     public static void hitPlayer(int damage) {
         playerLives = playerLives - damage;
-        System.out.println("y");
     }
 
     public static void addKnightDeath() {

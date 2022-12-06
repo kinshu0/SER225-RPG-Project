@@ -148,7 +148,7 @@ public class Zombie extends NPC {
 
         else if (player.overlaps(this) && hitTimer2.isTimeUp()) {
             music.playDG();
-            System.out.println(lives);
+            // System.out.println(lives);
             Deaths.hitPlayer(1);
             hitTimer2.reset();
         }

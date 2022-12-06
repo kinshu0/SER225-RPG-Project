@@ -4,6 +4,7 @@ import Engine.GraphicsHandler;
 import Engine.Key;
 import Engine.Keyboard;
 import Engine.ScreenManager;
+import Level.base;
 import SpriteFont.SpriteFont;
 import Utils.Stopwatch;
 
@@ -20,7 +21,8 @@ public class OptionsClass {
 
     public static void initOptions() {
         pauseCon = new SpriteFont("zombies " + zomAct, 200, 150, "Comic Sans", 30, new Color(49, 207, 240));
-        god = new SpriteFont("God Mode " + godMode, 200, 175, "Comic Sans", 30, new Color(49, 207, 240));
+        god = new SpriteFont("player/base God Mode (press g)" + godMode, 200, 175, "Comic Sans", 30,
+                new Color(49, 207, 240));
 
     }
 
@@ -30,7 +32,7 @@ public class OptionsClass {
         pauseCon.draw(graphicsHandler);
         pauseCon.setText("zombies " + zomAct);
         god.draw(graphicsHandler);
-        god.setText("Gode mode " + godMode);
+        god.setText("God Mode and base infinite health (press g) " + godMode);
         if (Keyboard.isKeyDown(Key.ENTER) && keyTimer.isTimeUp()) {
             keyTimer.reset();
             zomAct = !zomAct;
@@ -42,8 +44,10 @@ public class OptionsClass {
             godMode = !godMode;
             if (godMode == false) {
                 turnedGodModeOff = true;
+                base.setBaseHealth(3000);
             } else {
                 turnedGodModeOff = false;
+                base.setBaseHealth(99999999);
             }
             // System.out.println(currentMenuItemHovered);
         }
